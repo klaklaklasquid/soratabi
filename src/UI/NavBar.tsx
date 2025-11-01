@@ -4,7 +4,7 @@ function NavBar() {
   const { barTop, barBottom, toggleAnimation } = useHamburger();
 
   return (
-    <header className="fixed right-5 top-5 z-50">
+    <header className="fixed right-4 top-5 z-50">
       {/* mobile hamburger menu */}
       <div
         onClick={toggleAnimation}
