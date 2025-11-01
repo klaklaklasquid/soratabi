@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import App from "../App";
 import Footer from "./Footer";
 import NavBar from "./NavBar";
-import NavigationLinks from "../Pages/NavigationLinks";
+import NavigationLinks from "./NavigationLinks";
 import useHamburger from "../Hooks/useHamburger";
 
 function AppLayout() {
@@ -18,12 +18,12 @@ function AppLayout() {
           <NavBar />
 
           {/* Main */}
-          <main className="grow h-screen">
+          <main className="grow h-svh">
             {!isOpen ? <Outlet /> : <NavigationLinks />}
           </main>
 
           {/* Footer */}
-          <Footer />
+          {!isOpen && <Footer />}
         </App>
       </div>
     </>
