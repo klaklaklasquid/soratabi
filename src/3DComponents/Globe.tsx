@@ -16,7 +16,7 @@ function Globe() {
   });
 
   return (
-    <group ref={meshRef} rotation={[0.3, -1, -0.7]}>
+    <group ref={meshRef} rotation={[0.3, -1, -0.7]} position={[0, 0, -0.1]}>
       <primitive object={globe.scene} scale={1} />
     </group>
   );

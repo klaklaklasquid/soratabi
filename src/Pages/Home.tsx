@@ -1,5 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import Globe from "../3DComponents/Globe";
+import Plane from "../3DComponents/Plane";
 
 function Home() {
   return (
@@ -15,6 +16,7 @@ function Home() {
         <Canvas camera={{ fov: 60, position: [0, 0, 2] }}>
           <ambientLight intensity={1.5} />
           <Globe />
+          <Plane />
         </Canvas>
       </div>
     </div>
