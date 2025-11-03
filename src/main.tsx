@@ -57,5 +57,5 @@ createRoot(document.getElementById("root")!).render(
     <HamburgerProvider>
       <RouterProvider router={router} />
     </HamburgerProvider>
-  </StrictMode>,
+  </StrictMode>
 );
