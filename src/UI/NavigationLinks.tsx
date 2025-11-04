@@ -6,7 +6,7 @@ function NavigationLinks() {
   const { toggleAnimation } = useHamburger();
 
   return (
-    <nav className="h-svh flex flex-col justify-center items-center gap-8">
+    <nav className="flex h-svh flex-col items-center justify-center gap-8">
       {appRoutes
         .filter((route) => route.inNav)
         .map((route) => (
@@ -20,7 +20,8 @@ function NavigationLinks() {
                   ? "text-[rgba(192,192,192,1)]"
                   : "text-[rgba(192,192,192,0.5)] hover:text-[rgba(192,192,192,0.8)]"
               }`
-            }>
+            }
+          >
             {route.name}
           </NavLink>
         ))}

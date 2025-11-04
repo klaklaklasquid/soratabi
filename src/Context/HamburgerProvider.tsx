@@ -7,7 +7,8 @@ function HamburgerProvider({ children }: { children: ReactNode }) {
     useHamburgerAnimation();
   return (
     <HamburgerContext.Provider
-      value={{ isOpen, barTop, barBottom, toggleAnimation }}>
+      value={{ isOpen, barTop, barBottom, toggleAnimation }}
+    >
       {children}
     </HamburgerContext.Provider>
   );
