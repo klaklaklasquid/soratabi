@@ -6,3 +6,41 @@ html {
   scrollbar-width: none;
   background-color: #000a21;
 }
+
+canvas + div {
+  scrollbar-width: none;
+}
+
+.message-box-right {
+  border-bottom-right-radius: 0px;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    right: -29.5px;
+    bottom: 0px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.2);
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+  }
+}
+
+.message-box-left {
+  border-bottom-left-radius: 0px;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -30px;
+    bottom: 0px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.2);
+    clip-path: polygon(100% 0, 0 100%, 100% 100%);
+  }
+}

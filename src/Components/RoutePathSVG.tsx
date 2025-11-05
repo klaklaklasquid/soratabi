@@ -1,16 +1,16 @@
 function RoutePathSVG() {
   return (
     <svg
-      className="pointer-events-none absolute inset-0 h-full w-full"
-      viewBox="0 -150 400 1000"
+      className="pointer-events-none absolute top-0 left-1/2 h-full w-screen -translate-x-1/2"
+      viewBox="0 0 400 1000"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
         d="M200 0
-           C180 100, 440 200, 200 300 
-           C180 400, -220 500, 200 600 
-           C180 700, 220 800, 200 900"
+           C-500 150, 800 300, 200 450
+           C-500 600, 800 750, 200 900
+           C-500 1050, 800 1200, 200 1350"
         stroke="white"
         strokeDasharray="12 12"
         strokeWidth="5"
