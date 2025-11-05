@@ -8,10 +8,11 @@ function AboutText(props: AboutTextProps) {
     props.number % 2 === 0 ? viewport.width / 2.5 : -viewport.width / 2.5;
   const spacing = viewport.height / 1.5;
   const y = viewport.height / 1.2 - props.number * spacing;
+  const currentPosition: [number, number, number] = [x, y, 0];
 
   return (
     <>
-      <Html position={[x, y, 0]}>
+      <Html position={currentPosition}>
         <div
           className={`flex h-[300px] w-[300px] flex-col gap-4 rounded-2xl bg-[rgba(255,255,255,0.2)] p-5 ${props.number % 2 === 0 ? "message-box-right -translate-x-full" : "message-box-left"} `}
         >
