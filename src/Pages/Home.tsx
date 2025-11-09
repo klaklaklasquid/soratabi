@@ -2,7 +2,6 @@ import { Canvas } from "@react-three/fiber";
 import Globe from "../3DComponents/Globe";
 import Plane from "../3DComponents/Plane";
 import Button from "../Components/Button";
-import Footer from "../UI/Footer";
 
 function Home() {
   return (
@@ -28,7 +27,6 @@ function Home() {
           <Button style="secondary">Your Journey</Button>
         </div>
       </section>
-      <Footer />
     </>
   );
 }

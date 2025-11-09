@@ -4,6 +4,7 @@ import App from "../App";
 import NavBar from "./NavBar";
 import NavigationLinks from "./NavigationLinks";
 import useHamburger from "../Hooks/useHamburger";
+import Footer from "./Footer";
 
 function AppLayout() {
   const { isOpen } = useHamburger();
@@ -14,17 +15,16 @@ function AppLayout() {
         className="fixed inset-0 -z-20 h-screen w-screen bg-cover bg-top-right"
         style={{ backgroundImage: "url('/geminiBgv2.png')" }}
       ></div>
-      <div className="z-0 flex flex-col">
+      <div className="flex h-full flex-col">
         <App>
           <NavBar />
 
           {/* Main */}
-          <main className={`h-svh grow`}>
+          <main className={`min-h-svh grow`}>
             {!isOpen ? <Outlet /> : <NavigationLinks />}
           </main>
 
-          {/* Footer */}
-          {/* {!isOpen && <Footer />} */}
+          {!isOpen && <Footer />}
         </App>
       </div>
     </>
