@@ -20,7 +20,7 @@ function AppLayout() {
           <NavBar />
 
           {/* Main */}
-          <main className={`min-h-svh grow`}>
+          <main className={`h-svh grow`}>
             {!isOpen ? <Outlet /> : <NavigationLinks />}
           </main>
 
