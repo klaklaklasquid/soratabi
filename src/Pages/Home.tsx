@@ -6,7 +6,7 @@ import Button from "../Components/Button";
 function Home() {
   return (
     <>
-      <section className="grid h-full grid-cols-2 grid-rows-8 pt-5 pl-5">
+      <section className="grid h-full grid-cols-2 grid-rows-8 pt-5 pl-5 lg:grid-rows-6">
         <h2 className="row-span-1 text-2xl">SORATABI</h2>
         <div className="col-span-2 col-start-1 row-span-2 row-start-2 text-4xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-[8rem]">
           <h1>DISCOVER A NEW</h1>
@@ -22,7 +22,7 @@ function Home() {
           </Canvas>
         </div>
 
-        <div className="col-span-2 row-start-7 flex flex-col items-center justify-center gap-4 lg:col-span-1 lg:row-start-6 lg:flex-row lg:justify-start xl:row-start-7">
+        <div className="col-span-2 row-start-7 flex flex-col items-center justify-center gap-4 lg:col-span-1 lg:row-start-6 lg:flex-row lg:justify-start xl:row-start-4">
           <Button style="primary">Browse Destinations</Button>
           <Button style="secondary">Your Journey</Button>
         </div>

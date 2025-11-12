@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import App from "../App";
-// import Footer from "./Footer";
 import NavBar from "./NavBar";
 import NavigationLinks from "./NavigationLinks";
 import useHamburger from "../Hooks/useHamburger";
@@ -20,7 +19,7 @@ function AppLayout() {
           <NavBar />
 
           {/* Main */}
-          <main className={`h-svh grow`}>
+          <main className="h-full grow">
             {!isOpen ? <Outlet /> : <NavigationLinks />}
           </main>
 
