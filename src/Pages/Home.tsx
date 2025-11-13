@@ -22,7 +22,7 @@ function Home() {
           </Canvas>
         </div>
 
-        <div className="col-span-2 row-start-7 flex flex-col items-center justify-center gap-4 lg:col-span-1 lg:row-start-6 lg:flex-row lg:justify-start xl:row-start-4">
+        <div className="col-span-2 row-start-7 flex flex-col items-center justify-center gap-4 lg:col-span-1 lg:row-start-6 lg:flex-row lg:justify-start xl:row-start-5">
           <Button style="primary">Browse Destinations</Button>
           <Button style="secondary">Your Journey</Button>
         </div>
