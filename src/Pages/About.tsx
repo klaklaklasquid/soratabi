@@ -10,7 +10,7 @@ function About() {
           WHY SORATABI
         </h2>
 
-        <div className="col-span-5 col-start-1 row-start-2 flex h-full flex-col items-center gap-16">
+        <div className="col-span-3 col-start-2 row-start-2 flex h-full flex-col items-center gap-16">
           {aboutContent.map((item) => (
             <AboutText
               key={item.number}

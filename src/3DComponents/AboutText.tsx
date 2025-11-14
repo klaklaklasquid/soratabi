@@ -10,13 +10,13 @@ function AboutText(props: AboutTextProps) {
 
   return (
     <div
-      className={`bg-primary-blue relative flex h-[300px] w-[300px] flex-col gap-4 rounded-2xl p-5 ${side ? "message-box-right" : "message-box-left"} `}
+      className={`bg-primary-blue relative flex h-[300px] w-[300px] flex-col gap-4 rounded-2xl p-5 ${side ? "message-box-right self-start" : "message-box-left self-end"} `}
     >
       <h3 className="text-xl">{props.title}</h3>
       <p>{props.text}</p>
 
       <div
-        className={`absolute -top-16 h-24 w-24 ${side ? "-left-1/10" : "-right-1/10"}`}
+        className={`absolute -top-16 h-24 w-24 lg:top-1/2 lg:h-48 lg:w-48 lg:-translate-y-1/2 ${side ? "-left-1/10 lg:left-5/4" : "-right-1/10 lg:right-5/4"}`}
       >
         <Canvas camera={{ fov: 60, position: [0, 0, 2] }}>
           <ambientLight intensity={2} />
