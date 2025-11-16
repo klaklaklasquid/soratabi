@@ -1,26 +1,29 @@
-import { Html } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
+import Globe from "./Globe";
+import PlaneForText from "./PlaneForText";
+import Paint from "./Paint";
+import Star from "./Star";
+import Rainbow from "./Rainbow";
 
 function AboutText(props: AboutTextProps) {
-  const { viewport } = useThree();
-
-  const x =
-    props.number % 2 === 0 ? viewport.width / 2.5 : -viewport.width / 2.5;
-  const spacing = viewport.height / 1.5;
-  const y = viewport.height / 1.2 - props.number * spacing;
-  const currentPosition: [number, number, number] = [x, y, 0];
+  const side = props.number % 2 === 0;
 
   return (
-    <>
-      <Html position={currentPosition}>
-        <div
-          className={`flex h-[300px] w-[300px] flex-col gap-4 rounded-2xl bg-[rgba(255,255,255,0.2)] p-5 ${props.number % 2 === 0 ? "message-box-right -translate-x-full" : "message-box-left"} `}
-        >
-          <h3 className="text-xl">{props.title}</h3>
-          <p>{props.text}</p>
-        </div>
-      </Html>
-    </>
+    <div
+      className={`bg-primary-blue relative flex h-[300px] w-[300px] flex-col gap-4 rounded-2xl p-5 ${side ? "message-box-right self-start" : "message-box-left self-end"} `}
+    >
+      <h3 className="text-xl">{props.title}</h3>
+      <p>{props.text}</p>
+
+      <div
+        className={`absolute -top-16 h-24 w-24 lg:top-1/2 lg:h-48 lg:w-48 lg:-translate-y-1/2 ${side ? "-left-1/10 lg:left-5/4" : "-right-1/10 lg:right-5/4"}`}
+      >
+        <Canvas camera={{ fov: 60, position: [0, 0, 2] }}>
+          <ambientLight intensity={2} />
+          <ModelRenderer model={props.model} />
+        </Canvas>
+      </div>
+    </div>
   );
 }
 
@@ -28,6 +31,29 @@ interface AboutTextProps {
   title: string;
   text: string;
   number: number;
+  model: string;
+}
+
+function ModelRenderer({ model }: { model: string }) {
+  switch (model) {
+    case "globe":
+      return <Globe />;
+
+    case "paint":
+      return <Paint />;
+
+    case "star":
+      return <Star />;
+
+    case "plane":
+      return <PlaneForText />;
+
+    case "rainbow":
+      return <Rainbow />;
+
+    default:
+      return null;
+  }
 }
 
 export default AboutText;

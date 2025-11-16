@@ -5,7 +5,7 @@ import { Group } from "three";
 import { GLTF } from "three/examples/jsm/Addons.js";
 import * as THREE from "three";
 
-function Globe() {
+function Plane() {
   const plane = useGLTF("/Airplane.glb") as GLTFResult;
   const meshRef = useRef<Group>(null!);
 
@@ -42,4 +42,4 @@ type GLTFResult = GLTF & {
 
 useGLTF.preload("/Airplane.glb");
 
-export default Globe;
+export default Plane;

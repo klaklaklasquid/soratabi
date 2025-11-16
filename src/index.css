@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --background-color-primary-blue: #0d324d;
+}
+
 html {
   box-sizing: border-box;
   color: #fafafa;
@@ -18,12 +22,12 @@ canvas + div {
   &::before {
     content: "";
     position: absolute;
-    right: -29.5px;
+    right: -25px;
     bottom: 0px;
     display: block;
     width: 30px;
     height: 30px;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: var(--background-color-primary-blue);
     clip-path: polygon(0 0, 0 100%, 100% 100%);
   }
 }
@@ -35,12 +39,12 @@ canvas + div {
   &::before {
     content: "";
     position: absolute;
-    left: -30px;
+    left: -25px;
     bottom: 0px;
     display: block;
     width: 30px;
     height: 30px;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: var(--background-color-primary-blue);
     clip-path: polygon(100% 0, 0 100%, 100% 100%);
   }
 }
