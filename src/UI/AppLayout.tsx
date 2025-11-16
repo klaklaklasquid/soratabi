@@ -19,7 +19,7 @@ function AppLayout() {
           <NavBar />
 
           {/* Main */}
-          <main className="h-svh grow">
+          <main className="mt-16 h-svh grow">
             {!isOpen ? <Outlet /> : <NavigationLinks />}
           </main>
 

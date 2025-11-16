@@ -1,16 +1,39 @@
 /// <reference types="vite/client" />
 
-declare module "*.glsl" {
-  const value: string;
-  export default value;
+interface ToursData {
+  id: number;
+  name: string;
+  ratingsAverage: number;
+  ratingsQuantity: number;
+  createdAt: string;
+  duration: number;
+  price: number;
+  summary: string;
+  description: string;
+  coverImage: string;
+  type: string;
+  maxCustomers: number;
+  locations: LocationsData[];
+  startDates: StartDatesData[];
+  tags: TagsData[];
+  customers: number;
 }
 
-declare module "*.vert" {
-  const value: string;
-  export default value;
+interface LocationsData {
+  id: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+  description: string;
+  image: string;
 }
 
-declare module "*.frag" {
-  const value: string;
-  export default value;
+interface StartDatesData {
+  id: number;
+  startDate: string;
+}
+
+interface TagsData {
+  id: number;
+  tag: string;
 }

@@ -2,6 +2,10 @@
 
 @theme {
   --background-color-primary-blue: #0d324d;
+  --background-color-primary-blue-50: #0d324d88;
+  --background-color-secondary-blue: #004553;
+  --background-color-tertiary-red: #ff6b6b;
+  --border-color-secondary-blue: #004553;
 }
 
 html {

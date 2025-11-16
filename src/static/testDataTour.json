@@ -1,0 +1,94 @@
+{
+  "tours": [
+    {
+      "id": 1,
+      "name": "Discover Japan Tour",
+      "ratingsAverage": 4.8,
+      "ratingsQuantity": 120,
+      "createdAt": "2025-01-10",
+      "duration": 10,
+      "price": 1899.0,
+      "summary": "A full cultural immersion through Japan.",
+      "description": "Explore Tokyo, Kyoto and Osaka with expert guides.",
+      "coverImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Japan_%28orthographic_projection%29.svg/1024px-Japan_%28orthographic_projection%29.svg.png",
+      "type": "tour",
+      "maxCustomers": 20,
+      "locations": [
+        {
+          "id": 1,
+          "name": "Tokyo",
+          "latitude": 35.6762,
+          "longitude": 139.6503,
+          "description": "City of neon lights and culture.",
+          "image": "https://www.advantour.com/img/japan/images/tokyo.jpg"
+        },
+        {
+          "id": 2,
+          "name": "Kyoto",
+          "latitude": 35.0116,
+          "longitude": 135.7681,
+          "description": "Temples, shrines and nature.",
+          "image": "https://www.advantour.com/img/japan/images/kyoto.jpg"
+        },
+        {
+          "id": 3,
+          "name": "Osaka",
+          "latitude": 34.6937,
+          "longitude": 135.5023,
+          "description": "Street food capital of Japan.",
+          "image": "https://www.advantour.com/img/japan/images/osaka.jpg"
+        },
+        {
+          "id": 4,
+          "name": "Yokohama",
+          "latitude": 35.4437,
+          "longitude": 139.638,
+          "description": "Harbor city near Tokyo.",
+          "image": "https://www.advantour.com/img/japan/images/yokohama.jpg"
+        },
+        {
+          "id": 5,
+          "name": "Okinawa",
+          "latitude": 26.3344,
+          "longitude": 127.8056,
+          "description": "Tropical islands and beaches.",
+          "image": "https://www.advantour.com/img/japan/images/okinawa.jpg"
+        }
+      ],
+      "startDates": [
+        {
+          "id": 1,
+          "startDate": "2026-03-10"
+        },
+        {
+          "id": 2,
+          "startDate": "2026-04-15"
+        },
+        {
+          "id": 3,
+          "startDate": "2026-06-01"
+        },
+        {
+          "id": 4,
+          "startDate": "2026-07-20"
+        }
+      ],
+      "tags": [
+        {
+          "id": 1,
+          "tag": "culture"
+        },
+        {
+          "id": 2,
+          "tag": "adventure"
+        },
+        {
+          "id": 3,
+          "tag": "food"
+        }
+      ],
+      "customers": 10
+    }
+  ],
+  "cruises": []
+}

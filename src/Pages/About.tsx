@@ -6,7 +6,7 @@ function About() {
   return (
     <>
       <section className="grid grid-cols-5">
-        <h2 className="col-span-full row-start-1 mt-24 mb-24 justify-self-center text-4xl">
+        <h2 className="col-span-full row-start-1 mb-24 justify-self-center text-4xl">
           WHY SORATABI
         </h2>
 

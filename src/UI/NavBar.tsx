@@ -4,17 +4,20 @@ function NavBar() {
   const { barTop, barBottom, toggleAnimation } = useHamburger();
 
   return (
-    <header className="fixed right-4 top-5 z-50">
+    <header className="fixed top-5 right-4 z-50">
       {/* mobile hamburger menu */}
       <div
         onClick={toggleAnimation}
-        className="flex flex-col gap-2 p-2 cursor-pointer">
+        className="flex cursor-pointer flex-col gap-2 p-2"
+      >
         <div
           ref={barTop}
-          className="bg-[#fafafa] opacity-50 w-10 h-1 rounded-2xl"></div>
+          className="h-1 w-10 rounded-2xl bg-[#fafafa] opacity-50"
+        ></div>
         <div
           ref={barBottom}
-          className="bg-[#fafafa] opacity-50 w-10 h-1 rounded-2xl"></div>
+          className="h-1 w-10 rounded-2xl bg-[#fafafa] opacity-50"
+        ></div>
       </div>
     </header>
   );
