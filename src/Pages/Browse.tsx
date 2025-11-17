@@ -9,28 +9,28 @@ function Browse() {
   const [active, setActive] = useState<boolean>(true);
 
   return (
-    <section className="">
-      <div className="grid grid-cols-[0.5fr_1fr_1fr_0.5fr]">
+    <section className="px-7 xl:grid xl:grid-cols-[1fr_3fr] xl:grid-rows-[min-w_min-w_4fr] xl:gap-5">
+      <div className="flex gap-5 xl:col-start-1 xl:row-start-1 xl:self-start">
         <InputButton />
         <FilterButton />
       </div>
 
-      <div className="mt-5 grid grid-cols-[0.5fr_1fr_1fr_0.5fr] gap-5">
+      <div className="mt-5 flex gap-5 xl:col-start-1 xl:row-start-2 xl:mt-0 xl:self-start">
         <div
           onClick={() => setActive(true)}
-          className={`${active ? "bg-secondary-blue" : "bg-primary-blue-50 border-secondary-blue border-2"} col-start-2 flex h-12 w-38 cursor-pointer items-center justify-center rounded-4xl`}
+          className={`${active ? "bg-secondary-blue" : "bg-primary-blue-50 border-secondary-blue border-2"} col-start-2 flex h-12 w-38 grow cursor-pointer items-center justify-center rounded-4xl`}
         >
           <h2>Tours</h2>
         </div>
         <div
           onClick={() => setActive(false)}
-          className={`${!active ? "bg-secondary-blue" : "bg-primary-blue-50 border-secondary-blue border-2"} flex h-12 w-38 cursor-pointer items-center justify-center rounded-4xl`}
+          className={`${!active ? "bg-secondary-blue" : "bg-primary-blue-50 border-secondary-blue border-2"} flex h-12 w-38 grow cursor-pointer items-center justify-center rounded-4xl`}
         >
           <h2>Cruises</h2>
         </div>
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:row-span-3 xl:mt-0">
         {active
           ? data.tours.map((tour) => <TourCard key={tour.id} data={tour} />)
           : data.cruises.map((cruise) => (

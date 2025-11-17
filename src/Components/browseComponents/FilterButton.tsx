@@ -1,6 +1,6 @@
 function FilterButton() {
   return (
-    <div className="bg-primary-blue-50 border-secondary-blue flex h-full w-12 items-center justify-center place-self-end rounded-[9999px] border-2">
+    <div className="bg-primary-blue-50 border-secondary-blue flex min-h-12 min-w-12 grow items-center justify-center rounded-[9999px] border-2">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

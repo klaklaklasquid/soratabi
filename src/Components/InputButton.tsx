@@ -11,7 +11,7 @@ function InputButton() {
       onChange={handleSearchChange}
       value={search}
       placeholder="Search Destinations..."
-      className="bg-primary-blue-50 border-secondary-blue col-start-2 rounded-4xl border-2 px-6 py-2 text-center text-lg outline-0"
+      className="bg-primary-blue-50 border-secondary-blue col-start-2 grow-5 rounded-4xl border-2 px-6 py-2 text-center text-lg outline-0"
     />
   );
 }

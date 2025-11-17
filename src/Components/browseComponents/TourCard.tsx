@@ -15,9 +15,9 @@ function TourCard({ data }: TourCardProps) {
   }
 
   return (
-    <div className="bg-primary-blue-50 flex h-full w-10/12 flex-col gap-4 self-start justify-self-center rounded-2xl p-7">
+    <div className="bg-primary-blue-50 flex h-full w-full flex-col gap-4 self-start justify-self-center rounded-2xl p-7">
       <div className="flex justify-between">
-        <h2 className="text-2xl">{data.name}</h2>
+        <h2 className="max-w-2/3 text-2xl">{data.name}</h2>
         <h2 className="bg-secondary-blue self-start rounded-[9999px] px-6 py-2">
           {capitalizeFirst(data.type)}
         </h2>
@@ -32,7 +32,11 @@ function TourCard({ data }: TourCardProps) {
       >
         {availabilty()}
       </h2>
-      <img src={data.coverImage} alt="image of the place" />
+      <img
+        className="h-1/2 object-contain"
+        src={data.coverImage}
+        alt="image of the place"
+      />
 
       <Link
         className="bg-secondary-blue self-center justify-self-end rounded-[9999px] px-6 py-2"
