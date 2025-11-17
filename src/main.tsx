@@ -10,6 +10,7 @@ import About from "./Pages/About.tsx";
 import Journey from "./Pages/Journey.tsx";
 import Account from "./Pages/Account.tsx";
 import HamburgerProvider from "./Context/HamburgerProvider.tsx";
+import FilterSettings from "./Components/browseComponents/FilterSettings.tsx";
 
 export const routeConfig = [
   {
@@ -42,6 +43,10 @@ export const routeConfig = [
     name: "ACCOUNT",
     inNav: true,
   },
+  {
+    path: "/filter-settings",
+    element: <FilterSettings />,
+  },
 ];
 
 const router = createBrowserRouter([
@@ -57,5 +62,5 @@ createRoot(document.getElementById("root")!).render(
     <HamburgerProvider>
       <RouterProvider router={router} />
     </HamburgerProvider>
-  </StrictMode>
+  </StrictMode>,
 );

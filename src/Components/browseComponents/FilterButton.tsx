@@ -1,6 +1,11 @@
+import { Link } from "react-router-dom";
+
 function FilterButton() {
   return (
-    <div className="bg-primary-blue-50 border-secondary-blue flex min-h-12 min-w-12 grow items-center justify-center rounded-[9999px] border-2">
+    <Link
+      to={"/filter-settings"}
+      className="bg-primary-blue-50 border-secondary-blue flex min-h-12 min-w-12 grow items-center justify-center rounded-[9999px] border-2"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -15,7 +20,7 @@ function FilterButton() {
           d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
         />
       </svg>
-    </div>
+    </Link>
   );
 }
 
