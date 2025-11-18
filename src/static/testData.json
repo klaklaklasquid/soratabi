@@ -10,7 +10,7 @@
       "price": 1899.0,
       "summary": "A full cultural immersion through Japan.",
       "description": "Explore Tokyo, Kyoto and Osaka with expert guides.",
-      "coverImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Japan_%28orthographic_projection%29.svg/1024px-Japan_%28orthographic_projection%29.svg.png",
+      "coverImage": "https://cdn.discordapp.com/attachments/697382590063181917/1440326888538247301/tour.png?ex=691dc072&is=691c6ef2&hm=2e5777d8ec5ef428ae786181b21d6e573336d592b6256531a344edc55e24d0ba&",
       "type": "tour",
       "maxCustomers": 20,
       "locations": [
@@ -79,7 +79,7 @@
       "price": 1599.0,
       "summary": "Discover ice caves, waterfalls and volcanoes.",
       "description": "A breathtaking journey through Iceland’s natural wonders including geysers, glaciers and lava fields.",
-      "coverImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Iceland_%28orthographic_projection%29.svg/800px-Iceland_%28orthographic_projection%29.svg.png",
+      "coverImage": "https://cdn.discordapp.com/attachments/697382590063181917/1440326888538247301/tour.png?ex=691dc072&is=691c6ef2&hm=2e5777d8ec5ef428ae786181b21d6e573336d592b6256531a344edc55e24d0ba&",
       "type": "tour",
       "maxCustomers": 16,
       "locations": [
@@ -129,7 +129,7 @@
       "price": 2099.0,
       "summary": "A high-altitude adventure to Machu Picchu.",
       "description": "Experience Cusco, the Sacred Valley and the legendary Inca Trail.",
-      "coverImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Un-peru.png/800px-Un-peru.png",
+      "coverImage": "https://cdn.discordapp.com/attachments/697382590063181917/1440326888538247301/tour.png?ex=691dc072&is=691c6ef2&hm=2e5777d8ec5ef428ae786181b21d6e573336d592b6256531a344edc55e24d0ba&",
       "type": "tour",
       "maxCustomers": 18,
       "locations": [
@@ -182,7 +182,7 @@
       "price": 1299.0,
       "summary": "Sail through Italy, Greece and Croatia.",
       "description": "Enjoy crystal clear seas, historic cities and Mediterranean cuisine.",
-      "coverImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Mediterranee_02_EN.jpg/800px-Mediterranee_02_EN.jpg",
+      "coverImage": "https://cdn.discordapp.com/attachments/697382590063181917/1440327583043686470/cruise.png?ex=691dc117&is=691c6f97&hm=4a815f4e60fb212b2e7d949d26f4448e995d66fd9c1d131ee9ebbd77344c5932&",
       "type": "cruise",
       "maxCustomers": 150,
       "locations": [
@@ -232,7 +232,7 @@
       "price": 1999.0,
       "summary": "A tropical cruise through turquoise waters.",
       "description": "Island hopping through Jamaica, Bahamas and the Cayman Islands.",
-      "coverImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Amerikanisches_Mittelmeer_NASA_World_Wind_Globe.jpg/800px-Amerikanisches_Mittelmeer_NASA_World_Wind_Globe.jpg",
+      "coverImage": "https://cdn.discordapp.com/attachments/697382590063181917/1440327583043686470/cruise.png?ex=691dc117&is=691c6f97&hm=4a815f4e60fb212b2e7d949d26f4448e995d66fd9c1d131ee9ebbd77344c5932&",
       "type": "cruise",
       "maxCustomers": 220,
       "locations": [
@@ -283,7 +283,7 @@
       "price": 1799.0,
       "summary": "Sail through icy fjords and massive glaciers.",
       "description": "Spot whales, glaciers and untouched Alaskan wilderness.",
-      "coverImage": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Relief_map_of_USA_Alaska.png",
+      "coverImage": "https://cdn.discordapp.com/attachments/697382590063181917/1440327583043686470/cruise.png?ex=691dc117&is=691c6f97&hm=4a815f4e60fb212b2e7d949d26f4448e995d66fd9c1d131ee9ebbd77344c5932&",
       "type": "cruise",
       "maxCustomers": 140,
       "locations": [

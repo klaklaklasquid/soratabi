@@ -6,7 +6,7 @@ function TourCard({ data }: TourCardProps) {
 
   function availabilty() {
     if (data.customers === data.maxCustomers) {
-      return "Not Available";
+      return "Currently Not Available";
     } else if (lastSlots) {
       return "Last Slots";
     } else {

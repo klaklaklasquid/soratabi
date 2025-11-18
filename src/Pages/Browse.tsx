@@ -4,6 +4,7 @@ import InputButton from "../Components/InputButton";
 import TourCard from "../Components/browseComponents/TourCard";
 
 import data from "..//static/testData.json";
+import FilterSettings from "../Components/browseComponents/FilterSettings";
 
 function Browse() {
   const [active, setActive] = useState<boolean>(true);
@@ -11,7 +12,7 @@ function Browse() {
   return (
     <section className="px-7 xl:grid xl:grid-cols-[1fr_3fr] xl:grid-rows-[min-w_min-w_4fr] xl:gap-5">
       <div className="flex gap-5 xl:col-start-1 xl:row-start-1 xl:self-start">
-        <InputButton />
+        <InputButton placeholder="Search Destinations..." />
         <FilterButton />
       </div>
 
@@ -30,7 +31,11 @@ function Browse() {
         </div>
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:row-span-3 xl:mt-0">
+      <div className="row-start-3 hidden xl:block">
+        <FilterSettings notPage={true} />
+      </div>
+
+      <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:row-span-3 xl:mt-0">
         {active
           ? data.tours.map((tour) => <TourCard key={tour.id} data={tour} />)
           : data.cruises.map((cruise) => (
