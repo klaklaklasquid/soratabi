@@ -9,8 +9,9 @@ import Browse from "./Pages/Browse.tsx";
 import About from "./Pages/About.tsx";
 import Journey from "./Pages/Journey.tsx";
 import Account from "./Pages/Account.tsx";
-import HamburgerProvider from "./Context/HamburgerProvider.tsx";
+import HamburgerProvider from "./Context/HamburgerContext/HamburgerProvider.tsx";
 import FilterSettings from "./Components/browseComponents/FilterSettings.tsx";
+import FilterProvider from "./Context/FilterContext/FilterProvider.tsx";
 
 export const routeConfig = [
   {
@@ -59,8 +60,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <HamburgerProvider>
-      <RouterProvider router={router} />
-    </HamburgerProvider>
+    <FilterProvider>
+      <HamburgerProvider>
+        <RouterProvider router={router} />
+      </HamburgerProvider>
+    </FilterProvider>
   </StrictMode>,
 );

@@ -5,14 +5,20 @@ import TourCard from "../Components/browseComponents/TourCard";
 
 import data from "..//static/testData.json";
 import FilterSettings from "../Components/browseComponents/FilterSettings";
+import { useFilter } from "../Hooks/useFilter";
 
 function Browse() {
+  const { search, setSearch } = useFilter();
   const [active, setActive] = useState<boolean>(true);
 
   return (
     <section className="px-7 xl:grid xl:grid-cols-[1fr_3fr] xl:grid-rows-[min-w_min-w_4fr] xl:gap-5">
       <div className="flex gap-5 xl:col-start-1 xl:row-start-1 xl:self-start">
-        <InputButton placeholder="Search Destinations..." />
+        <InputButton
+          placeholder="Search Destinations..."
+          state={search}
+          setState={setSearch}
+        />
         <FilterButton />
       </div>
 
