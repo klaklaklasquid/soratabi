@@ -1,14 +1,5 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-
-// Correct default icon
-const DefaultIcon = new L.Icon.Default({
-  iconRetinaUrl:
-    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-});
 
 export interface Location {
   id: number | string;
@@ -43,7 +34,7 @@ export default function LeafletMap({
       center={initialCenter}
       zoom={zoom}
       className={className}
-      scrollWheelZoom={false}
+      scrollWheelZoom={true}
       zoomControl={false}
     >
       <TileLayer
@@ -52,11 +43,7 @@ export default function LeafletMap({
       />
 
       {locations.map((loc) => (
-        <Marker
-          key={loc.id}
-          position={[loc.latitude, loc.longitude]}
-          icon={DefaultIcon}
-        >
+        <Marker key={loc.id} position={[loc.latitude, loc.longitude]}>
           <Popup>
             <div>
               <h3 className="font-bold">{loc.name}</h3>

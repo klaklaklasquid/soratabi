@@ -57,7 +57,7 @@ function FullTourCard() {
             <LeafletMap
               className="min-h-[500px] w-full overflow-hidden rounded-xl"
               locations={currentTour.locations}
-              zoom={4}
+              zoom={5}
             />
           </div>
         ) : (
