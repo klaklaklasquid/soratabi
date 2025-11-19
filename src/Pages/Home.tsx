@@ -17,6 +17,7 @@ function Home() {
         <div className="col-span-2 col-start-2 row-span-2 row-start-3 grid sm:row-span-3 sm:row-start-3 lg:row-span-4 lg:row-start-3">
           <Canvas camera={{ fov: 60, position: [0, 0, 2] }}>
             <ambientLight intensity={1.5} />
+            <directionalLight position={[10, 5, 10]} intensity={0.5} />
             <Globe />
             <Plane />
           </Canvas>

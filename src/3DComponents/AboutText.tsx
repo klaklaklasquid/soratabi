@@ -19,7 +19,9 @@ function AboutText(props: AboutTextProps) {
         className={`absolute -top-16 h-24 w-24 lg:top-1/2 lg:h-48 lg:w-48 lg:-translate-y-1/2 ${side ? "-left-1/10 lg:left-5/4" : "-right-1/10 lg:right-5/4"}`}
       >
         <Canvas camera={{ fov: 60, position: [0, 0, 2] }}>
-          <ambientLight intensity={2} />
+          <ambientLight intensity={1} />
+          <directionalLight position={[10, 5, 10]} intensity={0.5} />
+
           <ModelRenderer model={props.model} />
         </Canvas>
       </div>
