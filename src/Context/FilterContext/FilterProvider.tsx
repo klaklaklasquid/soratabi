@@ -14,6 +14,20 @@ function FilterProvider({ children }: FilterProviderProps) {
   const [maxRatingAverage, setMaxRatingAverage] = useState<number | undefined>(
     undefined,
   );
+  const [minDate, setMinDate] = useState<string>("");
+  const [maxDate, setMaxDate] = useState<string>("");
+
+  const handleResetState = () => {
+    setSearch("");
+    setMinPrice(undefined);
+    setMaxPrice(undefined);
+    setMinDuration(undefined);
+    setMaxDuration(undefined);
+    setMinRatingAverage(undefined);
+    setMaxRatingAverage(undefined);
+    setMinDate("");
+    setMaxDate("");
+  };
 
   return (
     <FilterContext.Provider
@@ -34,6 +48,11 @@ function FilterProvider({ children }: FilterProviderProps) {
         setMinRatingAverage,
         maxRatingAverage,
         setMaxRatingAverage,
+        minDate,
+        setMinDate,
+        maxDate,
+        setMaxDate,
+        handleResetState,
       }}
     >
       {children}

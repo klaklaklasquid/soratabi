@@ -1,38 +1,59 @@
 import { useNavigate } from "react-router-dom";
 import InputButton from "../InputButton";
 import data from "../../static/testData.json";
+import { useFilter } from "../../Hooks/useFilter";
+import Button from "../Button";
 
 function FilterSettings({ notPage }: FilterSettingsProps) {
   const navigate = useNavigate();
+  const {
+    minPrice,
+    setMinPrice,
+    maxPrice,
+    setMaxPrice,
+    minDuration,
+    setMinDuration,
+    maxDuration,
+    setMaxDuration,
+    minRatingAverage,
+    setMinRatingAverage,
+    maxRatingAverage,
+    setMaxRatingAverage,
+    minDate,
+    setMinDate,
+    maxDate,
+    setMaxDate,
+    handleResetState,
+  } = useFilter();
 
-  const minPrice = Math.min(
+  const minPricePlaceholder = Math.min(
     ...data.tours.map((tour) => tour.price),
     ...data.cruises.map((cruise) => cruise.price),
   );
 
-  const maxPrice = Math.max(
+  const maxPricePlaceholder = Math.max(
     ...data.tours.map((tour) => tour.price),
     ...data.cruises.map((cruise) => cruise.price),
   );
 
-  const minDuration = Math.min(
+  const minDurationPlaceholder = Math.min(
     ...data.tours.map((tour) => tour.duration),
     ...data.cruises.map((cruise) => cruise.duration),
   );
 
-  const maxDuration = Math.max(
+  const maxDurationPlaceholder = Math.max(
     ...data.tours.map((tour) => tour.duration),
     ...data.cruises.map((cruise) => cruise.duration),
   );
 
-  const minRatingsAverage = Math.floor(
+  const minRatingsAveragePlaceholder = Math.floor(
     Math.min(
       ...data.tours.map((tour) => tour.ratingsAverage),
       ...data.cruises.map((cruise) => cruise.ratingsAverage),
     ),
   );
 
-  const maxRatingsAverage = Math.ceil(
+  const maxRatingsAveragePlaceholder = Math.ceil(
     Math.max(
       ...data.tours.map((tour) => tour.ratingsAverage),
       ...data.cruises.map((cruise) => cruise.ratingsAverage),
@@ -62,17 +83,21 @@ function FilterSettings({ notPage }: FilterSettingsProps) {
       <div className="flex flex-col gap-5">
         <h3 className="text-2xl">Price</h3>
         <div className="flex gap-5">
-          <InputButton
+          <InputButton<number | undefined>
             type="number"
-            placeholder={`min ${minPrice}`}
-            min={minPrice}
-            max={maxPrice - 1}
+            placeholder={`min ${minPricePlaceholder}`}
+            min={minPricePlaceholder}
+            max={maxPricePlaceholder - 1}
+            state={minPrice}
+            setState={setMinPrice}
           />
-          <InputButton
+          <InputButton<number | undefined>
             type="number"
-            placeholder={`max ${maxPrice}`}
-            min={minPrice + 1}
-            max={maxPrice}
+            placeholder={`max ${maxPricePlaceholder}`}
+            min={minPricePlaceholder + 1}
+            max={maxPricePlaceholder}
+            state={maxPrice}
+            setState={setMaxPrice}
           />
         </div>
       </div>
@@ -80,17 +105,21 @@ function FilterSettings({ notPage }: FilterSettingsProps) {
       <div className="flex flex-col gap-5">
         <h3 className="text-2xl">Duration</h3>
         <div className="flex gap-5">
-          <InputButton
+          <InputButton<number | undefined>
             type="number"
-            placeholder={`min ${minDuration}`}
-            min={minDuration}
-            max={maxDuration - 1}
+            placeholder={`min ${minDurationPlaceholder}`}
+            min={minDurationPlaceholder}
+            max={maxDurationPlaceholder - 1}
+            state={minDuration}
+            setState={setMinDuration}
           />
-          <InputButton
+          <InputButton<number | undefined>
             type="number"
-            placeholder={`max ${maxDuration}`}
-            min={maxDuration + 1}
-            max={maxDuration}
+            placeholder={`max ${maxDurationPlaceholder}`}
+            min={maxDurationPlaceholder + 1}
+            max={maxDurationPlaceholder}
+            state={maxDuration}
+            setState={setMaxDuration}
           />
         </div>
       </div>
@@ -98,17 +127,21 @@ function FilterSettings({ notPage }: FilterSettingsProps) {
       <div className="flex flex-col gap-5">
         <h3 className="text-2xl">Rating</h3>
         <div className="flex gap-5">
-          <InputButton
+          <InputButton<number | undefined>
             type="number"
-            placeholder={`min ${minRatingsAverage}`}
-            min={minRatingsAverage}
-            max={maxRatingsAverage - 1}
+            placeholder={`min ${minRatingsAveragePlaceholder}`}
+            min={minRatingsAveragePlaceholder}
+            max={maxRatingsAveragePlaceholder - 1}
+            state={minRatingAverage}
+            setState={setMinRatingAverage}
           />
-          <InputButton
+          <InputButton<number | undefined>
             type="number"
-            placeholder={`max ${maxRatingsAverage}`}
-            min={maxRatingsAverage + 1}
-            max={maxRatingsAverage}
+            placeholder={`max ${maxRatingsAveragePlaceholder}`}
+            min={maxRatingsAveragePlaceholder + 1}
+            max={maxRatingsAveragePlaceholder}
+            state={maxRatingAverage}
+            setState={setMaxRatingAverage}
           />
         </div>
       </div>
@@ -116,10 +149,14 @@ function FilterSettings({ notPage }: FilterSettingsProps) {
       <div className="flex flex-col gap-5">
         <h3 className="text-2xl">Start Date</h3>
         <div className="flex gap-5">
-          <InputButton type="date" />
-          <InputButton type="date" />
+          <InputButton type="date" state={minDate} setState={setMinDate} />
+          <InputButton type="date" state={maxDate} setState={setMaxDate} />
         </div>
       </div>
+
+      <Button style="primary" onClick={handleResetState}>
+        Reset Filter
+      </Button>
     </section>
   );
 }

@@ -13,6 +13,8 @@ interface FilterContextInterface {
   maxDuration: number | undefined;
   minRatingAverage: number | undefined;
   maxRatingAverage: number | undefined;
+  minDate: string;
+  maxDate: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   setType: React.Dispatch<React.SetStateAction<boolean>>;
   setMinPrice: React.Dispatch<React.SetStateAction<number | undefined>>;
@@ -21,4 +23,7 @@ interface FilterContextInterface {
   setMaxDuration: React.Dispatch<React.SetStateAction<number | undefined>>;
   setMinRatingAverage: React.Dispatch<React.SetStateAction<number | undefined>>;
   setMaxRatingAverage: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setMinDate: React.Dispatch<React.SetStateAction<string>>;
+  setMaxDate: React.Dispatch<React.SetStateAction<string>>;
+  handleResetState: () => void;
 }
