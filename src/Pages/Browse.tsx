@@ -43,9 +43,11 @@ function Browse() {
 
       <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:row-span-3 xl:mt-0">
         {active
-          ? data.tours.map((tour) => <TourCard key={tour.id} data={tour} />)
+          ? data.tours.map((tour) => (
+              <TourCard key={tour.id} data={tour} type={"tours"} />
+            ))
           : data.cruises.map((cruise) => (
-              <TourCard key={cruise.id} data={cruise} />
+              <TourCard key={cruise.id} data={cruise} type="cruises" />
             ))}
       </div>
     </section>

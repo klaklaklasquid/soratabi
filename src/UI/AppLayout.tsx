@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 import NavigationLinks from "./NavigationLinks";
 import useHamburger from "../Hooks/useHamburger";
 import Footer from "./Footer";
+import ScrollToTop from "./ScrollToTop";
 
 function AppLayout() {
   const { isOpen } = useHamburger();
@@ -16,6 +17,7 @@ function AppLayout() {
       ></div>
       <div className="flex h-full flex-col">
         <App>
+          <ScrollToTop />
           <NavBar />
 
           {/* Main */}

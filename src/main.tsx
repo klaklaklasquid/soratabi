@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import "leaflet/dist/leaflet.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import AppLayout from "./UI/AppLayout.tsx";
@@ -12,6 +13,7 @@ import Account from "./Pages/Account.tsx";
 import HamburgerProvider from "./Context/HamburgerContext/HamburgerProvider.tsx";
 import FilterSettings from "./Components/browseComponents/FilterSettings.tsx";
 import FilterProvider from "./Context/FilterContext/FilterProvider.tsx";
+import FullTourCard from "./Components/browseComponents/FullTourCard.tsx";
 
 export const routeConfig = [
   {
@@ -47,6 +49,10 @@ export const routeConfig = [
   {
     path: "/filter-settings",
     element: <FilterSettings />,
+  },
+  {
+    path: "/tour/:type/:id",
+    element: <FullTourCard />,
   },
 ];
 

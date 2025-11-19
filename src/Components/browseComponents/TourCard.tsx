@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { capitalizeFirst } from "../../Utils/textAlter";
 
-function TourCard({ data }: TourCardProps) {
+function TourCard({ data, type }: TourCardProps) {
   const lastSlots = data.maxCustomers * 0.9 < data.customers;
 
   function availabilty() {
@@ -40,7 +40,7 @@ function TourCard({ data }: TourCardProps) {
 
       <Link
         className="bg-secondary-blue self-center justify-self-end rounded-[9999px] px-6 py-2"
-        to={`/tour/${data.id}`}
+        to={`/tour/${type}/${data.id}`}
       >
         Full Page
       </Link>
@@ -50,6 +50,7 @@ function TourCard({ data }: TourCardProps) {
 
 interface TourCardProps {
   data: ToursData;
+  type: string;
 }
 
 export default TourCard;

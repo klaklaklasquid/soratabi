@@ -10,7 +10,7 @@
       "price": 1899.0,
       "summary": "A full cultural immersion through Japan.",
       "description": "Explore Tokyo, Kyoto and Osaka with expert guides.",
-      "coverImage": "https://cdn.discordapp.com/attachments/697382590063181917/1440326888538247301/tour.png?ex=691dc072&is=691c6ef2&hm=2e5777d8ec5ef428ae786181b21d6e573336d592b6256531a344edc55e24d0ba&",
+      "coverImage": "https://media.discordapp.net/attachments/697382590063181917/1440326888538247301/tour.png?ex=691f11f2&is=691dc072&hm=7a17ca0b8352c7da0ccbd48e3831f25b1443fc6b17cbb13aef2a5ebf87f756a1&=&format=webp&quality=lossless",
       "type": "tour",
       "maxCustomers": 20,
       "locations": [
@@ -72,14 +72,14 @@
     {
       "id": 3,
       "name": "Iceland Volcano Explorer",
-      "ratingsAverage": 4.9,
+      "ratingsAverage": 3,
       "ratingsQuantity": 85,
       "createdAt": "2025-01-15",
       "duration": 7,
       "price": 1599.0,
       "summary": "Discover ice caves, waterfalls and volcanoes.",
-      "description": "A breathtaking journey through Iceland’s natural wonders including geysers, glaciers and lava fields.",
-      "coverImage": "https://cdn.discordapp.com/attachments/697382590063181917/1440326888538247301/tour.png?ex=691dc072&is=691c6ef2&hm=2e5777d8ec5ef428ae786181b21d6e573336d592b6256531a344edc55e24d0ba&",
+      "description": "A breathtaking journey through Iceland’s natural wonders, taking you across steaming geysers, shimmering glaciers, vast lava fields, roaring waterfalls, black-sand beaches, and remote landscapes where nature still feels completely untouched. Along the way, you’ll experience the raw power, quiet beauty, and dramatic contrasts that make Iceland one of the most unique and unforgettable destinations on earth.",
+      "coverImage": "https://media.discordapp.net/attachments/697382590063181917/1440326888538247301/tour.png?ex=691f11f2&is=691dc072&hm=7a17ca0b8352c7da0ccbd48e3831f25b1443fc6b17cbb13aef2a5ebf87f756a1&=&format=webp&quality=lossless",
       "type": "tour",
       "maxCustomers": 16,
       "locations": [
@@ -122,14 +122,14 @@
     {
       "id": 5,
       "name": "Peru Andes Adventure",
-      "ratingsAverage": 4.7,
+      "ratingsAverage": 0.5,
       "ratingsQuantity": 140,
       "createdAt": "2025-02-02",
       "duration": 12,
       "price": 2099.0,
       "summary": "A high-altitude adventure to Machu Picchu.",
       "description": "Experience Cusco, the Sacred Valley and the legendary Inca Trail.",
-      "coverImage": "https://cdn.discordapp.com/attachments/697382590063181917/1440326888538247301/tour.png?ex=691dc072&is=691c6ef2&hm=2e5777d8ec5ef428ae786181b21d6e573336d592b6256531a344edc55e24d0ba&",
+      "coverImage": "https://media.discordapp.net/attachments/697382590063181917/1440326888538247301/tour.png?ex=691f11f2&is=691dc072&hm=7a17ca0b8352c7da0ccbd48e3831f25b1443fc6b17cbb13aef2a5ebf87f756a1&=&format=webp&quality=lossless",
       "type": "tour",
       "maxCustomers": 18,
       "locations": [
