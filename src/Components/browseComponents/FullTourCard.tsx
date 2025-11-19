@@ -6,8 +6,7 @@ import TextWithToggle from "./TextWithToggle";
 import LeafletMap from "../../UI/LeafletMap";
 import Button from "../Button";
 import { useState } from "react";
-import Globe from "../../3DComponents/Globe";
-import { Canvas } from "@react-three/fiber";
+import GlobeMap from "../../3DComponents/GlobeMap";
 
 function FullTourCard() {
   const [view, setView] = useState<boolean>(true);
@@ -61,11 +60,8 @@ function FullTourCard() {
             />
           </div>
         ) : (
-          <div className="min-h-[250px]">
-            <Canvas camera={{ fov: 60, position: [0, 0, 2] }}>
-              <ambientLight intensity={1.5} />
-              <Globe />
-            </Canvas>
+          <div className="min-h-[50vh]">
+            <GlobeMap locations={currentTour.locations} />
           </div>
         )}
 
