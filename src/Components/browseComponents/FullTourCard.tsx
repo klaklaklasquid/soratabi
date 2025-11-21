@@ -44,20 +44,6 @@ function FullTourCard() {
     });
   };
 
-  const stopAutoScroll = () => {
-    if (autoScroll.current) {
-      autoScroll.current.pause();
-    }
-  };
-
-  const resumeAutoScroll = () => {
-    if (autoScroll.current) {
-      autoScroll.current.resume();
-    } else {
-      startAutoScroll();
-    }
-  };
-
   useEffect(() => {
     const timer = setTimeout(startAutoScroll, 100);
 
@@ -70,26 +56,26 @@ function FullTourCard() {
   }, []);
 
   return (
-    <section className="mb-10 grid grid-cols-1 gap-y-5 px-10">
+    <section className="mb-10 grid grid-cols-1 gap-5 px-5 xl:grid-cols-2">
       <NavigateBackPage />
 
-      <main className="bg-primary-blue-50 col-start-1 flex flex-col gap-3 rounded-2xl p-5 text-lg">
-        <div className="flex flex-wrap items-center justify-between gap-y-3">
+      <main className="bg-primary-blue-50 col-start-1 flex flex-col gap-3 rounded-2xl p-5 text-lg md:grid md:grid-cols-2">
+        <div className="flex flex-wrap items-center justify-between gap-y-3 md:col-span-2">
           <RatingStars rating={currentTour.ratingsAverage} />
           <h3 className="bg-secondary-blue rounded-[9999px] px-4 py-2">
             {currentTour.ratingsQuantity} reviews
           </h3>
         </div>
         <h2 className="text-3xl">{currentTour.name}</h2>
-        <h4>{currentTour.summary}</h4>
+        <h4 className="md:row-start-3">{currentTour.summary}</h4>
         <h2 className="text-4xl">€ {currentTour.price}</h2>
         <h4>{currentTour.duration} day's</h4>
         <img src={currentTour.coverImage} alt="image" />
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3 md:col-span-2 md:row-start-5">
           {currentTour.tags.map((tag) => (
             <h4
               key={tag.id}
-              className="bg-secondary-blue rounded-[9999px] px-4 py-2"
+              className="bg-secondary-blue self-center justify-self-center rounded-[9999px] px-4 py-2"
             >
               {tag.tag}
             </h4>
@@ -102,11 +88,7 @@ function FullTourCard() {
       {/* reviews must be placed here */}
       <div
         ref={sliderRef}
-        className="scrollbar-hide flex w-full gap-5 overflow-x-auto"
-        onMouseEnter={stopAutoScroll}
-        onMouseLeave={resumeAutoScroll}
-        onTouchStart={stopAutoScroll}
-        onTouchEnd={resumeAutoScroll}
+        className="scrollbar-hide flex w-full gap-5 overflow-x-auto xl:col-span-2 xl:row-start-2"
       >
         {fullReviewsData.map((reviewId, index) => (
           <ReviewCard key={`${reviewId}-${index}`} />
@@ -146,7 +128,7 @@ function FullTourCard() {
       </section>
 
       {/* startDates */}
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 md:grid md:grid-cols-2 xl:col-span-2 2xl:grid-cols-4">
         {currentTour.startDates.map((date) => (
           <StartDates
             key={date.id}

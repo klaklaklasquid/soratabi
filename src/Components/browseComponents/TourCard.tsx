@@ -3,18 +3,6 @@ import { capitalizeFirst } from "../../Utils/textAlter";
 import { useMemo } from "react";
 
 function TourCard({ data, type }: TourCardProps) {
-  // const lastSlots = data.maxCustomers * 0.9 < data.customers;
-
-  // function availabilty() {
-  //   if (data.customers === data.maxCustomers) {
-  //     return "Currently Not Available";
-  //   } else if (lastSlots) {
-  //     return "Last Slots";
-  //   } else {
-  //     return "Available";
-  //   }
-  // }
-
   const status = useMemo(() => {
     const dates = data.startDates;
 

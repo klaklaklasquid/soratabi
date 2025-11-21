@@ -7,7 +7,7 @@ function TextWithToggle({ text }: { text: string }) {
   const isLong = text.length > 150;
 
   return (
-    <p className="leading-relaxed">
+    <p className="leading-relaxed md:col-span-2">
       {expanded ? text : preview}
       {isLong && (
         <span

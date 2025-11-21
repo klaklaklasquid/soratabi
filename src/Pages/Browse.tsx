@@ -12,7 +12,7 @@ function Browse() {
   const [active, setActive] = useState<boolean>(true);
 
   return (
-    <section className="px-10 xl:grid xl:grid-cols-[1fr_3fr] xl:grid-rows-[min-w_min-w_4fr] xl:gap-5">
+    <section className="px-5 xl:grid xl:grid-cols-[1fr_3fr] xl:grid-rows-[min-w_min-w_4fr] xl:gap-5">
       <div className="flex gap-5 xl:col-start-1 xl:row-start-1 xl:self-start">
         <InputButton
           placeholder="Search Destinations..."
