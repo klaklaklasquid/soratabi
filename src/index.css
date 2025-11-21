@@ -5,9 +5,12 @@
   --background-color-primary-blue-50: #0d324d88;
   --background-color-secondary-blue: #004553;
   --background-color-tertiary-red: #ff6b6b;
-  --border-color-secondary-blue: #004553;
+  --background-color-primary-yellow: #ffb700;
+  --background-color-tertiary-blue: #00c6ff;
 
   --text-color-star: #ffb700;
+
+  --border-color-secondary-blue: #004553;
 }
 
 html {
@@ -18,6 +21,10 @@ html {
 }
 
 canvas + div {
+  scrollbar-width: none;
+}
+
+.scrollbar-hide {
   scrollbar-width: none;
 }
 

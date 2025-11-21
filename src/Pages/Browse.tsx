@@ -12,7 +12,7 @@ function Browse() {
   const [active, setActive] = useState<boolean>(true);
 
   return (
-    <section className="px-7 xl:grid xl:grid-cols-[1fr_3fr] xl:grid-rows-[min-w_min-w_4fr] xl:gap-5">
+    <section className="px-10 xl:grid xl:grid-cols-[1fr_3fr] xl:grid-rows-[min-w_min-w_4fr] xl:gap-5">
       <div className="flex gap-5 xl:col-start-1 xl:row-start-1 xl:self-start">
         <InputButton
           placeholder="Search Destinations..."
@@ -41,7 +41,7 @@ function Browse() {
         <FilterSettings notPage={true} />
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:row-span-3 xl:mt-0">
+      <div className="mt-6 mb-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:row-span-3 xl:mt-0">
         {active
           ? data.tours.map((tour) => (
               <TourCard key={tour.id} data={tour} type={"tours"} />

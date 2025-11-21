@@ -44,7 +44,7 @@ function InputButton<T extends string | number | undefined>({
       onChange={handleChange}
       value={inputValue}
       placeholder={placeholder}
-      className="bg-primary-blue-50 border-secondary-blue col-start-2 grow-5 rounded-4xl border-2 px-6 py-2 text-center text-lg outline-0"
+      className="bg-primary-blue-50 border-secondary-blue flex-5 rounded-[9999px] border-2 px-4 py-2 text-center text-lg outline-0"
     />
   );
 }

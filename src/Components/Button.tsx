@@ -6,7 +6,7 @@ function Button(props: ButtonProps) {
         props.style === "primary"
           ? "bg-secondary-blue"
           : "border-secondary-blue border-2"
-      }`}
+      } ${props.className}`}
     >
       {props.children}
     </button>
@@ -17,5 +17,6 @@ interface ButtonProps {
   children: string;
   style: "primary" | "secondary";
   onClick?: () => void;
+  className?: string;
 }
 export default Button;

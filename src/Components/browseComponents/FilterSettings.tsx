@@ -60,7 +60,7 @@ function FilterSettings({ notPage }: FilterSettingsProps) {
   );
 
   return (
-    <section className="flex flex-col gap-5 px-5">
+    <section className={`flex flex-col gap-5 ${!notPage && "px-10"}`}>
       {!notPage && <NavigateBackPage />}
 
       <div className="flex flex-col gap-5">
@@ -131,7 +131,7 @@ function FilterSettings({ notPage }: FilterSettingsProps) {
 
       <div className="flex flex-col gap-5">
         <h3 className="text-2xl">Start Date</h3>
-        <div className="flex gap-5">
+        <div className="flex flex-col gap-5">
           <InputButton type="date" state={minDate} setState={setMinDate} />
           <InputButton type="date" state={maxDate} setState={setMaxDate} />
         </div>

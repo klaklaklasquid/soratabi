@@ -16,7 +16,6 @@ interface ToursData {
   locations: LocationsData[];
   startDates: StartDatesData[];
   tags: TagsData[];
-  customers: number;
 }
 
 interface LocationsData {
@@ -31,6 +30,7 @@ interface LocationsData {
 interface StartDatesData {
   id: number;
   startDate: string;
+  currentCustomers: number;
 }
 
 interface TagsData {

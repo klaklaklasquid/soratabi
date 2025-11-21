@@ -58,19 +58,23 @@
       "startDates": [
         {
           "id": 1,
-          "startDate": "2026-03-10"
+          "startDate": "2026-03-10",
+          "currentCustomers": 10
         },
         {
           "id": 2,
-          "startDate": "2026-04-15"
+          "startDate": "2026-04-15",
+          "currentCustomers": 5
         },
         {
           "id": 3,
-          "startDate": "2026-06-01"
+          "startDate": "2026-06-01",
+          "currentCustomers": 7
         },
         {
           "id": 4,
-          "startDate": "2026-07-20"
+          "startDate": "2026-07-20",
+          "currentCustomers": 9
         }
       ],
       "tags": [
@@ -87,7 +91,7 @@
           "tag": "food"
         }
       ],
-      "customers": 10
+      "reviews": []
     }
   ],
   "cruises": []
