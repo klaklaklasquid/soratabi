@@ -1,18 +1,41 @@
 import { Link } from "react-router-dom";
 import { capitalizeFirst } from "../../Utils/textAlter";
+import { useMemo } from "react";
 
 function TourCard({ data, type }: TourCardProps) {
-  const lastSlots = data.maxCustomers * 0.9 < data.customers;
+  // const lastSlots = data.maxCustomers * 0.9 < data.customers;
 
-  function availabilty() {
-    if (data.customers === data.maxCustomers) {
-      return "Currently Not Available";
-    } else if (lastSlots) {
-      return "Last Slots";
-    } else {
-      return "Available";
-    }
-  }
+  // function availabilty() {
+  //   if (data.customers === data.maxCustomers) {
+  //     return "Currently Not Available";
+  //   } else if (lastSlots) {
+  //     return "Last Slots";
+  //   } else {
+  //     return "Available";
+  //   }
+  // }
+
+  const status = useMemo(() => {
+    const dates = data.startDates;
+
+    const allFull = dates.every(
+      (date) => date.currentCustomers >= data.maxCustomers,
+    );
+
+    if (allFull) return "Currently Not Available";
+
+    const anyLastSlots = dates.some(
+      (date) => date.currentCustomers >= data.maxCustomers * 0.35,
+    );
+
+    return anyLastSlots ? "Last Slots" : "Available";
+  }, [data.startDates, data.maxCustomers]);
+
+  const statusClasses = {
+    Available: "bg-secondary-blue",
+    "Last Slots": "bg-primary-yellow",
+    "Currently Not Available": "bg-tertiary-red",
+  };
 
   return (
     <div className="bg-primary-blue-50 flex h-full w-full flex-col gap-4 self-start justify-self-center rounded-2xl p-7">
@@ -28,9 +51,9 @@ function TourCard({ data, type }: TourCardProps) {
       </h2>
       <h3 className="text-xl">{data.summary}</h3>
       <h2
-        className={`${availabilty() === "Available" ? "bg-secondary-blue" : "bg-tertiary-red"} self-start rounded-[9999px] px-6 py-2`}
+        className={`${statusClasses[status]} self-start rounded-[9999px] px-6 py-2 font-semibold`}
       >
-        {availabilty()}
+        {status}
       </h2>
       <img
         className="h-1/2 object-contain"

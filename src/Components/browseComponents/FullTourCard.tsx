@@ -14,8 +14,8 @@ import gsap from "gsap";
 function FullTourCard() {
   const [view, setView] = useState<boolean>(true);
   const { id, type } = useParams();
-  // const sliderRef = useRef<HTMLDivElement | null>(null);
-  // const autoScroll = useRef<gsap.core.Tween | null>(null);
+  const sliderRef = useRef<HTMLDivElement | null>(null);
+  const autoScroll = useRef<gsap.core.Tween | null>(null);
 
   const currentTour =
     type === "tours"
@@ -25,49 +25,49 @@ function FullTourCard() {
   const reviewsData = [1, 2, 3, 4, 5];
   const fullReviewsData = [...reviewsData, ...reviewsData];
 
-  // const startAutoScroll = () => {
-  //   const slider = sliderRef.current;
-  //   if (!slider) return;
+  const startAutoScroll = () => {
+    const slider = sliderRef.current;
+    if (!slider) return;
 
-  //   const totalScrollDistance = slider.scrollWidth / 2;
+    const totalScrollDistance = slider.scrollWidth / 2;
 
-  //   if (autoScroll.current) autoScroll.current.kill();
+    if (autoScroll.current) autoScroll.current.kill();
 
-  //   autoScroll.current = gsap.to(slider, {
-  //     scrollLeft: totalScrollDistance,
-  //     duration: 30,
-  //     ease: "linear",
-  //     repeat: -1,
-  //     onRepeat: () => {
-  //       slider.scrollLeft = 0;
-  //     },
-  //   });
-  // };
+    autoScroll.current = gsap.to(slider, {
+      scrollLeft: totalScrollDistance,
+      duration: 30,
+      ease: "linear",
+      repeat: -1,
+      onRepeat: () => {
+        slider.scrollLeft = 0;
+      },
+    });
+  };
 
-  // const stopAutoScroll = () => {
-  //   if (autoScroll.current) {
-  //     autoScroll.current.pause();
-  //   }
-  // };
+  const stopAutoScroll = () => {
+    if (autoScroll.current) {
+      autoScroll.current.pause();
+    }
+  };
 
-  // const resumeAutoScroll = () => {
-  //   if (autoScroll.current) {
-  //     autoScroll.current.resume();
-  //   } else {
-  //     startAutoScroll();
-  //   }
-  // };
+  const resumeAutoScroll = () => {
+    if (autoScroll.current) {
+      autoScroll.current.resume();
+    } else {
+      startAutoScroll();
+    }
+  };
 
-  // useEffect(() => {
-  //   const timer = setTimeout(startAutoScroll, 100);
+  useEffect(() => {
+    const timer = setTimeout(startAutoScroll, 100);
 
-  //   return () => {
-  //     clearTimeout(timer);
-  //     if (autoScroll.current) {
-  //       autoScroll.current.kill();
-  //     }
-  //   };
-  // }, []);
+    return () => {
+      clearTimeout(timer);
+      if (autoScroll.current) {
+        autoScroll.current.kill();
+      }
+    };
+  }, []);
 
   return (
     <section className="mb-10 grid grid-cols-1 gap-y-5 px-10">
@@ -101,12 +101,12 @@ function FullTourCard() {
 
       {/* reviews must be placed here */}
       <div
-        // ref={sliderRef}
+        ref={sliderRef}
         className="scrollbar-hide flex w-full gap-5 overflow-x-auto"
-        // onMouseEnter={stopAutoScroll} // Pause on desktop hover
-        // onMouseLeave={resumeAutoScroll} // Resume on desktop unhover
-        // onTouchStart={stopAutoScroll} // Pause on mobile touch start
-        // onTouchEnd={resumeAutoScroll} // Resume on mobile touch end
+        onMouseEnter={stopAutoScroll}
+        onMouseLeave={resumeAutoScroll}
+        onTouchStart={stopAutoScroll}
+        onTouchEnd={resumeAutoScroll}
       >
         {fullReviewsData.map((reviewId, index) => (
           <ReviewCard key={`${reviewId}-${index}`} />
