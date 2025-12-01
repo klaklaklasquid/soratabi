@@ -1,5 +1,10 @@
 /// <reference types="vite/client" />
 
+interface TourAndCruiseDateContract {
+  tours: ToursData[];
+  cruises: ToursData[];
+}
+
 interface ToursData {
   id: number;
   name: string;
