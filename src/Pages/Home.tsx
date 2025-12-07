@@ -12,14 +12,6 @@ function Home() {
       <section className="relative flex h-[calc(100vh-4rem)] flex-col px-4 py-4 sm:px-6 sm:py-6 lg:px-12 lg:py-12">
         {/* Hero Content */}
         <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center lg:ml-[5%]">
-          {/* Brand Badge */}
-          <div className="border-tertiary-blue/30 bg-tertiary-blue/5 animate-fade-in mb-4 inline-flex w-fit items-center gap-2 rounded-full border px-4 py-2 backdrop-blur-sm sm:mb-6">
-            <div className="bg-tertiary-blue h-2 w-2 animate-pulse rounded-full"></div>
-            <span className="text-tertiary-blue text-sm font-medium tracking-wider">
-              SORATABI
-            </span>
-          </div>
-
           {/* Main Hero Text */}
           <div className="animate-slide-up mb-6 max-w-4xl sm:mb-6">
             <h1 className="mb-4 text-4xl leading-tight font-bold tracking-tight sm:mb-4 sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
