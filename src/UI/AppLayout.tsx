@@ -11,10 +11,9 @@ function AppLayout() {
 
   return (
     <>
-      <div
-        className="fixed inset-0 -z-20 h-screen w-screen bg-cover bg-top-right"
-        style={{ backgroundImage: "url('/geminiBgv2.png')" }}
-      ></div>
+      <div className="fixed inset-0 -z-20 h-screen w-screen bg-gradient-to-br from-[#0d1b2e] via-[#0d324d] to-[#004553]"></div>
+      <div className="from-tertiary-blue/20 fixed inset-0 -z-10 h-screen w-screen bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] via-transparent to-transparent"></div>
+      <div className="from-secondary-blue/15 fixed inset-0 -z-10 h-screen w-screen bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] via-transparent to-transparent"></div>
       <div className="flex h-full flex-col">
         <App>
           <ScrollToTop />
