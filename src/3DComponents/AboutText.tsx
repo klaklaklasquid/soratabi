@@ -4,6 +4,8 @@ import PlaneForText from "./PlaneForText";
 import Paint from "./Paint";
 import Star from "./Star";
 import Rainbow from "./Rainbow";
+import { Suspense } from "react";
+import Loading from "../UI/Loading";
 
 function AboutText(props: AboutTextProps) {
   // Responsive chat bubble: row on desktop, column on mobile
@@ -14,11 +16,13 @@ function AboutText(props: AboutTextProps) {
     >
       {/* 3D Model above bubble on mobile, left/right on desktop */}
       <div className="relative mb-2 flex h-24 w-24 sm:mb-0 sm:h-40 sm:w-40">
-        <Canvas camera={{ fov: 60, position: [0, 0, 2] }}>
-          <ambientLight intensity={1.2} />
-          <directionalLight position={[10, 5, 10]} intensity={0.7} />
-          <ModelRenderer model={props.model} />
-        </Canvas>
+        <Suspense fallback={<Loading />}>
+          <Canvas camera={{ fov: 60, position: [0, 0, 2] }}>
+            <ambientLight intensity={1.2} />
+            <directionalLight position={[10, 5, 10]} intensity={0.7} />
+            <ModelRenderer model={props.model} />
+          </Canvas>
+        </Suspense>
         {/* Glow behind model */}
         <div
           className={`absolute inset-0 -z-10 rounded-full ${isLeft ? "bg-tertiary-blue/20" : "bg-primary-yellow/20"} blur-2xl`}

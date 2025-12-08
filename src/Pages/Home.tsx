@@ -3,6 +3,8 @@ import Globe from "../3DComponents/Globe";
 import Plane from "../3DComponents/Plane";
 import Button from "../Components/Button";
 import { useNavigate } from "react-router-dom";
+import { Suspense } from "react";
+import Loading from "../UI/Loading";
 
 function Home() {
   const navigate = useNavigate();
@@ -78,13 +80,15 @@ function Home() {
         </div>
 
         {/* Globe Canvas - Floating on the right */}
-        <div className="absolute top-1/2 right-0 h-[600px] w-[600px] -translate-y-1/2 opacity-60 md:right-20 xl:h-[800px] xl:w-[800px]">
-          <Canvas camera={{ fov: 60, position: [0, 0, 2] }}>
-            <ambientLight intensity={1.5} />
-            <directionalLight position={[10, 5, 10]} intensity={0.5} />
-            <Globe />
-            <Plane />
-          </Canvas>
+        <div className="absolute top-1/2 right-0 flex h-[600px] w-[600px] -translate-y-1/2 opacity-60 md:right-20 xl:h-[800px] xl:w-[800px]">
+          <Suspense fallback={<Loading />}>
+            <Canvas camera={{ fov: 60, position: [0, 0, 2] }}>
+              <ambientLight intensity={1.5} />
+              <directionalLight position={[10, 5, 10]} intensity={0.5} />
+              <Globe />
+              <Plane />
+            </Canvas>
+          </Suspense>
         </div>
 
         {/* Decorative Elements */}

@@ -15,7 +15,7 @@ import { AxiosError } from "axios";
 
 function FullTourCard() {
   const [view, setView] = useState<boolean>(true);
-  const { id } = useParams(); // type deleted
+  const { id } = useParams();
   const sliderRef = useRef<HTMLDivElement | null>(null);
   const autoScroll = useRef<gsap.core.Tween | null>(null);
   const { isPending, data, error, isError } = useTourById(+id!);
