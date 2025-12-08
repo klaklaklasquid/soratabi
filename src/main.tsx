@@ -14,6 +14,7 @@ import HamburgerProvider from "./Context/HamburgerContext/HamburgerProvider.tsx"
 import FilterSettings from "./Components/browseComponents/FilterSettings.tsx";
 import FilterProvider from "./Context/FilterContext/FilterProvider.tsx";
 import FullTourCard from "./Components/browseComponents/FullTourCard.tsx";
+import ModelsProvider from "./Context/ModelsContext/ModelsProvider.tsx";
 
 export const routeConfig = [
   {
@@ -66,10 +67,12 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <FilterProvider>
-      <HamburgerProvider>
-        <RouterProvider router={router} />
-      </HamburgerProvider>
-    </FilterProvider>
+    <ModelsProvider>
+      <FilterProvider>
+        <HamburgerProvider>
+          <RouterProvider router={router} />
+        </HamburgerProvider>
+      </FilterProvider>
+    </ModelsProvider>
   </StrictMode>,
 );

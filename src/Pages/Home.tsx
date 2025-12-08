@@ -23,7 +23,9 @@ function Home() {
               <br />
               <span className="text-white">A NEW WORLD</span>
               <br />
-              <span className="text-secondary-blue">OF TRAVEL</span>
+              <span className="via-tertiary-blue block bg-linear-to-r from-white to-white bg-clip-text text-transparent">
+                OF TRAVEL
+              </span>
             </h1>
             <p className="max-w-xl text-sm text-gray-300 sm:text-base md:text-lg lg:text-xl">
               Embark on extraordinary journeys across the globe. From cultural

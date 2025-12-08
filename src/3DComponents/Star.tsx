@@ -1,11 +1,10 @@
-import { useGLTF } from "@react-three/drei";
-import { GLTF } from "three/examples/jsm/Addons.js";
 import * as THREE from "three";
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
+import { useModels } from "../Hooks/useModels";
 
 function Star() {
-  const { scene } = useGLTF("/star.glb") as GLTFResult;
+  const { star } = useModels();
   const starRef = useRef<THREE.Object3D>(null!);
 
   useFrame((state, delta) => {
@@ -14,14 +13,7 @@ function Star() {
     starRef.current.rotation.z = Math.sin(time) / 1.5;
   });
 
-  return <primitive ref={starRef} object={scene} />;
+  return <primitive ref={starRef} object={star.scene} />;
 }
-
-type GLTFResult = GLTF & {
-  nodes: Record<string, THREE.Object3D>;
-  materials: Record<string, THREE.Material>;
-};
-
-useGLTF.preload("/star.glb");
 
 export default Star;

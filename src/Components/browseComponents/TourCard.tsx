@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { capitalizeFirst } from "../../Utils/textAlter";
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
+import Loading from "../../UI/Loading";
 
 function TourCard({ data, type }: TourCardProps) {
   const status = useMemo(() => {
@@ -43,11 +44,13 @@ function TourCard({ data, type }: TourCardProps) {
       >
         {status}
       </h2>
-      <img
-        className="h-1/2 object-contain"
-        src={data.coverImage}
-        alt="image of the place"
-      />
+      <Suspense fallback={<Loading />}>
+        <img
+          className="h-1/2 object-contain"
+          src={data.coverImage}
+          alt="image of the place"
+        />
+      </Suspense>
 
       <Link
         className="bg-secondary-blue self-center justify-self-end rounded-[9999px] px-6 py-2"

@@ -1,15 +1,14 @@
-import { OrbitControls, useGLTF } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useState } from "react";
-import { GLTF } from "three/examples/jsm/Addons.js";
-import * as THREE from "three";
 import Marker from "./Marker";
 import GlobeLocationDetail from "../Components/browseComponents/GlobeLocationDetail";
+import { useModels } from "../Hooks/useModels";
 
 function GlobeMap({ locations }: GlobeMapProps) {
   const [selectedLocation, setSelectedLocation] =
     useState<LocationsData | null>(null);
-  const globe = useGLTF("/earthReallyGood.glb") as GLTFResult;
+  const { earth } = useModels();
 
   const handleMarkerClick = (data: LocationsData) => {
     setSelectedLocation(data);
@@ -31,7 +30,7 @@ function GlobeMap({ locations }: GlobeMapProps) {
 
           <group>
             <primitive
-              object={globe.scene}
+              object={earth.scene}
               scale={2.05}
               rotation={[0.54, Math.PI / 0.71, 0]}
               onPointerMissed={() => null}
@@ -68,12 +67,5 @@ function GlobeMap({ locations }: GlobeMapProps) {
 interface GlobeMapProps {
   locations: LocationsData[];
 }
-
-type GLTFResult = GLTF & {
-  nodes: Record<string, THREE.Object3D>;
-  materials: Record<string, THREE.Material>;
-};
-
-useGLTF.preload("/earthReallyGood.glb");
 
 export default GlobeMap;
