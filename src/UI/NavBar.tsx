@@ -11,7 +11,7 @@ function NavBar() {
         {/* Brand Badge */}
         <NavLink
           to="/"
-          className="group border-tertiary-blue/30 bg-tertiary-blue/5 hover:border-tertiary-blue/50 hover:bg-tertiary-blue/10 inline-flex items-center gap-2 rounded-full border px-4 py-2 backdrop-blur-sm transition-all duration-300"
+          className="border-tertiary-blue/30 bg-tertiary-blue/5 hover:border-tertiary-blue/50 hover:bg-tertiary-blue/10 inline-flex items-center gap-2 rounded-full border px-4 py-2 backdrop-blur-sm transition-all duration-300"
         >
           <div className="bg-tertiary-blue h-2 w-2 animate-pulse rounded-full"></div>
           <span className="text-tertiary-blue text-sm font-medium tracking-wider">

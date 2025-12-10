@@ -11,7 +11,7 @@ function NavigateBackPage({ className }: { className?: string }) {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={`fixed top-5 left-5 z-50 size-8 ${className}`}
+      className={`fixed top-5 left-5 z-50 size-8 cursor-pointer ${className}`}
     >
       <path
         strokeLinecap="round"
