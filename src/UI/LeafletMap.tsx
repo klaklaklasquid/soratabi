@@ -1,5 +1,6 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import "./leaflet-custom.css";
 
 export interface Location {
   id: number | string;
@@ -34,8 +35,12 @@ export default function LeafletMap({
       center={initialCenter}
       zoom={zoom}
       className={className}
-      scrollWheelZoom={true}
-      zoomControl={false}
+      scrollWheelZoom={false}
+      zoomControl={true}
+      doubleClickZoom={false}
+      dragging={true}
+      touchZoom={false}
+      keyboard={false}
     >
       <TileLayer
         url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"

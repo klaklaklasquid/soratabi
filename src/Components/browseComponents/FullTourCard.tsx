@@ -4,11 +4,10 @@ import RatingStars from "./RatingsStars";
 import TextWithToggle from "./TextWithToggle";
 import LeafletMap from "../../UI/LeafletMap";
 import Button from "../Button";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import GlobeMap from "../../3DComponents/GlobeMap";
 import StartDates from "./StartDates";
 import ReviewCard from "./ReviewCard";
-import gsap from "gsap";
 import { useTourById } from "../../Hooks/useTourById";
 import { AxiosError } from "axios";
 import Loading from "../../UI/Loading";
@@ -19,42 +18,38 @@ import Empty from "../../UI/Empty";
 function FullTourCard() {
   const [view, setView] = useState<boolean>(true);
   const { id } = useParams();
-  const sliderRef = useRef<HTMLDivElement | null>(null);
-  const autoScroll = useRef<gsap.core.Tween | null>(null);
   const { isPending, data, error, isError } = useTourById(+id!);
 
+  // Example reviews, replace with real data if available
   const reviewsData = [1, 2, 3, 4, 5];
-  const fullReviewsData = [...reviewsData, ...reviewsData];
-
-  const startAutoScroll = () => {
-    const slider = sliderRef.current;
-    if (!slider) return;
-
-    const totalScrollDistance = slider.scrollWidth / 2;
-
-    if (autoScroll.current) autoScroll.current.kill();
-
-    autoScroll.current = gsap.to(slider, {
-      scrollLeft: totalScrollDistance,
-      duration: 30,
-      ease: "linear",
-      repeat: -1,
-      onRepeat: () => {
-        slider.scrollLeft = 0;
-      },
-    });
+  const [reviewIndex, setReviewIndex] = useState(0);
+  // Swipe state
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchEndX, setTouchEndX] = useState<number | null>(null);
+  const handlePrevReview = () =>
+    setReviewIndex((i) => (i === 0 ? reviewsData.length - 1 : i - 1));
+  const handleNextReview = () =>
+    setReviewIndex((i) => (i === reviewsData.length - 1 ? 0 : i + 1));
+  // Touch handlers for swipe
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    setTouchStartX(e.touches[0].clientX);
+    setTouchEndX(null);
   };
-
-  useEffect(() => {
-    const timer = setTimeout(startAutoScroll, 100);
-
-    return () => {
-      clearTimeout(timer);
-      if (autoScroll.current) {
-        autoScroll.current.kill();
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    setTouchEndX(e.touches[0].clientX);
+  };
+  const handleTouchEnd = () => {
+    if (touchStartX !== null && touchEndX !== null) {
+      const distance = touchStartX - touchEndX;
+      if (distance > 50) {
+        handleNextReview();
+      } else if (distance < -50) {
+        handlePrevReview();
       }
-    };
-  }, []);
+    }
+    setTouchStartX(null);
+    setTouchEndX(null);
+  };
 
   if (isPending) {
     return (
@@ -76,60 +71,92 @@ function FullTourCard() {
   }
 
   return (
-    <section className="mb-10 grid grid-cols-1 gap-5 px-5 xl:grid-cols-2">
-      <main className="bg-primary-blue-50 col-start-1 flex flex-col gap-3 rounded-2xl p-5 text-lg md:grid md:grid-cols-2">
-        <div className="flex flex-wrap items-center justify-between gap-y-3 md:col-span-2">
-          <RatingStars rating={data.ratingsAverage} />
-          <h3 className="bg-secondary-blue rounded-[9999px] px-4 py-2">
-            {data.ratingsQuantity} reviews
-          </h3>
+    <section className="mx-5 mt-10 mb-10 flex flex-col gap-5 md:mx-20 lg:mx-40 xl:mx-80">
+      {/* Hero/Info Panel */}
+      <div className="relative flex flex-col gap-5 rounded-3xl bg-white/30 p-0 shadow-lg backdrop-blur-md">
+        <div className="relative h-64 w-full overflow-hidden rounded-t-3xl">
+          <img
+            src={data.coverImage}
+            alt="image"
+            className="h-full w-full object-contain"
+          />
+          <div className="bg-secondary-blue/90 absolute top-4 left-4 rounded-full px-5 py-2 text-xs font-bold text-white shadow-lg">
+            {data.tags.map((tag) => tag.tag).join(", ")}
+          </div>
         </div>
-        <h2 className="text-3xl">{data.name}</h2>
-        <h4 className="md:row-start-3">{data.summary}</h4>
-        <h2 className="text-4xl">€ {data.price}</h2>
-        <h4>{data.duration} day's</h4>
-        <img src={data.coverImage} alt="image" />
-        <div className="flex flex-wrap gap-3 md:col-span-2 md:row-start-5">
-          {data.tags.map((tag) => (
-            <h4
-              key={tag.id}
-              className="bg-secondary-blue self-center justify-self-center rounded-[9999px] px-4 py-2"
-            >
-              {tag.tag}
-            </h4>
-          ))}
+        <div className="flex flex-col gap-2 px-6 py-4">
+          <div className="flex items-center justify-between">
+            <RatingStars rating={data.ratingsAverage} />
+            <span className="bg-secondary-blue rounded-full px-4 py-2 text-white">
+              {data.ratingsQuantity} reviews
+            </span>
+          </div>
+          <h2 className="text-primary-blue text-3xl font-bold">{data.name}</h2>
+          <h4 className="text-lg text-gray-700">{data.summary}</h4>
+          <div className="flex gap-4">
+            <span className="bg-primary-yellow/80 text-primary-blue rounded-full px-4 py-1 text-lg font-bold shadow">
+              € {data.price}
+            </span>
+            <span className="bg-primary-blue/80 rounded-full px-4 py-1 text-lg font-medium text-white shadow">
+              {data.duration}-Day
+            </span>
+          </div>
+          <TextWithToggle text={data.description} />
         </div>
-
-        <TextWithToggle text={data.description} />
-      </main>
-
-      {/* reviews must be placed here */}
-      <div
-        ref={sliderRef}
-        className="scrollbar-hide flex w-full gap-5 overflow-x-auto xl:col-span-2 xl:row-start-2"
-      >
-        {fullReviewsData.map((reviewId, index) => (
-          <ReviewCard key={`${reviewId}-${index}`} />
-        ))}
       </div>
 
-      {/* map */}
-      <section className="flex flex-col gap-3 text-lg">
-        {view ? (
-          <div className="bg-primary-blue-50 rounded-2xl p-5">
-            <LeafletMap
-              className="min-h-[500px] w-full overflow-hidden rounded-xl"
-              locations={data.locations}
-              zoom={5}
+      {/* Review Carousel */}
+      <div className="flex w-full flex-col items-center gap-4">
+        <h3 className="text-primary-blue mb-2 text-xl font-semibold">
+          Reviews
+        </h3>
+        <div className="relative mx-auto flex w-full max-w-md items-center justify-center">
+          {/* Hide arrows on mobile, show on md+ */}
+          <button
+            className="bg-primary-blue/80 hover:bg-primary-blue absolute left-2 z-10 hidden h-10 w-10 items-center justify-center rounded-full text-white shadow-lg md:flex"
+            onClick={handlePrevReview}
+            aria-label="Previous review"
+          >
+            &#8592;
+          </button>
+          <div
+            className="flex w-full touch-pan-x justify-center overflow-hidden"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div
+              className="flex justify-center transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${reviewIndex * 100}%)` }}
+            >
+              {reviewsData.map((id) => (
+                <div key={id} className="flex w-full shrink-0 justify-center">
+                  <ReviewCard />
+                </div>
+              ))}
+            </div>
+          </div>
+          <button
+            className="bg-primary-blue/80 hover:bg-primary-blue absolute right-2 z-10 hidden h-10 w-10 items-center justify-center rounded-full text-white shadow-lg md:flex"
+            onClick={handleNextReview}
+            aria-label="Next review"
+          >
+            &#8594;
+          </button>
+        </div>
+        <div className="mt-2 flex justify-center gap-2">
+          {reviewsData.map((_, idx) => (
+            <span
+              key={idx}
+              className={`h-2 w-2 rounded-full transition-all duration-300 ${idx === reviewIndex ? "bg-primary-blue" : "bg-gray-300"}`}
             />
-          </div>
-        ) : (
-          <div className="min-h-[50vh]">
-            <GlobeMap locations={data.locations} />
-          </div>
-        )}
+          ))}
+        </div>
+      </div>
 
-        <div className="flex flex-col gap-5">
+      {/* Map/Globe Switcher */}
+      <section className="flex flex-col gap-3 text-lg">
+        <div className="mb-2 flex flex-col justify-center gap-3 xl:flex-row">
           <Button
             onClick={() => setView(true)}
             style={view ? "primary" : "secondary"}
@@ -143,10 +170,23 @@ function FullTourCard() {
             Globe View
           </Button>
         </div>
+        {view ? (
+          <div className="bg-primary-blue-50 rounded-2xl p-5">
+            <LeafletMap
+              className="min-h-[400px] w-full overflow-hidden rounded-xl"
+              locations={data.locations}
+              zoom={5}
+            />
+          </div>
+        ) : (
+          <div className="min-h-[40vh]">
+            <GlobeMap locations={data.locations} />
+          </div>
+        )}
       </section>
 
-      {/* startDates */}
-      <div className="flex flex-col gap-5 md:grid md:grid-cols-2 xl:col-span-2 2xl:grid-cols-4">
+      {/* Start Dates */}
+      <div className="flex flex-col gap-5">
         {data.startDates.map((date) => (
           <StartDates
             key={date.id}
