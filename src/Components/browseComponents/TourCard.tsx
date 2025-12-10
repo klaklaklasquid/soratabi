@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { capitalizeFirst } from "../../Utils/textAlter";
-import { Suspense, useMemo } from "react";
-import Loading from "../../UI/Loading";
+import { useMemo } from "react";
 
 function TourCard({ data, type }: TourCardProps) {
   const status = useMemo(() => {
@@ -25,39 +24,49 @@ function TourCard({ data, type }: TourCardProps) {
     "Last Slots": "bg-primary-yellow",
     "Currently Not Available": "bg-tertiary-red",
   };
-
   return (
-    <div className="bg-primary-blue-50 flex h-full w-full flex-col gap-4 self-start justify-self-center rounded-2xl p-7">
-      <div className="flex justify-between">
-        <h2 className="max-w-2/3 text-2xl">{data.name}</h2>
-        <h2 className="bg-secondary-blue self-start rounded-[9999px] px-6 py-2">
-          {capitalizeFirst(data.type)}
-        </h2>
+    <div
+      className="bg-primary-blue/10 relative flex h-[400px] w-full flex-col justify-end overflow-hidden rounded-3xl bg-contain bg-center bg-no-repeat shadow-xl transition-transform duration-300 hover:scale-[1.025] hover:shadow-2xl"
+      style={{ backgroundImage: `url(${data.coverImage})` }}
+    >
+      {/* Glassy info panel */}
+      {/* Type tag in image area */}
+      <span className="bg-secondary-blue/90 absolute top-4 right-4 z-20 rounded-full px-5 py-2 text-xs font-bold text-white shadow-lg">
+        {capitalizeFirst(data.type)}
+      </span>
+      <div className="relative z-10 m-5 flex flex-col gap-3 rounded-2xl bg-white/30 p-6 shadow-lg backdrop-blur-md">
+        <div className="flex items-center justify-between">
+          <h2 className="text-primary-blue text-2xl font-bold drop-shadow-sm">
+            {data.name}
+          </h2>
+        </div>
+        <div className="flex items-center gap-4">
+          <span className="bg-primary-yellow/80 text-primary-blue min-w-[100px] rounded-full px-4 py-1 text-center text-lg font-bold shadow">
+            € {data.price}
+          </span>
+          <span className="bg-primary-blue/80 min-w-[100px] rounded-full px-4 py-1 text-center text-lg font-medium text-white shadow">
+            {data.duration}-Day {capitalizeFirst(data.type)}
+          </span>
+        </div>
+        <p className="line-clamp-2 flex min-h-12 min-w-[200px] items-start text-base font-medium text-gray-800">
+          {data.summary}
+        </p>
+        <div className="mt-2 flex w-full items-center justify-between gap-2 self-end">
+          <span
+            className={`${statusClasses[status]} min-w-[120px] rounded-full px-6 py-2 text-center font-semibold text-white shadow-lg`}
+          >
+            {status}
+          </span>
+          <Link
+            className="bg-secondary-blue hover:bg-primary-blue min-w-[120px] rounded-full px-6 py-2 text-center font-semibold text-white shadow-lg transition-colors"
+            to={`/tour/${type}/${data.id}`}
+          >
+            View Details
+          </Link>
+        </div>
       </div>
-      <h1 className="text-4xl">€ {data.price}</h1>
-      <h2 className="text-2xl">
-        {data.duration}-Day {capitalizeFirst(data.type)}
-      </h2>
-      <h3 className="text-xl">{data.summary}</h3>
-      <h2
-        className={`${statusClasses[status]} self-start rounded-[9999px] px-6 py-2 font-semibold`}
-      >
-        {status}
-      </h2>
-      <Suspense fallback={<Loading />}>
-        <img
-          className="h-1/2 object-contain"
-          src={data.coverImage}
-          alt="image of the place"
-        />
-      </Suspense>
-
-      <Link
-        className="bg-secondary-blue self-center justify-self-end rounded-[9999px] px-6 py-2"
-        to={`/tour/${type}/${data.id}`}
-      >
-        Full Page
-      </Link>
+      {/* Overlay for glassy blue tint */}
+      <div className="from-primary-blue/60 via-primary-blue/10 pointer-events-none absolute inset-0 z-0 bg-linear-to-t to-transparent" />
     </div>
   );
 }

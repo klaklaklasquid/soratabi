@@ -60,7 +60,7 @@ function FilterSettings({ notPage }: FilterSettingsProps) {
 
   return (
     <section
-      className={`flex flex-col gap-8 ${!notPage ? "mt-10 mb-10 px-10" : ""}`}
+      className={`flex flex-col gap-5 ${!notPage ? "mt-10 mb-10 px-10" : ""}`}
     >
       {/* Price Filter */}
       <div className="flex flex-col gap-3 rounded-2xl border border-white/20 bg-white/30 p-4 shadow-sm backdrop-blur-md">
