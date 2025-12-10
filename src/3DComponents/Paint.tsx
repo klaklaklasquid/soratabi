@@ -1,11 +1,10 @@
-import { useGLTF } from "@react-three/drei";
-import { GLTF } from "three/examples/jsm/Addons.js";
 import * as THREE from "three";
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
+import { useModels } from "../Hooks/useModels";
 
 function Paint() {
-  const paint = useGLTF("/paint.glb") as GLTFResult;
+  const { paint } = useModels();
   const paintRef = useRef<THREE.Object3D>(null!);
 
   useFrame((state, delta) => {
@@ -23,12 +22,5 @@ function Paint() {
     ></primitive>
   );
 }
-
-type GLTFResult = GLTF & {
-  nodes: Record<string, THREE.Object3D>;
-  materials: Record<string, THREE.Material>;
-};
-
-useGLTF.preload("/paint.glb");
 
 export default Paint;

@@ -1,11 +1,10 @@
-import { useGLTF } from "@react-three/drei";
-import { GLTF } from "three/examples/jsm/Addons.js";
 import * as THREE from "three";
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
+import { useModels } from "../Hooks/useModels";
 
 function Rainbow() {
-  const { scene } = useGLTF("/rainbow.glb") as GLTFResult;
+  const { rainbow } = useModels();
   const rainbowRef = useRef<THREE.Object3D>(null!);
 
   useFrame((state) => {
@@ -16,18 +15,11 @@ function Rainbow() {
   return (
     <primitive
       ref={rainbowRef}
-      object={scene}
+      object={rainbow.scene}
       rotation={[0, 0, 0.15]}
       scale={0.75}
     />
   );
 }
-
-type GLTFResult = GLTF & {
-  nodes: Record<string, THREE.Object3D>;
-  materials: Record<string, THREE.Material>;
-};
-
-useGLTF.preload("/rainbow.glb");
 
 export default Rainbow;

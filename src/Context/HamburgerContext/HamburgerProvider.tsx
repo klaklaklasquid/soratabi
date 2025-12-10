@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useHamburgerAnimation } from "../Hooks/useHamburgerAnimation";
+import { useHamburgerAnimation } from "../../Hooks/useHamburgerAnimation";
 import { HamburgerContext } from "./HamburgerContext";
 
 function HamburgerProvider({ children }: { children: ReactNode }) {

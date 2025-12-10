@@ -1,12 +1,10 @@
-import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import { Group } from "three";
-import { GLTF } from "three/examples/jsm/Addons.js";
-import * as THREE from "three";
+import { useModels } from "../Hooks/useModels";
 
 function Globe() {
-  const globe = useGLTF("/earthReallyGood.glb") as GLTFResult;
+  const { earth } = useModels();
   const meshRef = useRef<Group>(null!);
 
   useFrame((_, delta) => {
@@ -17,16 +15,9 @@ function Globe() {
 
   return (
     <group ref={meshRef} rotation={[0.3, -1, -0.7]} position={[0, 0, -0.1]}>
-      <primitive object={globe.scene} scale={1} />
+      <primitive object={earth.scene} scale={1} />
     </group>
   );
 }
-
-type GLTFResult = GLTF & {
-  nodes: Record<string, THREE.Object3D>;
-  materials: Record<string, THREE.Material>;
-};
-
-useGLTF.preload("/earthReallyGood.glb");
 
 export default Globe;

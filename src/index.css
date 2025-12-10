@@ -2,6 +2,15 @@
 
 @theme {
   --background-color-primary-blue: #0d324d;
+  --background-color-primary-blue-50: #0d324d88;
+  --background-color-secondary-blue: #004553;
+  --background-color-tertiary-red: #ff6b6b;
+  --background-color-primary-yellow: #ffb700;
+  --background-color-tertiary-blue: #00c6ff;
+
+  --text-color-star: #ffb700;
+
+  --border-color-secondary-blue: #004553;
 }
 
 html {
@@ -11,40 +20,89 @@ html {
   background-color: #000a21;
 }
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out;
+}
+
+.animate-fade-in-delayed {
+  animation: fade-in 0.8s ease-out 0.4s both;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out 0.2s both;
+}
+
+.animate-slide-up-delayed {
+  animation: slide-up 0.8s ease-out 0.4s both;
+}
+
 canvas + div {
+  scrollbar-width: none;
+}
+
+.scrollbar-hide {
   scrollbar-width: none;
 }
 
 .message-box-right {
   border-bottom-right-radius: 0px;
   position: relative;
-
-  &::before {
-    content: "";
-    position: absolute;
-    right: -25px;
-    bottom: 0px;
-    display: block;
-    width: 30px;
-    height: 30px;
-    background-color: var(--background-color-primary-blue);
-    clip-path: polygon(0 0, 0 100%, 100% 100%);
-  }
+}
+.message-box-right::before {
+  content: "";
+  position: absolute;
+  right: -25px;
+  bottom: 0px;
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-color: var(--background-color-secondary-blue);
+  clip-path: polygon(0 0, 0 100%, 100% 100%);
 }
 
 .message-box-left {
   border-bottom-left-radius: 0px;
   position: relative;
-
-  &::before {
-    content: "";
-    position: absolute;
-    left: -25px;
-    bottom: 0px;
-    display: block;
-    width: 30px;
-    height: 30px;
-    background-color: var(--background-color-primary-blue);
-    clip-path: polygon(100% 0, 0 100%, 100% 100%);
-  }
+}
+.message-box-left::before {
+  content: "";
+  position: absolute;
+  left: -25px;
+  bottom: 0px;
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-color: var(--background-color-primary-blue);
+  clip-path: polygon(100% 0, 0 100%, 100% 100%);
 }

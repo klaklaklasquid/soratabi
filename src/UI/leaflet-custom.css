@@ -1,0 +1,39 @@
+/* Custom styles for Leaflet zoom controls */
+
+.leaflet-control-zoom {
+  background: var(--background-color-primary-blue-50, rgba(13, 50, 77, 0.53));
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  min-width: 90px;
+}
+.leaflet-control-zoom a {
+  color: var(--background-color-primary-yellow, #ffb700);
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transition:
+    background 0.2s,
+    color 0.2s;
+  margin: 0 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.leaflet-control-zoom a:hover {
+  background: var(--background-color-secondary-blue, #004553);
+  color: #fff;
+}
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+  margin: 0;
+  padding: 8px 12px;
+}

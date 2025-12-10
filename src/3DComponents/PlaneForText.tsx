@@ -1,11 +1,10 @@
-import { useGLTF } from "@react-three/drei";
-import { GLTF } from "three/examples/jsm/Addons.js";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
+import { useModels } from "../Hooks/useModels";
 
 function PlaneForText() {
-  const plane = useGLTF("/Airplane.glb") as GLTFResult;
+  const { plane } = useModels();
   const planeRef = useRef<THREE.Object3D>(null!);
 
   useFrame((state) => {
@@ -26,12 +25,5 @@ function PlaneForText() {
     />
   );
 }
-
-type GLTFResult = GLTF & {
-  nodes: Record<string, THREE.Object3D>;
-  materials: Record<string, THREE.Material>;
-};
-
-useGLTF.preload("/Airplane.glb");
 
 export default PlaneForText;

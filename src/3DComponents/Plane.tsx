@@ -1,12 +1,10 @@
-import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import { Group } from "three";
-import { GLTF } from "three/examples/jsm/Addons.js";
-import * as THREE from "three";
+import { useModels } from "../Hooks/useModels";
 
 function Plane() {
-  const plane = useGLTF("/Airplane.glb") as GLTFResult;
+  const { plane } = useModels();
   const meshRef = useRef<Group>(null!);
 
   useFrame((state) => {
@@ -34,12 +32,5 @@ function Plane() {
     </group>
   );
 }
-
-type GLTFResult = GLTF & {
-  nodes: Record<string, THREE.Object3D>;
-  materials: Record<string, THREE.Material>;
-};
-
-useGLTF.preload("/Airplane.glb");
 
 export default Plane;
