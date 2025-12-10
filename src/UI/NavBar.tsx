@@ -1,23 +1,31 @@
 import useHamburger from "../Hooks/useHamburger";
 import { NavLink } from "react-router-dom";
 import { routeConfig as appRoutes } from "../main";
+import NavigateBackPage from "../Components/NavigateBackPage";
+import { useLocationMatch } from "../Hooks/useLocationMatch";
 
 function NavBar() {
   const { barTop, barBottom, toggleAnimation } = useHamburger();
+  const showBack = useLocationMatch(["/filter-settings", "/tour/:type/:id"]);
 
   return (
     <header className="fixed top-0 right-0 left-0 z-50 px-4 py-4 sm:px-6 lg:px-12">
       <nav className="flex w-full items-center justify-between">
-        {/* Brand Badge */}
-        <NavLink
-          to="/"
-          className="border-tertiary-blue/30 bg-tertiary-blue/5 hover:border-tertiary-blue/50 hover:bg-tertiary-blue/10 inline-flex items-center gap-2 rounded-full border px-4 py-2 backdrop-blur-sm transition-all duration-300"
-        >
-          <div className="bg-tertiary-blue h-2 w-2 animate-pulse rounded-full"></div>
-          <span className="text-tertiary-blue text-sm font-medium tracking-wider">
-            SORATABI
-          </span>
-        </NavLink>
+        {/* Left: Back button and Brand together */}
+        <div className="flex items-center gap-2">
+          {showBack && (
+            <NavigateBackPage className="static top-0 left-0 size-8" />
+          )}
+          <NavLink
+            to="/"
+            className={`group border-tertiary-blue/30 bg-tertiary-blue/5 hover:border-tertiary-blue/50 hover:bg-tertiary-blue/10 inline-flex items-center gap-2 rounded-full border px-4 py-2 backdrop-blur-sm transition-all duration-300 ${showBack ? "ml-2" : ""}`}
+          >
+            <div className="bg-tertiary-blue h-2 w-2 animate-pulse rounded-full"></div>
+            <span className="text-tertiary-blue text-sm font-medium tracking-wider">
+              SORATABI
+            </span>
+          </NavLink>
+        </div>
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2 py-2 backdrop-blur-md md:flex">

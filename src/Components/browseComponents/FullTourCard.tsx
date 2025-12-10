@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import NavigateBackPage from "../NavigateBackPage";
 
 import RatingStars from "./RatingsStars";
 import TextWithToggle from "./TextWithToggle";
@@ -71,8 +70,6 @@ function FullTourCard() {
 
   return (
     <section className="mb-10 grid grid-cols-1 gap-5 px-5 xl:grid-cols-2">
-      <NavigateBackPage />
-
       <main className="bg-primary-blue-50 col-start-1 flex flex-col gap-3 rounded-2xl p-5 text-lg md:grid md:grid-cols-2">
         <div className="flex flex-wrap items-center justify-between gap-y-3 md:col-span-2">
           <RatingStars rating={data.ratingsAverage} />

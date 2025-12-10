@@ -2,7 +2,6 @@ import InputButton from "../InputButton";
 import data from "../../static/testData.json";
 import { useFilter } from "../../Hooks/useFilter";
 import Button from "../Button";
-import NavigateBackPage from "../NavigateBackPage";
 
 function FilterSettings({ notPage }: FilterSettingsProps) {
   const {
@@ -63,8 +62,6 @@ function FilterSettings({ notPage }: FilterSettingsProps) {
     <section
       className={`flex flex-col gap-8 ${!notPage ? "mt-10 mb-10 px-10" : ""}`}
     >
-      {!notPage && <NavigateBackPage className="" />}
-
       {/* Price Filter */}
       <div className="flex flex-col gap-3 rounded-2xl border border-white/20 bg-white/30 p-4 shadow-sm backdrop-blur-md">
         <div className="mb-2 flex items-center gap-2">
