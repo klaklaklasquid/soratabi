@@ -11,6 +11,10 @@ import ReviewCard from "./ReviewCard";
 import gsap from "gsap";
 import { useTourById } from "../../Hooks/useTourById";
 import { AxiosError } from "axios";
+import Loading from "../../UI/Loading";
+import NotFound from "../../UI/NotFound";
+import ErrorMessage from "../../UI/ErrorMessage";
+import Empty from "../../UI/Empty";
 
 function FullTourCard() {
   const [view, setView] = useState<boolean>(true);
@@ -53,19 +57,22 @@ function FullTourCard() {
   }, []);
 
   if (isPending) {
-    // implement a loading screen
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <Loading />
+      </div>
+    );
   }
 
   if (isError) {
     if (error instanceof AxiosError && error.response?.status === 404) {
-      // return a not found
+      return <NotFound />;
     }
-    //  return a errormessage
+    return <ErrorMessage message={error?.message} />;
   }
 
   if (!data) {
-    // return empty page
-    return null;
+    return <Empty />;
   }
 
   return (

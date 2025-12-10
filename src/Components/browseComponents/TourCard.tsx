@@ -26,11 +26,10 @@ function TourCard({ data, type }: TourCardProps) {
   };
   return (
     <div
-      className="bg-primary-blue/10 relative flex h-[400px] w-full flex-col justify-end overflow-hidden rounded-3xl bg-contain bg-center bg-no-repeat shadow-xl transition-transform duration-300 hover:scale-[1.025] hover:shadow-2xl"
+      className="bg-primary-blue/10 border-secondary-blue relative flex h-[400px] w-full flex-col justify-end overflow-hidden rounded-3xl border bg-contain bg-center bg-no-repeat shadow-xl transition-transform duration-300 hover:scale-[1.025] hover:shadow-2xl"
       style={{ backgroundImage: `url(${data.coverImage})` }}
     >
       {/* Glassy info panel */}
-      {/* Type tag in image area */}
       <span className="bg-secondary-blue/90 absolute top-4 right-4 z-20 rounded-full px-5 py-2 text-xs font-bold text-white shadow-lg">
         {capitalizeFirst(data.type)}
       </span>
