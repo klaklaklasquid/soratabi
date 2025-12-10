@@ -51,6 +51,12 @@ function FullTourCard() {
     setTouchEndX(null);
   };
 
+  function getReviewsPerView() {
+    if (window.innerWidth >= 1280) return 3; // xl and up
+    if (window.innerWidth >= 768) return 2; // md and up
+    return 1; // mobile
+  }
+
   if (isPending) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
@@ -110,7 +116,7 @@ function FullTourCard() {
         <h3 className="text-primary-blue mb-2 text-xl font-semibold">
           Reviews
         </h3>
-        <div className="relative mx-auto flex w-full max-w-md items-center justify-center">
+        <div className="relative mx-auto flex w-full max-w-md items-center justify-center md:max-w-2xl lg:max-w-4xl">
           {/* Hide arrows on mobile, show on md+ */}
           <button
             className="bg-primary-blue/80 hover:bg-primary-blue absolute left-2 z-10 hidden h-10 w-10 items-center justify-center rounded-full text-white shadow-lg md:flex"
@@ -127,10 +133,17 @@ function FullTourCard() {
           >
             <div
               className="flex justify-center transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${reviewIndex * 100}%)` }}
+              style={{
+                transform: `translateX(-${reviewIndex * (100 / getReviewsPerView())}%)`,
+                width: `${reviewsData.length * (100 / getReviewsPerView())}%`,
+              }}
             >
               {reviewsData.map((id) => (
-                <div key={id} className="flex w-full shrink-0 justify-center">
+                <div
+                  key={id}
+                  className="flex shrink-0 justify-center"
+                  style={{ width: `calc(100% / ${getReviewsPerView()})` }}
+                >
                   <ReviewCard />
                 </div>
               ))}
@@ -144,11 +157,16 @@ function FullTourCard() {
             &#8594;
           </button>
         </div>
+
         <div className="mt-2 flex justify-center gap-2">
           {reviewsData.map((_, idx) => (
             <span
               key={idx}
-              className={`h-2 w-2 rounded-full transition-all duration-300 ${idx === reviewIndex ? "bg-primary-blue" : "bg-gray-300"}`}
+              className={`h-2 w-2 rounded-full transition-all duration-300 ${
+                idx === reviewIndex
+                  ? "bg-primary-yellow border-primary-blue border-2 shadow-lg"
+                  : "bg-gray-300"
+              } `}
             />
           ))}
         </div>
