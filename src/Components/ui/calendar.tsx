@@ -173,6 +173,96 @@ function Calendar({
   );
 }
 
+// function CalendarDayButton({
+//   className,
+//   day,
+//   modifiers,
+//   ...props
+// }: React.ComponentProps<typeof DayButton>) {
+//   const defaultClassNames = getDefaultClassNames();
+
+//   const ref = React.useRef<HTMLButtonElement>(null);
+//   React.useEffect(() => {
+//     if (modifiers.focused) ref.current?.focus();
+//   }, [modifiers.focused]);
+
+//   return (
+//     <Button
+//       ref={ref}
+//       variant="ghost"
+//       size="icon"
+//       data-day={day.date.toLocaleDateString()}
+//       data-selected-single={
+//         modifiers.selected &&
+//         !modifiers.range_start &&
+//         !modifiers.range_end &&
+//         !modifiers.range_middle
+//       }
+//       data-range-start={modifiers.range_start}
+//       data-range-end={modifiers.range_end}
+//       data-range-middle={modifiers.range_middle}
+//       className={cn(
+//         "data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground data-[range-middle=true]:bg-accent data-[range-middle=true]:text-accent-foreground data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 dark:hover:text-accent-foreground flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] data-[range-end=true]:rounded-md data-[range-end=true]:rounded-r-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md data-[range-start=true]:rounded-l-md [&>span]:text-xs [&>span]:opacity-70",
+//         defaultClassNames.day,
+//         className,
+//       )}
+//       {...props}
+//     />
+//   );
+// }
+
+// function CalendarDayButton({
+//   className,
+//   day,
+//   modifiers,
+//   ...props
+// }: React.ComponentProps<typeof DayButton>) {
+//   const defaultClassNames = getDefaultClassNames();
+
+//   const ref = React.useRef<HTMLButtonElement>(null);
+//   React.useEffect(() => {
+//     if (modifiers.focused) ref.current?.focus();
+//   }, [modifiers.focused]);
+
+//   // Determine if the day is part of the selected range or is a single selection.
+//   const isSelectedRange =
+//     modifiers.range_start ||
+//     modifiers.range_end ||
+//     modifiers.range_middle ||
+//     (modifiers.selected &&
+//       !modifiers.range_start &&
+//       !modifiers.range_end &&
+//       !modifiers.range_middle);
+
+//   return (
+//     <Button
+//       ref={ref}
+//       // CRITICAL FIX: Use "default" variant for selected days to apply background color
+//       // Otherwise, it remains "ghost" and shows no background.
+//       variant={isSelectedRange ? "default" : "ghost"}
+//       size="icon"
+//       data-day={day.date.toLocaleDateString()}
+//       data-selected-single={
+//         modifiers.selected &&
+//         !modifiers.range_start &&
+//         !modifiers.range_end &&
+//         !modifiers.range_middle
+//       }
+//       data-range-start={modifiers.range_start}
+//       data-range-end={modifiers.range_end}
+//       data-range-middle={modifiers.range_middle}
+//       className={cn(
+//         "data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground data-[range-middle=true]:bg-accent data-[range-middle=true]:text-accent-foreground data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 dark:hover:text-accent-foreground flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] data-[range-end=true]:rounded-md data-[range-end=true]:rounded-r-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md data-[range-start=true]:rounded-l-md [&>span]:text-xs [&>span]:opacity-70",
+//         defaultClassNames.day,
+//         className,
+//       )}
+//       {...props}
+//     />
+//   );
+// }
+
+// *** REPLACE YOUR ENTIRE CalendarDayButton FUNCTION WITH THIS ***
+
 function CalendarDayButton({
   className,
   day,
@@ -186,22 +276,50 @@ function CalendarDayButton({
     if (modifiers.focused) ref.current?.focus();
   }, [modifiers.focused]);
 
+  // Determine the selection state
+  const isSelectedSingle =
+    modifiers.selected &&
+    !modifiers.range_start &&
+    !modifiers.range_end &&
+    !modifiers.range_middle;
+  const isRangeMiddle = modifiers.range_middle;
+  const isRangeStartOrEnd = modifiers.range_start || modifiers.range_end;
+
+  // Conditionally determine the inline style for background and color
+  let inlineStyles = {};
+
+  if (isSelectedSingle || isRangeStartOrEnd) {
+    // This targets single selections and the start/end points of a range (usually 'primary' color)
+    inlineStyles = {
+      backgroundColor: "var(--primary) !important",
+      color: "var(--primary-foreground) !important",
+    };
+  } else if (isRangeMiddle) {
+    // This targets the middle of the range (usually 'accent' color)
+    inlineStyles = {
+      backgroundColor: "var(--accent) !important",
+      color: "var(--accent-foreground) !important",
+    };
+  }
+
+  // --- We still include the conditional variant from the previous fix as a best practice ---
+  const isSelected = isSelectedSingle || isRangeMiddle || isRangeStartOrEnd;
+
   return (
     <Button
       ref={ref}
-      variant="ghost"
+      // Keep the conditional variant for base styling if inline styles fail
+      variant={isSelected ? "default" : "ghost"}
       size="icon"
+      // *** THE INLINE STYLE FIX IS HERE ***
+      style={inlineStyles}
       data-day={day.date.toLocaleDateString()}
-      data-selected-single={
-        modifiers.selected &&
-        !modifiers.range_start &&
-        !modifiers.range_end &&
-        !modifiers.range_middle
-      }
+      data-selected-single={isSelectedSingle}
       data-range-start={modifiers.range_start}
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}
       className={cn(
+        // Keep all your original className definitions for rounded corners, focus, etc.
         "data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground data-[range-middle=true]:bg-accent data-[range-middle=true]:text-accent-foreground data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 dark:hover:text-accent-foreground flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] data-[range-end=true]:rounded-md data-[range-end=true]:rounded-r-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md data-[range-start=true]:rounded-l-md [&>span]:text-xs [&>span]:opacity-70",
         defaultClassNames.day,
         className,
@@ -210,5 +328,4 @@ function CalendarDayButton({
     />
   );
 }
-
 export { Calendar, CalendarDayButton };
