@@ -15,6 +15,7 @@ import FilterSettings from "./Components/browseComponents/FilterSettings.tsx";
 import FilterProvider from "./Context/FilterContext/FilterProvider.tsx";
 import FullTourCard from "./Components/browseComponents/FullTourCard.tsx";
 import ModelsProvider from "./Context/ModelsContext/ModelsProvider.tsx";
+import NotFound from "./UI/NotFound.tsx";
 
 export const routeConfig = [
   {
@@ -54,6 +55,12 @@ export const routeConfig = [
   {
     path: "/tour/:type/:id",
     element: <FullTourCard />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
+    name: "NOT_FOUND",
+    inNav: false,
   },
 ];
 
