@@ -1,5 +1,4 @@
 import InputButton from "../InputButton";
-import data from "../../static/testData.json";
 import { useFilter } from "../../Hooks/useFilter";
 import Button from "../Button";
 
@@ -24,43 +23,9 @@ function FilterSettings({ notPage }: FilterSettingsProps) {
     handleResetState,
   } = useFilter();
 
-  const minPricePlaceholder = Math.min(
-    ...data.tours.map((tour) => tour.price),
-    ...data.cruises.map((cruise) => cruise.price),
-  );
-
-  const maxPricePlaceholder = Math.max(
-    ...data.tours.map((tour) => tour.price),
-    ...data.cruises.map((cruise) => cruise.price),
-  );
-
-  const minDurationPlaceholder = Math.min(
-    ...data.tours.map((tour) => tour.duration),
-    ...data.cruises.map((cruise) => cruise.duration),
-  );
-
-  const maxDurationPlaceholder = Math.max(
-    ...data.tours.map((tour) => tour.duration),
-    ...data.cruises.map((cruise) => cruise.duration),
-  );
-
-  const minRatingsAveragePlaceholder = Math.floor(
-    Math.min(
-      ...data.tours.map((tour) => tour.ratingsAverage),
-      ...data.cruises.map((cruise) => cruise.ratingsAverage),
-    ),
-  );
-
-  const maxRatingsAveragePlaceholder = Math.ceil(
-    Math.max(
-      ...data.tours.map((tour) => tour.ratingsAverage),
-      ...data.cruises.map((cruise) => cruise.ratingsAverage),
-    ),
-  );
-
   return (
     <section
-      className={`flex flex-col gap-5 ${!notPage ? "mt-10 mb-10 px-10" : ""}`}
+      className={`flex flex-col gap-5 ${!notPage ? "mt-10 mb-10 px-5" : ""}`}
     >
       {/* Price Filter */}
       <div className="flex flex-col gap-3 rounded-2xl border border-white/20 bg-white/30 p-4 shadow-sm backdrop-blur-md">
@@ -84,20 +49,16 @@ function FilterSettings({ notPage }: FilterSettingsProps) {
           </span>
           <h3 className="text-lg font-semibold text-white">Price</h3>
         </div>
-        <div className="flex gap-3">
+        <div className="flex w-full gap-3">
           <InputButton<number | undefined>
             type="number"
-            placeholder={`min ${minPricePlaceholder}`}
-            min={minPricePlaceholder}
-            max={maxPricePlaceholder - 1}
+            placeholder={`min`}
             state={minPrice}
             setState={setMinPrice}
           />
           <InputButton<number | undefined>
             type="number"
-            placeholder={`max ${maxPricePlaceholder}`}
-            min={minPricePlaceholder + 1}
-            max={maxPricePlaceholder}
+            placeholder={`max`}
             state={maxPrice}
             setState={setMaxPrice}
           />
@@ -129,17 +90,13 @@ function FilterSettings({ notPage }: FilterSettingsProps) {
         <div className="flex gap-3">
           <InputButton<number | undefined>
             type="number"
-            placeholder={`min ${minDurationPlaceholder}`}
-            min={minDurationPlaceholder}
-            max={maxDurationPlaceholder - 1}
+            placeholder={`min`}
             state={minDuration}
             setState={setMinDuration}
           />
           <InputButton<number | undefined>
             type="number"
-            placeholder={`max ${maxDurationPlaceholder}`}
-            min={maxDurationPlaceholder + 1}
-            max={maxDurationPlaceholder}
+            placeholder={`max`}
             state={maxDuration}
             setState={setMaxDuration}
           />
@@ -171,17 +128,13 @@ function FilterSettings({ notPage }: FilterSettingsProps) {
         <div className="flex gap-3">
           <InputButton<number | undefined>
             type="number"
-            placeholder={`min ${minRatingsAveragePlaceholder}`}
-            min={minRatingsAveragePlaceholder}
-            max={maxRatingsAveragePlaceholder - 1}
+            placeholder={`min`}
             state={minRatingAverage}
             setState={setMinRatingAverage}
           />
           <InputButton<number | undefined>
             type="number"
-            placeholder={`max ${maxRatingsAveragePlaceholder}`}
-            min={maxRatingsAveragePlaceholder + 1}
-            max={maxRatingsAveragePlaceholder}
+            placeholder={`max`}
             state={maxRatingAverage}
             setState={setMaxRatingAverage}
           />
