@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
-function FilterButton() {
+function FilterButton({ className }: { className?: string }) {
   return (
     <Link
       to={"/filter-settings"}
-      className="bg-primary-blue-50 border-secondary-blue flex min-h-12 min-w-12 grow items-center justify-center rounded-[9999px] border-2 xl:hidden"
+      className={`bg-primary-blue-50 border-secondary-blue flex min-h-12 max-w-12 grow items-center justify-center rounded-[9999px] border-2 xl:hidden ${className}`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

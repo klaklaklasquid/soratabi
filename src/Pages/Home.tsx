@@ -5,6 +5,7 @@ import Button from "../Components/Button";
 import { useNavigate } from "react-router-dom";
 import { Suspense } from "react";
 import Loading from "../UI/Loading";
+import BlurSpot from "../UI/BlurSpot";
 
 function Home() {
   const navigate = useNavigate();
@@ -94,8 +95,16 @@ function Home() {
         </div>
 
         {/* Decorative Elements */}
-        <div className="bg-tertiary-blue/20 pointer-events-none absolute top-1/4 left-0 h-48 w-48 rounded-full blur-[80px] sm:h-72 sm:w-72 sm:blur-[100px]"></div>
-        <div className="bg-secondary-blue/20 pointer-events-none absolute right-0 bottom-1/4 h-64 w-64 rounded-full blur-[100px] sm:right-1/4 sm:h-96 sm:w-96 sm:blur-[120px]"></div>
+        <BlurSpot
+          color="bg-tertiary-blue/20"
+          className="top-1/4 left-0 h-48 w-48 sm:h-72 sm:w-72"
+          blur="blur-[80px] sm:blur-[100px]"
+        />
+        <BlurSpot
+          color="bg-secondary-blue/20"
+          className="right-0 bottom-1/4 h-64 w-64 sm:right-1/4 sm:h-96 sm:w-96"
+          blur="blur-[100px] sm:blur-[120px]"
+        />
       </section>
 
       {/* Stats Section - Mobile only (below fold) */}

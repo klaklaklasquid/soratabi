@@ -50,7 +50,7 @@ function TourCard({ data, type }: TourCardProps) {
         <p className="line-clamp-2 flex min-h-12 min-w-[200px] items-start text-base font-medium text-gray-800">
           {data.summary}
         </p>
-        <div className="mt-2 flex w-full items-center justify-between gap-2 self-end">
+        <div className="mt-2 flex w-full flex-col items-center justify-between gap-4 self-end lg:flex-row">
           <span
             className={`${statusClasses[status]} min-w-[120px] rounded-full px-6 py-2 text-center font-semibold text-white shadow-lg`}
           >

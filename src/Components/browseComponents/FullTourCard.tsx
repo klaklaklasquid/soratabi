@@ -5,6 +5,8 @@ import TextWithToggle from "./TextWithToggle";
 import LeafletMap from "../../UI/LeafletMap";
 import Button from "../Button";
 import { useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import GlobeMap from "../../3DComponents/GlobeMap";
 import StartDates from "./StartDates";
 import ReviewCard from "./ReviewCard";
@@ -14,6 +16,7 @@ import Loading from "../../UI/Loading";
 import NotFound from "../../UI/NotFound";
 import ErrorMessage from "../../UI/ErrorMessage";
 import Empty from "../../UI/Empty";
+import BlurSpot from "../../UI/BlurSpot";
 
 function FullTourCard() {
   const [view, setView] = useState<boolean>(true);
@@ -21,41 +24,10 @@ function FullTourCard() {
   const { isPending, data, error, isError } = useTourById(+id!);
 
   // Example reviews, replace with real data if available
-  const reviewsData = [1, 2, 3, 4, 5];
-  const [reviewIndex, setReviewIndex] = useState(0);
-  // Swipe state
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-  const [touchEndX, setTouchEndX] = useState<number | null>(null);
-  const handlePrevReview = () =>
-    setReviewIndex((i) => (i === 0 ? reviewsData.length - 1 : i - 1));
-  const handleNextReview = () =>
-    setReviewIndex((i) => (i === reviewsData.length - 1 ? 0 : i + 1));
-  // Touch handlers for swipe
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    setTouchStartX(e.touches[0].clientX);
-    setTouchEndX(null);
-  };
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    setTouchEndX(e.touches[0].clientX);
-  };
-  const handleTouchEnd = () => {
-    if (touchStartX !== null && touchEndX !== null) {
-      const distance = touchStartX - touchEndX;
-      if (distance > 50) {
-        handleNextReview();
-      } else if (distance < -50) {
-        handlePrevReview();
-      }
-    }
-    setTouchStartX(null);
-    setTouchEndX(null);
-  };
-
-  function getReviewsPerView() {
-    if (window.innerWidth >= 1280) return 3; // xl and up
-    if (window.innerWidth >= 768) return 2; // md and up
-    return 1; // mobile
-  }
+  const reviewsData = [1, 2, 3, 4, 5, 6, 7];
+  const [emblaRef] = useEmblaCarousel({ loop: true, startIndex: 2 }, [
+    Autoplay({ delay: 3500 }),
+  ]);
 
   if (isPending) {
     return (
@@ -78,20 +50,11 @@ function FullTourCard() {
 
   return (
     <section className="mx-5 mt-10 mb-10 flex flex-col gap-5 md:mx-20 lg:mx-40 xl:mx-80">
-      {/* Hero/Info Panel */}
-      <div className="relative flex flex-col gap-5 rounded-3xl bg-white/30 p-0 shadow-lg backdrop-blur-md">
-        <div className="relative h-64 w-full overflow-hidden rounded-t-3xl">
-          <img
-            src={data.coverImage}
-            alt="image"
-            className="h-full w-full object-contain"
-          />
-          <div className="bg-secondary-blue/90 absolute top-4 left-4 rounded-full px-5 py-2 text-xs font-bold text-white shadow-lg">
-            {data.tags.map((tag) => tag.tag).join(", ")}
-          </div>
-        </div>
-        <div className="flex flex-col gap-2 px-6 py-4">
-          <div className="flex items-center justify-between">
+      {/* Hero/Info Panel - image as right-side background */}
+      <div className="relative flex min-h-80 flex-col gap-0 overflow-hidden rounded-3xl bg-white/30 shadow-lg backdrop-blur-md md:flex-row">
+        {/* Info Panel Left */}
+        <div className="z-10 flex flex-col gap-2 px-6 py-8 md:w-1/2">
+          <div className="mb-2 flex items-center justify-between">
             <RatingStars rating={data.ratingsAverage} />
             <span className="bg-secondary-blue rounded-full px-4 py-2 text-white">
               {data.ratingsQuantity} reviews
@@ -99,7 +62,7 @@ function FullTourCard() {
           </div>
           <h2 className="text-primary-blue text-3xl font-bold">{data.name}</h2>
           <h4 className="text-lg text-gray-700">{data.summary}</h4>
-          <div className="flex gap-4">
+          <div className="my-2 flex gap-4">
             <span className="bg-primary-yellow/80 text-primary-blue rounded-full px-4 py-1 text-lg font-bold shadow">
               € {data.price}
             </span>
@@ -109,66 +72,38 @@ function FullTourCard() {
           </div>
           <TextWithToggle text={data.description} />
         </div>
+        {/* Image Right */}
+        <div
+          className="flex min-h-[220px] w-full items-end justify-end md:min-h-8 md:w-1/2"
+          style={{
+            backgroundImage: `url(${data.coverImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center 15%",
+            backgroundRepeat: "no-repeat",
+          }}
+        >
+          <div className="bg-secondary-blue/90 absolute right-4 bottom-4 rounded-full px-5 py-2 text-xs font-bold text-white shadow-lg">
+            {data.tags.map((tag) => tag.tag).join(", ")}
+          </div>
+        </div>
       </div>
 
-      {/* Review Carousel */}
-      <div className="flex w-full flex-col items-center gap-4">
+      {/* Review Carousel - shadcn Card + Embla */}
+      <div className="flex w-full flex-col items-center gap-4 overflow-hidden">
         <h3 className="text-primary-blue mb-2 text-xl font-semibold">
           Reviews
         </h3>
-        <div className="relative mx-auto flex w-full max-w-md items-center justify-center md:max-w-2xl lg:max-w-4xl">
-          {/* Hide arrows on mobile, show on md+ */}
-          <button
-            className="bg-primary-blue/80 hover:bg-primary-blue absolute left-2 z-10 hidden h-10 w-10 items-center justify-center rounded-full text-white shadow-lg md:flex"
-            onClick={handlePrevReview}
-            aria-label="Previous review"
-          >
-            &#8592;
-          </button>
+        <div className="relative mx-auto w-full max-w-md md:max-w-2xl lg:max-w-3xl xl:max-w-4xl">
           <div
-            className="flex w-full touch-pan-x justify-center overflow-hidden"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+            className="overflow-visible rounded-3xl backdrop-blur-md"
+            ref={emblaRef}
           >
-            <div
-              className="flex justify-center transition-transform duration-500 ease-in-out"
-              style={{
-                transform: `translateX(-${reviewIndex * (100 / getReviewsPerView())}%)`,
-                width: `${reviewsData.length * (100 / getReviewsPerView())}%`,
-              }}
-            >
+            <div className="flex gap-6 px-4 py-6">
               {reviewsData.map((id) => (
-                <div
-                  key={id}
-                  className="flex shrink-0 justify-center"
-                  style={{ width: `calc(100% / ${getReviewsPerView()})` }}
-                >
-                  <ReviewCard />
-                </div>
+                <ReviewCard key={id} />
               ))}
             </div>
           </div>
-          <button
-            className="bg-primary-blue/80 hover:bg-primary-blue absolute right-2 z-10 hidden h-10 w-10 items-center justify-center rounded-full text-white shadow-lg md:flex"
-            onClick={handleNextReview}
-            aria-label="Next review"
-          >
-            &#8594;
-          </button>
-        </div>
-
-        <div className="mt-2 flex justify-center gap-2">
-          {reviewsData.map((_, idx) => (
-            <span
-              key={idx}
-              className={`h-2 w-2 rounded-full transition-all duration-300 ${
-                idx === reviewIndex
-                  ? "bg-primary-yellow border-primary-blue border-2 shadow-lg"
-                  : "bg-gray-300"
-              } `}
-            />
-          ))}
         </div>
       </div>
 
@@ -213,6 +148,18 @@ function FullTourCard() {
           />
         ))}
       </div>
+
+      {/* Decorative blurred spots - using BlurSpot component */}
+      <BlurSpot
+        color="bg-tertiary-blue/20"
+        className="top-1/4 left-0 h-48 w-48 sm:h-72 sm:w-72"
+        blur="blur-[80px] sm:blur-[100px]"
+      />
+      <BlurSpot
+        color="bg-secondary-blue/20"
+        className="right-0 bottom-1/4 h-64 w-64 sm:right-1/4 sm:h-96 sm:w-96"
+        blur="blur-[100px] sm:blur-[120px]"
+      />
     </section>
   );
 }
