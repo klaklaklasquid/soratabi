@@ -16,6 +16,7 @@ import FilterProvider from "./Context/FilterContext/FilterProvider.tsx";
 import FullTourCard from "./Components/browseComponents/FullTourCard.tsx";
 import ModelsProvider from "./Context/ModelsContext/ModelsProvider.tsx";
 import NotFound from "./UI/NotFound.tsx";
+import LoginPage from "./Pages/LoginPage.tsx";
 
 export const routeConfig = [
   {
@@ -47,6 +48,10 @@ export const routeConfig = [
     element: <Account />,
     name: "ACCOUNT",
     inNav: true,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
   },
   {
     path: "/filter-settings",
