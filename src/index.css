@@ -19,6 +19,11 @@ html {
   color: #fafafa;
   scrollbar-width: none;
   background-color: #000a21;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 @keyframes fade-in {
