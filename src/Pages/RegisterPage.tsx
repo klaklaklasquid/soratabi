@@ -60,7 +60,7 @@ function RegisterPage() {
   };
 
   return (
-    <div className="relative flex min-h-screen w-full items-start justify-center overflow-x-hidden px-5 pt-24 pb-10 sm:items-center sm:px-6 sm:py-20 lg:px-12">
+    <section className="grid h-[calc(100svh-4rem)] w-screen place-items-center px-5">
       {/* Background blur spots */}
       <BlurSpot
         color="bg-tertiary-blue/30"
@@ -305,7 +305,7 @@ function RegisterPage() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
