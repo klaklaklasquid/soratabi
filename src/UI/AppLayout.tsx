@@ -14,7 +14,7 @@ function AppLayout() {
       <div className="via-primary-blue to-secondary-blue fixed inset-0 -z-20 h-screen w-screen bg-linear-to-br from-[#0d1b2e]"></div>
       <div className="from-tertiary-blue/20 fixed inset-0 -z-10 h-screen w-screen bg-[radial-gradient(ellipse_at_top_right,var(--tw-gradient-stops))] via-transparent to-transparent"></div>
       <div className="from-secondary-blue/15 fixed inset-0 -z-10 h-screen w-screen bg-[radial-gradient(ellipse_at_bottom_left,var(--tw-gradient-stops))] via-transparent to-transparent"></div>
-      <div className="flex h-full flex-col">
+      <div className="flex h-full flex-col overflow-x-hidden">
         <App>
           <ScrollToTop />
           <NavBar />
