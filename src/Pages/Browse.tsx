@@ -43,7 +43,7 @@ function Browse() {
   return (
     <section className="mt-5 px-5 xl:grid xl:grid-cols-[1fr_3fr] xl:grid-rows-[min-w_min-w_4fr] xl:gap-5 xl:px-12">
       <div className="grid lg:gap-y-5">
-        <div className="flex gap-5 xl:col-start-1 xl:row-start-1 xl:self-start">
+        <div className="flex gap-3 xl:col-start-1 xl:row-start-1 xl:self-start">
           <InputButton
             placeholder="Search Destinations..."
             state={search}
@@ -52,19 +52,27 @@ function Browse() {
           <FilterButton />
         </div>
 
-        <div className="mt-5 flex gap-5 xl:col-start-1 xl:row-start-2 xl:mt-0 xl:self-start">
-          <div
+        <div className="mt-5 flex gap-2 rounded-full border border-white/10 bg-white/5 p-1.5 backdrop-blur-md xl:col-start-1 xl:row-start-2 xl:mt-0 xl:self-start">
+          <button
             onClick={() => setActive(true)}
-            className={`${active ? "bg-secondary-blue" : "bg-primary-blue-50 border-secondary-blue border-2"} col-start-2 flex h-12 w-38 grow cursor-pointer items-center justify-center rounded-4xl`}
+            className={`flex h-10 flex-1 items-center justify-center rounded-full px-6 text-sm font-medium transition-all duration-300 ${
+              active
+                ? "bg-secondary-blue shadow-secondary-blue/50 text-white shadow-lg"
+                : "text-gray-300 hover:bg-white/10 hover:text-white"
+            }`}
           >
-            <h2>Tours</h2>
-          </div>
-          <div
+            Tours
+          </button>
+          <button
             onClick={() => setActive(false)}
-            className={`${!active ? "bg-secondary-blue" : "bg-primary-blue-50 border-secondary-blue border-2"} flex h-12 w-38 grow cursor-pointer items-center justify-center rounded-4xl`}
+            className={`flex h-10 flex-1 items-center justify-center rounded-full px-6 text-sm font-medium transition-all duration-300 ${
+              !active
+                ? "bg-secondary-blue shadow-secondary-blue/50 text-white shadow-lg"
+                : "text-gray-300 hover:bg-white/10 hover:text-white"
+            }`}
           >
-            <h2>Cruises</h2>
-          </div>
+            Cruises
+          </button>
         </div>
 
         <div className="row-start-3 hidden xl:block">

@@ -12,7 +12,7 @@ function About() {
       </h2>
 
       {/* Chat Timeline */}
-      <div className="relative flex w-full max-w-2xl flex-col gap-12">
+      <div className="relative flex w-full max-w-xl flex-col gap-12 lg:max-w-2xl">
         {aboutContent.map((item, idx) => (
           <div
             key={item.number}
