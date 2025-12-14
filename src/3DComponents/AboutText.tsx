@@ -12,10 +12,10 @@ function AboutText(props: AboutTextProps) {
   const isLeft = props.align === "left";
   return (
     <div
-      className={`relative z-10 mx-auto flex max-w-[80vw] flex-col items-center gap-2 sm:max-w-[32vw] sm:flex-row sm:items-end sm:gap-4 ${isLeft ? "sm:justify-start" : "sm:flex-row-reverse sm:justify-end"}`}
+      className={`relative z-10 mx-auto flex max-w-[80vw] flex-col items-center gap-2 md:max-w-[70vw] lg:max-w-[32vw] lg:flex-row lg:items-end lg:gap-4 ${isLeft ? "lg:justify-start" : "lg:flex-row-reverse lg:justify-end"}`}
     >
       {/* 3D Model above bubble on mobile, left/right on desktop */}
-      <div className="relative mb-2 flex h-24 w-24 sm:mb-0 sm:h-40 sm:w-40">
+      <div className="relative mb-2 flex h-24 w-24 lg:mb-0 lg:h-40 lg:w-40">
         <Suspense fallback={<Loading />}>
           <Canvas camera={{ fov: 60, position: [0, 0, 2] }}>
             <ambientLight intensity={1.2} />
@@ -30,12 +30,12 @@ function AboutText(props: AboutTextProps) {
       </div>
       {/* Chat bubble */}
       <div
-        className={`relative flex flex-col gap-2 rounded-2xl px-4 py-3 shadow-lg backdrop-blur-md transition-all duration-300 sm:px-6 sm:py-4 ${isLeft ? "bg-primary-blue/90 message-box-left" : "bg-secondary-blue/90 message-box-right"}`}
+        className={`relative flex flex-col gap-2 rounded-2xl px-4 py-3 shadow-lg backdrop-blur-md transition-all duration-300 md:px-6 md:py-4 ${isLeft ? "bg-primary-blue/90 message-box-left" : "bg-secondary-blue/90 message-box-right"}`}
       >
-        <h3 className="text-base font-semibold text-white sm:text-lg">
+        <h3 className="text-base font-semibold text-white md:text-lg">
           {props.title}
         </h3>
-        <p className="text-sm text-gray-200 sm:text-base">{props.text}</p>
+        <p className="text-sm text-gray-200 md:text-base">{props.text}</p>
       </div>
     </div>
   );
