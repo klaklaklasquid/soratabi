@@ -6,7 +6,7 @@ import { useLocationMatch } from "../Hooks/useLocationMatch";
 import { UserRound } from "lucide-react";
 
 function NavBar() {
-  const { barTop, barBottom, toggleAnimation } = useHamburger();
+  const { barTop, barBottom, toggleAnimation, isOpen } = useHamburger();
   const showBack = useLocationMatch(["/filter-settings", "/tour/:type/:id"]);
 
   return (
@@ -77,7 +77,7 @@ function NavBar() {
         <div className="flex items-center gap-2 md:hidden">
           <NavLink
             to="/login"
-            onClick={toggleAnimation}
+            onClick={() => isOpen && toggleAnimation()}
             className={({ isActive }) =>
               `group relative grid aspect-square place-items-center rounded-full border backdrop-blur-sm transition-all duration-300 ${
                 isActive

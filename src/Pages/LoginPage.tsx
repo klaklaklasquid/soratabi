@@ -27,7 +27,7 @@ function LoginPage() {
       {/* Background blur spots */}
       <BlurSpot
         color="bg-tertiary-blue/30"
-        className="top-[10%] left-[20%] h-[400px] w-[400px]"
+        className="top-[20%] left-[20%] h-[400px] w-[400px]"
       />
       <BlurSpot
         color="bg-secondary-blue/30"
