@@ -4,7 +4,7 @@ function FilterButton({ className }: { className?: string }) {
   return (
     <Link
       to={"/filter-settings"}
-      className={`bg-primary-blue-50 border-secondary-blue flex min-h-12 max-w-12 grow items-center justify-center rounded-[9999px] border-2 xl:hidden ${className}`}
+      className={`group flex aspect-square min-h-12 min-w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:bg-white/10 xl:hidden ${className}`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -12,7 +12,7 @@ function FilterButton({ className }: { className?: string }) {
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className="size-6"
+        className="h-6 w-6 text-gray-300 transition-colors group-hover:text-white"
       >
         <path
           strokeLinecap="round"
