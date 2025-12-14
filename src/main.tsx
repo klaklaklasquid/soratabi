@@ -17,6 +17,7 @@ import FullTourCard from "./Components/browseComponents/FullTourCard.tsx";
 import ModelsProvider from "./Context/ModelsContext/ModelsProvider.tsx";
 import NotFound from "./UI/NotFound.tsx";
 import LoginPage from "./Pages/LoginPage.tsx";
+import RegisterPage from "./Pages/RegisterPage.tsx";
 
 export const routeConfig = [
   {
@@ -52,6 +53,10 @@ export const routeConfig = [
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
   },
   {
     path: "/filter-settings",
