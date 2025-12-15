@@ -56,11 +56,10 @@ function RegisterPage() {
     confirmPassword: string;
   }) => {
     console.log("Register:", { ...values, profileImage });
-    // Add your register logic here
   };
 
   return (
-    <section className="grid h-[calc(100svh-4rem)] w-screen place-items-center px-5">
+    <section className="grid min-h-[calc(100svh-4rem)] w-screen place-items-center px-5 py-12">
       {/* Background blur spots */}
       <BlurSpot
         color="bg-tertiary-blue/20"

@@ -22,7 +22,7 @@ function LoginPage() {
   };
 
   return (
-    <section className="grid h-[calc(100svh-4rem)] w-screen place-items-center px-5">
+    <section className="grid min-h-[calc(100svh-4rem)] w-screen place-items-center px-5">
       {/* Background blur spots */}
 
       <BlurSpot
