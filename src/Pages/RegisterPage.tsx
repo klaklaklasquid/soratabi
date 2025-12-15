@@ -63,12 +63,14 @@ function RegisterPage() {
     <section className="grid h-[calc(100svh-4rem)] w-screen place-items-center px-5">
       {/* Background blur spots */}
       <BlurSpot
-        color="bg-tertiary-blue/30"
-        className="top-[10%] left-[20%] h-[400px] w-[400px]"
+        color="bg-tertiary-blue/20"
+        className="top-1/4 left-0 h-48 w-48 sm:h-72 sm:w-72"
+        blur="blur-[80px] sm:blur-[100px]"
       />
       <BlurSpot
-        color="bg-secondary-blue/30"
-        className="top-[60%] right-[10%] h-[350px] w-[350px]"
+        color="bg-secondary-blue/20"
+        className="right-0 bottom-1/4 h-64 w-64 sm:right-1/4 sm:h-96 sm:w-96"
+        blur="blur-[100px] sm:blur-[120px]"
       />
 
       {/* Register Card */}
