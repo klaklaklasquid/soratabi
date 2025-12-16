@@ -1,0 +1,23 @@
+import { useState } from "react";
+import { AuthContext } from "./AuthContext";
+
+function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [user, setUser] = useState<UserInterface>({
+    id: 1,
+    role: "admin",
+    firstname: "John",
+    lastname: "Doe",
+    userPhoto:
+      "https://soratabischoolblob.blob.core.windows.net/soratabiblob/testImage.png",
+  });
+
+  return (
+    <AuthContext.Provider value={{ user, isAuth, isLoading }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export default AuthProvider;
