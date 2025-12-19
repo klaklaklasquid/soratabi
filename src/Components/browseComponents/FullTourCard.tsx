@@ -10,6 +10,7 @@ import Autoplay from "embla-carousel-autoplay";
 import GlobeMap from "../../3DComponents/GlobeMap";
 import StartDates from "./StartDates";
 import ReviewCard from "./ReviewCard";
+import ReviewEmpty from "./ReviewEmpty";
 import { useTourById } from "../../Hooks/useTourById";
 import { AxiosError } from "axios";
 import Loading from "../../UI/Loading";
@@ -17,19 +18,31 @@ import NotFound from "../../UI/NotFound";
 import ErrorMessage from "../../UI/ErrorMessage";
 import Empty from "../../UI/Empty";
 import BlurSpot from "../../UI/BlurSpot";
+import { useReviewByTourId } from "@/Hooks/useReviewByTourId";
 
 function FullTourCard() {
   const [view, setView] = useState<boolean>(true);
   const { id } = useParams();
-  const { isPending, data, error, isError } = useTourById(+id!);
+  const { isLoading, data, error, isError } = useTourById(+id!);
+  const {
+    isLoading: reviewLoading,
+    data: reviewsData,
+    error: reviewError,
+    isError: reviewIsError,
+    stats,
+  } = useReviewByTourId(+id!);
 
-  // Example reviews, replace with real data if available
-  const reviewsData = [1, 2, 3, 4, 5, 6, 7];
-  const [emblaRef] = useEmblaCarousel({ loop: true, startIndex: 2 }, [
-    Autoplay({ delay: 3500 }),
-  ]);
+  const [emblaRef] = useEmblaCarousel(
+    {
+      loop: reviewsData && reviewsData.length >= 5,
+      startIndex: reviewsData ? Math.floor(reviewsData.length / 2) : 0,
+      align: "center",
+      containScroll: "trimSnaps",
+    },
+    reviewsData && reviewsData.length >= 5 ? [Autoplay({ delay: 3500 })] : [],
+  );
 
-  if (isPending) {
+  if (isLoading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
         <Loading />
@@ -55,9 +68,11 @@ function FullTourCard() {
         {/* Info Panel Left */}
         <div className="z-10 flex flex-col gap-2 px-6 py-8 md:w-1/2">
           <div className="mb-2 flex items-center justify-between">
-            <RatingStars rating={data.ratingsAverage} />
+            <RatingStars
+              rating={stats ? stats.averageRating : data.ratingsAverage}
+            />
             <span className="bg-secondary-blue rounded-full px-4 py-2 text-white">
-              {data.ratingsQuantity} reviews
+              {stats ? stats.totalReviews : data.ratingsQuantity} reviews
             </span>
           </div>
           <h2 className="text-primary-blue text-3xl font-bold">{data.name}</h2>
@@ -89,20 +104,20 @@ function FullTourCard() {
       </div>
 
       {/* Review Carousel - shadcn Card + Embla */}
-      <div className="flex w-full flex-col items-center gap-4 overflow-hidden">
-        <h3 className="text-primary-blue mb-2 text-xl font-semibold">
-          Reviews
-        </h3>
-        <div className="relative mx-auto w-full max-w-md md:max-w-2xl lg:max-w-3xl xl:max-w-4xl">
-          <div
-            className="overflow-visible rounded-3xl backdrop-blur-md"
-            ref={emblaRef}
-          >
-            <div className="flex gap-6 px-4 py-6">
-              {reviewsData.map((id) => (
-                <ReviewCard key={id} />
-              ))}
-            </div>
+      <div className="flex w-full flex-col items-center gap-4">
+        <div className="w-full overflow-hidden rounded-3xl" ref={emblaRef}>
+          <div className="mx-auto flex max-w-md gap-6 px-4 py-6 md:max-w-2xl lg:max-w-3xl xl:max-w-4xl">
+            {reviewLoading ? (
+              <Loading />
+            ) : reviewIsError ? (
+              <ErrorMessage message={reviewError?.message} />
+            ) : !reviewsData || reviewsData.length === 0 ? (
+              <ReviewEmpty />
+            ) : (
+              reviewsData.map((review) => (
+                <ReviewCard key={review.id} review={review} />
+              ))
+            )}
           </div>
         </div>
       </div>

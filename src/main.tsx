@@ -18,6 +18,8 @@ import ModelsProvider from "./Context/ModelsContext/ModelsProvider.tsx";
 import NotFound from "./UI/NotFound.tsx";
 import LoginPage from "./Pages/LoginPage.tsx";
 import RegisterPage from "./Pages/RegisterPage.tsx";
+import AuthProtectedRoute from "./Auth/AuthProtectedRoute.tsx";
+import AuthProvider from "./Auth/AuthProvider.tsx";
 
 export const routeConfig = [
   {
@@ -40,13 +42,21 @@ export const routeConfig = [
   },
   {
     path: "/my-journey",
-    element: <Journey />,
+    element: (
+      <AuthProtectedRoute>
+        <Journey />
+      </AuthProtectedRoute>
+    ),
     name: "MY JOURNEY",
     inNav: true,
   },
   {
     path: "/account",
-    element: <Account />,
+    element: (
+      <AuthProtectedRoute>
+        <Account />
+      </AuthProtectedRoute>
+    ),
     name: "ACCOUNT",
     inNav: true,
   },
@@ -84,12 +94,14 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ModelsProvider>
-      <FilterProvider>
-        <HamburgerProvider>
-          <RouterProvider router={router} />
-        </HamburgerProvider>
-      </FilterProvider>
-    </ModelsProvider>
+    <AuthProvider>
+      <ModelsProvider>
+        <FilterProvider>
+          <HamburgerProvider>
+            <RouterProvider router={router} />
+          </HamburgerProvider>
+        </FilterProvider>
+      </ModelsProvider>
+    </AuthProvider>
   </StrictMode>,
 );

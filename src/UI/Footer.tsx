@@ -8,9 +8,7 @@ function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {/* Brand Section */}
           <div className="flex flex-col items-center gap-3 md:items-start">
-            <h3 className="from-tertiary-blue to-secondary-blue bg-linear-to-r bg-clip-text text-2xl font-bold text-transparent">
-              Soratabi
-            </h3>
+            <h3 className="text-tertiary text-2xl font-bold">Soratabi</h3>
             <p className="text-center text-sm text-gray-300 md:text-left">
               Reach for the stars
             </p>

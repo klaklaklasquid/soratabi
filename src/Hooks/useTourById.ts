@@ -3,7 +3,7 @@ import { GetTourById } from "../Api/apiGetTourById";
 import { AxiosError } from "axios";
 
 export const useTourById = (tourId: number) => {
-  const { isPending, data, error, isError } = useQuery({
+  const { isLoading, data, error, isError } = useQuery({
     queryKey: ["tour", tourId],
     queryFn: () => GetTourById(tourId),
     retry: (failureCount, error) => {
@@ -15,5 +15,5 @@ export const useTourById = (tourId: number) => {
     staleTime: 5 * 60 * 1000,
   });
 
-  return { isPending, data, error, isError };
+  return { isLoading, data, error, isError };
 };

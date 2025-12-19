@@ -42,3 +42,35 @@ interface TagsData {
   id: number;
   tag: string;
 }
+
+interface UserInterface {
+  id: number;
+  role: "admin" | "user";
+  firstname: string;
+  lastname: string;
+  userPhoto: string;
+}
+
+interface ReviewResponse {
+  id: string;
+  review: string;
+  rating: number;
+  createdAt: string;
+
+  // Tour info
+  tourId: number;
+  tourName: string;
+
+  // User info
+  userId: number;
+  userName: string;
+  userPhoto: string;
+}
+
+type ReviewRequest = Omit<ReviewResponse, "id">;
+
+interface TourStats {
+  tourId: number;
+  averageRating: number;
+  totalReviews: number;
+}

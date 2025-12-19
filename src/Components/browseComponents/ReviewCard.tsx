@@ -1,28 +1,45 @@
 import { Card } from "@/Components/ui/card";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar as fullStar } from "@fortawesome/free-solid-svg-icons";
+import RatingStars from "./RatingsStars";
 
-function ReviewCard() {
+function ReviewCard({ review }: { review: ReviewResponse }) {
+  const reviewDate = new Date(review.createdAt).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+
   return (
-    <Card className="flex min-w-80 flex-col gap-5 rounded-2xl border-none bg-white/40 p-6 text-base shadow-lg backdrop-blur-md sm:text-lg">
-      <div className="mb-2 grid grid-cols-8 items-center">
-        {/* temp circle for image */}
-        <div className="bg-tertiary-blue col-start-1 h-8 w-8 rounded-full"></div>
-        <h3 className="text-primary-blue col-span-5 col-start-2 text-base font-semibold">
-          9 Sept 2001
-        </h3>
-        <h3 className="text-primary-yellow col-start-7 text-base font-bold">
-          4.5
-        </h3>
-        <FontAwesomeIcon
-          icon={fullStar}
-          className="text-star text-primary-yellow col-start-8"
-          size="lg"
-        />
+    <Card className="flex w-80 min-w-72 shrink-0 flex-col gap-4 rounded-3xl border-none bg-white/40 p-6 shadow-lg backdrop-blur-md transition-transform select-none hover:scale-105 sm:min-w-80">
+      {/* Header with user info and rating */}
+      <div className="flex items-start justify-between">
+        <div className="flex flex-1 items-center gap-3">
+          <img
+            src={review.userPhoto}
+            alt={review.userName}
+            className="ring-primary-blue/20 h-12 w-12 rounded-full object-cover ring-2"
+          />
+          <div className="flex flex-col">
+            <h3 className="text-primary-blue text-base font-bold">
+              {review.userName}
+            </h3>
+            <p className="text-xs text-gray-500">{reviewDate}</p>
+          </div>
+        </div>
+        {/* Rating badge */}
+        <div className="bg-primary-yellow flex w-12 items-center justify-center rounded-full py-1.5 shadow-md">
+          <span className="text-primary-blue text-sm font-bold">
+            {review.rating}
+          </span>
+        </div>
       </div>
-      <h3 className="font-medium text-gray-800">
-        I had a blast on this tour, highly recommend!
-      </h3>
+
+      {/* Rating stars */}
+      <div className="-mt-1">
+        <RatingStars rating={review.rating} />
+      </div>
+
+      {/* Review text */}
+      <p className="text-sm leading-relaxed text-gray-700">{review.review}</p>
     </Card>
   );
 }
