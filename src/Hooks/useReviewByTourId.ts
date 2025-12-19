@@ -1,4 +1,4 @@
-import { GetAllReviewsByTourId } from "@/Api/apiReviews";
+import { GetAllReviewsByTourId, GetTourStats } from "@/Api/apiReviews";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
@@ -15,5 +15,17 @@ export const useReviewByTourId = (tourId: number) => {
     staleTime: 5 * 60 * 1000,
   });
 
-  return { isLoading, data, error, isError };
+  const { data: stats } = useQuery({
+    queryKey: ["reviewsStats", `tour id: ${tourId}`],
+    queryFn: () => GetTourStats(tourId),
+    retry: (failureCount, error) => {
+      if (error instanceof AxiosError && error.response?.status === 404) {
+        return false;
+      }
+      return failureCount < 1;
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
+  return { isLoading, data, error, isError, stats };
 };

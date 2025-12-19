@@ -68,3 +68,9 @@ interface ReviewResponse {
 }
 
 type ReviewRequest = Omit<ReviewResponse, "id">;
+
+interface TourStats {
+  tourId: number;
+  averageRating: number;
+  totalReviews: number;
+}

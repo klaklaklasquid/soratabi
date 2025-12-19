@@ -29,6 +29,7 @@ function FullTourCard() {
     data: reviewsData,
     error: reviewError,
     isError: reviewIsError,
+    stats,
   } = useReviewByTourId(+id!);
 
   const [emblaRef] = useEmblaCarousel(
@@ -67,9 +68,11 @@ function FullTourCard() {
         {/* Info Panel Left */}
         <div className="z-10 flex flex-col gap-2 px-6 py-8 md:w-1/2">
           <div className="mb-2 flex items-center justify-between">
-            <RatingStars rating={data.ratingsAverage} />
+            <RatingStars
+              rating={stats ? stats.averageRating : data.ratingsAverage}
+            />
             <span className="bg-secondary-blue rounded-full px-4 py-2 text-white">
-              {data.ratingsQuantity} reviews
+              {stats ? stats.totalReviews : data.ratingsQuantity} reviews
             </span>
           </div>
           <h2 className="text-primary-blue text-3xl font-bold">{data.name}</h2>
