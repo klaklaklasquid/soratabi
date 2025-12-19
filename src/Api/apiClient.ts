@@ -8,4 +8,12 @@ const apiClient = axios.create({
   },
 });
 
+export const cosmosApiClient = axios.create({
+  baseURL: import.meta.env.VITE_API_COSMOS_URL,
+  timeout: 10000,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 export default apiClient;

@@ -1,11 +1,11 @@
+import { GetAllReviewsByTourId } from "@/Api/apiReviews";
 import { useQuery } from "@tanstack/react-query";
-import { GetTourById } from "../Api/apiGetTourById";
 import { AxiosError } from "axios";
 
-export const useTourById = (tourId: number) => {
+export const useReviewByTourId = (tourId: number) => {
   const { isLoading, data, error, isError } = useQuery({
-    queryKey: ["tour", tourId],
-    queryFn: () => GetTourById(tourId),
+    queryKey: ["reviews", `tour id: ${tourId}`],
+    queryFn: () => GetAllReviewsByTourId(tourId),
     retry: (failureCount, error) => {
       if (error instanceof AxiosError && error.response?.status === 404) {
         return false;
