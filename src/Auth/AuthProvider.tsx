@@ -2,9 +2,9 @@ import { useState } from "react";
 import { AuthContext } from "./AuthContext";
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [isAuth, setIsAuth] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [user, setUser] = useState<UserInterface>({
+  const [isAuth] = useState<boolean>(false);
+  const [isLoading] = useState<boolean>(false);
+  const [user] = useState<UserInterface>({
     id: 1,
     role: "admin",
     firstname: "John",
