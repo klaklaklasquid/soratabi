@@ -5,13 +5,17 @@ import { Navigate } from "react-router-dom";
 function AuthProtectedRoute({ children, role }: AuthProtectedRouteProps) {
   const { isAuth, isLoading, user } = useAuth();
 
-  if (isLoading) <Loading />;
+  if (isLoading) return <Loading />;
 
-  if (user.role !== role) {
+  if (!isAuth) {
+    return <Navigate to={"/login"} />;
+  }
+
+  if (role && user.role !== role) {
     return <Navigate to={"/"} />;
   }
 
-  return isAuth ? children : <Navigate to={"/login"} />;
+  return children;
 }
 
 interface AuthProtectedRouteProps {

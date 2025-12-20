@@ -7,9 +7,13 @@ import { UserRound } from "lucide-react";
 import useAuth from "@/Auth/useAuth";
 
 function NavBar() {
-  const { user } = useAuth();
+  const { user, isAuth } = useAuth();
   const { barTop, barBottom, toggleAnimation, isOpen } = useHamburger();
-  const showBack = useLocationMatch(["/filter-settings", "/tour/:type/:id"]);
+  const showBack = useLocationMatch([
+    "/filter-settings",
+    "/tour/:type/:id",
+    "/tour/:type/:id/date/:dateId",
+  ]);
 
   return (
     <header className="fixed top-0 right-0 left-0 z-9999 px-4 py-4 sm:px-6 lg:px-12">
@@ -57,8 +61,12 @@ function NavBar() {
                     window.location.pathname.startsWith("/tour/");
                 }
 
-                if (route.name === "CREATE TOUR" && user.role !== "admin")
-                  return;
+                if (
+                  route.name === "CREATE TOUR" &&
+                  (!isAuth || user?.role !== "admin")
+                ) {
+                  return null;
+                }
 
                 return (
                   <NavLink

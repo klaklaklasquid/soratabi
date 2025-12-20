@@ -6,7 +6,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading] = useState<boolean>(false);
   const [user] = useState<UserInterface>({
     id: 1,
-    role: "admin",
+    role: "user",
     firstname: "John",
     lastname: "Doe",
     userPhoto:

@@ -13,8 +13,12 @@ import {
   faUserFriends,
   faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate, useParams } from "react-router-dom";
 
 function StartDates({ date, maxCustomers }: StartDatesProps) {
+  const { type, id } = useParams();
+  const navigate = useNavigate();
+
   const remainingSlots = maxCustomers - date.currentCustomers;
   const slotPercent = Math.max(0, Math.min(1, remainingSlots / maxCustomers));
   let slotBarColor = "bg-primary-blue/80";
@@ -31,6 +35,10 @@ function StartDates({ date, maxCustomers }: StartDatesProps) {
     slotTextColor = "text-primary-yellow";
     slotFillColor = "bg-primary-yellow/80";
     cardBg = "bg-primary-yellow/10";
+  }
+
+  function handleNavigation() {
+    navigate(`/tour/${type}/${id}/date/${date.id}`);
   }
 
   return (
@@ -85,6 +93,7 @@ function StartDates({ date, maxCustomers }: StartDatesProps) {
           className="bg-primary-blue/80 w-2/3 rounded-full py-3 text-lg font-bold text-white shadow-lg transition-transform duration-200 hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50"
           style="primary"
           disabled={remainingSlots <= 0}
+          onClick={handleNavigation}
         >
           Book This Date
         </Button>
