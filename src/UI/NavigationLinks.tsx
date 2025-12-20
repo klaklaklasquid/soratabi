@@ -1,8 +1,10 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { routeConfig as appRoutes } from "../main";
 import useHamburger from "../Hooks/useHamburger";
+import useAuth from "@/Auth/useAuth";
 
 function NavigationLinks() {
+  const { user } = useAuth();
   const { toggleAnimation } = useHamburger();
   const location = useLocation();
 
@@ -19,6 +21,9 @@ function NavigationLinks() {
               location.pathname === "/browse-destination" ||
               location.pathname.startsWith("/tour/");
           }
+
+          if (route.name === "CREATE TOUR" && user.role !== "admin") return;
+
           return (
             <NavLink
               key={route.path}

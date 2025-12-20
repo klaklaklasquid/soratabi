@@ -4,8 +4,10 @@ import { routeConfig as appRoutes } from "../main";
 import NavigateBackPage from "../Components/NavigateBackPage";
 import { useLocationMatch } from "../Hooks/useLocationMatch";
 import { UserRound } from "lucide-react";
+import useAuth from "@/Auth/useAuth";
 
 function NavBar() {
+  const { user } = useAuth();
   const { barTop, barBottom, toggleAnimation, isOpen } = useHamburger();
   const showBack = useLocationMatch(["/filter-settings", "/tour/:type/:id"]);
 
@@ -54,6 +56,10 @@ function NavBar() {
                     window.location.pathname === "/browse-destination" ||
                     window.location.pathname.startsWith("/tour/");
                 }
+
+                if (route.name === "CREATE TOUR" && user.role !== "admin")
+                  return;
+
                 return (
                   <NavLink
                     key={route.path}

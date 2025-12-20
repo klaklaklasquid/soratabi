@@ -20,6 +20,7 @@ import LoginPage from "./Pages/LoginPage.tsx";
 import RegisterPage from "./Pages/RegisterPage.tsx";
 import AuthProtectedRoute from "./Auth/AuthProtectedRoute.tsx";
 import AuthProvider from "./Auth/AuthProvider.tsx";
+import CreateTour from "./Pages/CreateTour.tsx";
 
 export const routeConfig = [
   {
@@ -61,6 +62,16 @@ export const routeConfig = [
     inNav: true,
   },
   {
+    path: "create-tour",
+    element: (
+      <AuthProtectedRoute>
+        <CreateTour />
+      </AuthProtectedRoute>
+    ),
+    name: "CREATE TOUR",
+    inNav: true,
+  },
+  {
     path: "/login",
     element: <LoginPage />,
   },
@@ -79,8 +90,6 @@ export const routeConfig = [
   {
     path: "*",
     element: <NotFound />,
-    name: "NOT_FOUND",
-    inNav: false,
   },
 ];
 
