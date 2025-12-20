@@ -4,7 +4,7 @@ import useHamburger from "../Hooks/useHamburger";
 import useAuth from "@/Auth/useAuth";
 
 function NavigationLinks() {
-  const { user } = useAuth();
+  const { user, isAuth } = useAuth();
   const { toggleAnimation } = useHamburger();
   const location = useLocation();
 
@@ -22,7 +22,12 @@ function NavigationLinks() {
               location.pathname.startsWith("/tour/");
           }
 
-          if (route.name === "CREATE TOUR" && user.role !== "admin") return;
+          if (
+            route.name === "CREATE TOUR" &&
+            (!isAuth || user?.role !== "admin")
+          ) {
+            return null;
+          }
 
           return (
             <NavLink

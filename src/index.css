@@ -4,12 +4,14 @@
   --background-color-primary-blue: #0d324d;
   --background-color-primary-blue-50: #0d324d88;
   --background-color-secondary-blue: #004553;
-  --background-color-tertiary-red: #ff6b6b;
+  --background-color-tertiary-red: #ef4444;
   --background-color-primary-yellow: #ffb700;
   --background-color-tertiary-blue: #00c6ff;
 
   --text-color-star: #ffb700;
   --text-color-tertiary: #00c6ff;
+  --text-color-offwhite: #f9f9f9;
+  --text-color-tertiary-red: #ef4444;
 
   --border-color-secondary-blue: #004553;
   --border-color-tertiary-blue: #00c6ff;
