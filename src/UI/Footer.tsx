@@ -27,7 +27,7 @@ function Footer() {
                 About
               </Link>
               <Link
-                to="/browse"
+                to="/browse-destination"
                 className="hover:text-tertiary-blue text-sm text-gray-300 transition-colors"
               >
                 Browse Tours
