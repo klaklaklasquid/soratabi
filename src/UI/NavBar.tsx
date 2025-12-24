@@ -7,7 +7,7 @@ import { UserRound } from "lucide-react";
 import useAuth from "@/Auth/useAuth";
 
 function NavBar() {
-  const { user, isAuth } = useAuth();
+  const auth = useAuth();
   const { barTop, barBottom, toggleAnimation, isOpen } = useHamburger();
   const showBack = useLocationMatch([
     "/filter-settings",
@@ -63,7 +63,7 @@ function NavBar() {
 
                 if (
                   route.name === "CREATE TOUR" &&
-                  (!isAuth || user?.role !== "admin")
+                  (!auth.isAuthenticated || auth.user?.profile?.role !== "admin")
                 ) {
                   return null;
                 }

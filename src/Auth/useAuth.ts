@@ -1,11 +1,7 @@
-import { useContext } from "react";
-import { AuthContext } from "./AuthContext";
+import { useAuth as useOidcAuth } from "react-oidc-context";
 
 const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) throw new Error("useAth must be used within a AuthProvider");
-
-  return context;
+  return useOidcAuth();
 };
 
 export default useAuth;
