@@ -1,19 +1,3 @@
-/**
- * Helper hook for making authenticated API calls with access token
- * Usage example:
- * 
- * import { useAuthenticatedFetch } from '@/Auth/useAuthenticatedFetch';
- * 
- * function MyComponent() {
- *   const fetchWithAuth = useAuthenticatedFetch();
- *   
- *   const getData = async () => {
- *     const data = await fetchWithAuth('https://localhost:7001/api/tours');
- *     return data;
- *   };
- * }
- */
-
 import useAuth from "./useAuth";
 
 export const useAuthenticatedFetch = () => {
@@ -42,13 +26,11 @@ export const useAuthenticatedFetch = () => {
   return fetchWithAuth;
 };
 
-/**
- * Get the current access token
- */
+// * Get the current access token
 export const getAccessToken = (): string | null => {
   try {
     const oidcStorage = sessionStorage.getItem(
-      `oidc.user:https://localhost:5001:webapp-client`
+      `oidc.user:https://localhost:5001:webapp-client`,
     );
     if (oidcStorage) {
       const user = JSON.parse(oidcStorage);

@@ -34,7 +34,7 @@ const registerSchema = Yup.object().shape({
 function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [profileImage, setProfileImage] = useState<File | null>(null);
+  // const [profileImage, setProfileImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,7 +43,7 @@ function RegisterPage() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setProfileImage(file);
+      // setProfileImage(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewUrl(reader.result as string);
@@ -77,10 +77,15 @@ function RegisterPage() {
         alert("Registration successful! Please login.");
         navigate("/login");
       }
-    } catch (err: any) {
-      setError(
-        err.response?.data?.message || "Registration failed. Please try again.",
-      );
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        setError(
+          err.response?.data?.message ||
+            "Registration failed. Please try again.",
+        );
+      } else {
+        setError("Registration failed. Please try again.");
+      }
       console.error("Registration error:", err);
     } finally {
       setIsSubmitting(false);
