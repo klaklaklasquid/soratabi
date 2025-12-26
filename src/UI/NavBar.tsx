@@ -5,9 +5,11 @@ import NavigateBackPage from "../Components/NavigateBackPage";
 import { useLocationMatch } from "../Hooks/useLocationMatch";
 import { UserRound } from "lucide-react";
 import useAuth from "@/Auth/useAuth";
+import { useUserProfile } from "@/Hooks/useUserProfile";
 
 function NavBar() {
   const auth = useAuth();
+  const { data: userProfile } = useUserProfile();
   const { barTop, barBottom, toggleAnimation, isOpen } = useHamburger();
   const showBack = useLocationMatch([
     "/filter-settings",
@@ -37,18 +39,26 @@ function NavBar() {
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-2 md:flex">
           <NavLink
-            to="/login"
+            to={auth.isAuthenticated ? "/account" : "/login"}
             className={({ isActive }) =>
               `group relative grid aspect-square place-items-center rounded-full border backdrop-blur-sm transition-all duration-300 ${
                 isActive
                   ? "border-secondary-blue bg-secondary-blue/20 shadow-secondary-blue/30 shadow-lg"
                   : "border-tertiary-blue/30 bg-tertiary-blue/5 hover:border-tertiary-blue/50 hover:bg-tertiary-blue/15 hover:shadow-tertiary-blue/20 hover:shadow-md"
-              } w-12 md:w-14`
+              } w-12 overflow-hidden md:w-14`
             }
           >
-            <UserRound
-              className={`h-5 w-5 transition-all duration-300 group-hover:scale-110`}
-            />
+            {auth.isAuthenticated && userProfile?.userphoto ? (
+              <img
+                src={userProfile.userphoto}
+                alt="Profile"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <UserRound
+                className={`h-5 w-5 transition-all duration-300 group-hover:scale-110`}
+              />
+            )}
           </NavLink>
           <div className="flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2 py-2 backdrop-blur-md">
             {appRoutes
@@ -63,7 +73,8 @@ function NavBar() {
 
                 if (
                   route.name === "CREATE TOUR" &&
-                  (!auth.isAuthenticated || auth.user?.profile?.role !== "admin")
+                  (!auth.isAuthenticated ||
+                    auth.user?.profile?.role !== "admin")
                 ) {
                   return null;
                 }
@@ -90,19 +101,27 @@ function NavBar() {
         {/* Mobile: Login + Hamburger */}
         <div className="flex items-center gap-2 md:hidden">
           <NavLink
-            to="/login"
+            to={auth.isAuthenticated ? "/account" : "/login"}
             onClick={() => isOpen && toggleAnimation()}
             className={({ isActive }) =>
               `group relative grid aspect-square place-items-center rounded-full border backdrop-blur-sm transition-all duration-300 ${
                 isActive
                   ? "border-secondary-blue bg-secondary-blue/20 shadow-secondary-blue/30 shadow-lg"
                   : "border-tertiary-blue/30 bg-tertiary-blue/5 hover:border-tertiary-blue/50 hover:bg-tertiary-blue/15 hover:shadow-tertiary-blue/20 hover:shadow-md"
-              } w-10 sm:w-12`
+              } w-10 overflow-hidden sm:w-12`
             }
           >
-            <UserRound
-              className={`h-4 w-4 transition-all duration-300 group-hover:scale-110 sm:h-5 sm:w-5`}
-            />
+            {auth.isAuthenticated && userProfile?.userphoto ? (
+              <img
+                src={userProfile.userphoto}
+                alt="Profile"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <UserRound
+                className={`h-4 w-4 transition-all duration-300 group-hover:scale-110 sm:h-5 sm:w-5`}
+              />
+            )}
           </NavLink>
           <button
             onClick={toggleAnimation}
