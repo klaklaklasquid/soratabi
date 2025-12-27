@@ -13,9 +13,6 @@ function Account() {
     error: profileError,
   } = useUserProfile();
 
-  console.log("User Profile:", userProfile);
-  console.log("Photo URL:", userProfile?.userphoto);
-
   const handleLogout = () => {
     auth.signoutRedirect();
   };
