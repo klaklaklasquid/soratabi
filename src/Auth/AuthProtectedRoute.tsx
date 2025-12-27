@@ -3,15 +3,16 @@ import Loading from "@/UI/Loading";
 import { Navigate } from "react-router-dom";
 
 function AuthProtectedRoute({ children, role }: AuthProtectedRouteProps) {
-  const { isAuth, isLoading, user } = useAuth();
+  const auth = useAuth();
 
-  if (isLoading) return <Loading />;
+  if (auth.isLoading) return <Loading />;
 
-  if (!isAuth) {
+  if (!auth.isAuthenticated) {
     return <Navigate to={"/login"} />;
   }
 
-  if (role && user.role !== role) {
+  // Check role if specified (role would be in user claims)
+  if (role && auth.user?.profile?.role !== role) {
     return <Navigate to={"/"} />;
   }
 

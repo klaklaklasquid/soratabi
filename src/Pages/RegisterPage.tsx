@@ -10,7 +10,8 @@ import {
 import BlurSpot from "../UI/BlurSpot";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const registerSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -33,13 +34,16 @@ const registerSchema = Yup.object().shape({
 function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [profileImage, setProfileImage] = useState<File | null>(null);
+  // const [profileImage, setProfileImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setProfileImage(file);
+      // setProfileImage(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewUrl(reader.result as string);
@@ -48,14 +52,44 @@ function RegisterPage() {
     }
   };
 
-  const handleRegisterSubmit = (values: {
+  const handleRegisterSubmit = async (values: {
     firstName: string;
     lastName: string;
     email: string;
     password: string;
     confirmPassword: string;
   }) => {
-    console.log("Register:", { ...values, profileImage });
+    setIsSubmitting(true);
+    setError("");
+
+    try {
+      // Register with Identity Server
+      const response = await axios.post(
+        "https://localhost:5001/api/account/register",
+        {
+          email: values.email,
+          password: values.password,
+        },
+      );
+
+      if (response.data.success) {
+        // Redirect to login after successful registration
+        alert("Registration successful! Please login.");
+        navigate("/login");
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        setError(
+          err.response?.data?.message ||
+            "Registration failed. Please try again.",
+        );
+      } else {
+        setError("Registration failed. Please try again.");
+      }
+      console.error("Registration error:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -281,12 +315,20 @@ function RegisterPage() {
                   />
                 </div>
 
+                {/* Error Message */}
+                {error && (
+                  <div className="bg-tertiary-red/20 border-tertiary-red/50 text-tertiary-red rounded-lg border p-3 text-sm">
+                    {error}
+                  </div>
+                )}
+
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="bg-secondary-blue shadow-secondary-blue/50 hover:shadow-secondary-blue/70 w-full min-w-0 rounded-full py-2.5 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl sm:py-3 sm:text-base"
+                  disabled={isSubmitting}
+                  className="bg-secondary-blue shadow-secondary-blue/50 hover:shadow-secondary-blue/70 w-full min-w-0 rounded-full py-2.5 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 sm:py-3 sm:text-base"
                 >
-                  Create Account
+                  {isSubmitting ? "Creating Account..." : "Create Account"}
                 </button>
               </Form>
             )}
