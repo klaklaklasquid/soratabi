@@ -44,8 +44,12 @@ function Journey() {
         <h1 className="mb-6 text-3xl font-bold text-white">Upcoming Tours</h1>
         {upcomingTours && upcomingTours.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {upcomingTours.map((tour) => (
-              <JourneyTourCard key={tour.id} data={tour} status="upcoming" />
+            {upcomingTours.map((tour, index) => (
+              <JourneyTourCard
+                key={`upcoming-${tour.id}-${index}`}
+                data={tour}
+                status="upcoming"
+              />
             ))}
           </div>
         ) : (
@@ -58,8 +62,12 @@ function Journey() {
         <h1 className="mb-6 text-3xl font-bold text-white">Completed Tours</h1>
         {completedTours && completedTours.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {completedTours.map((tour) => (
-              <JourneyTourCard key={tour.id} data={tour} status="completed" />
+            {completedTours.map((tour, index) => (
+              <JourneyTourCard
+                key={`completed-${tour.id}-${index}`}
+                data={tour}
+                status="completed"
+              />
             ))}
           </div>
         ) : (
@@ -72,8 +80,11 @@ function Journey() {
         <h1 className="mb-6 text-3xl font-bold text-white">My Reviews</h1>
         {myReviewData && myReviewData.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            {myReviewData.map((review) => (
-              <UserReviewCard key={review.id} review={review} />
+            {myReviewData.map((review, index) => (
+              <UserReviewCard
+                key={`review-${review.id}-${index}`}
+                review={review}
+              />
             ))}
           </div>
         ) : (
