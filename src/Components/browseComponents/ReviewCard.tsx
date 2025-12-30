@@ -9,25 +9,25 @@ function ReviewCard({ review }: { review: ReviewResponse }) {
   });
 
   return (
-    <Card className="flex w-80 min-w-72 shrink-0 flex-col gap-4 rounded-3xl border-none bg-white/40 p-6 shadow-lg backdrop-blur-md transition-transform select-none hover:scale-105 sm:min-w-80">
+    <Card className="border-secondary-blue/30 hover:border-secondary-blue/50 flex w-80 min-w-72 shrink-0 flex-col gap-4 rounded-3xl border-2 bg-white/50 p-6 shadow-lg backdrop-blur-xl transition-all select-none hover:scale-105 hover:shadow-xl sm:min-w-80">
       {/* Header with user info and rating */}
       <div className="flex items-start justify-between">
         <div className="flex flex-1 items-center gap-3">
           <img
             src={review.userPhoto}
             alt={review.userName}
-            className="ring-primary-blue/20 h-12 w-12 rounded-full object-cover ring-2"
+            className="ring-secondary-blue/40 h-12 w-12 rounded-full object-cover ring-2"
           />
           <div className="flex flex-col">
-            <h3 className="text-primary-blue text-base font-bold">
+            <h3 className="text-primary-blue text-base font-bold drop-shadow-sm">
               {review.userName}
             </h3>
-            <p className="text-xs text-gray-500">{reviewDate}</p>
+            <p className="text-xs font-medium text-gray-600">{reviewDate}</p>
           </div>
         </div>
         {/* Rating badge */}
-        <div className="bg-primary-yellow flex w-12 items-center justify-center rounded-full py-1.5 shadow-md">
-          <span className="text-primary-blue text-sm font-bold">
+        <div className="bg-primary-yellow/90 flex h-10 w-10 items-center justify-center rounded-full shadow-md backdrop-blur-sm">
+          <span className="text-primary-blue text-base font-bold">
             {review.rating}
           </span>
         </div>
@@ -39,7 +39,9 @@ function ReviewCard({ review }: { review: ReviewResponse }) {
       </div>
 
       {/* Review text */}
-      <p className="text-sm leading-relaxed text-gray-700">{review.review}</p>
+      <p className="text-sm leading-relaxed font-medium text-gray-800">
+        {review.review}
+      </p>
     </Card>
   );
 }

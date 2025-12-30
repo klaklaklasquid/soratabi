@@ -3,11 +3,8 @@ import { useParams } from "react-router-dom";
 import RatingStars from "./RatingsStars";
 import TextWithToggle from "./TextWithToggle";
 import LeafletMap from "../../UI/LeafletMap";
-import Button from "../Button";
-import { useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import GlobeMap from "../../3DComponents/GlobeMap";
 import StartDates from "./StartDates";
 import ReviewCard from "./ReviewCard";
 import ReviewEmpty from "./ReviewEmpty";
@@ -21,7 +18,6 @@ import BlurSpot from "../../UI/BlurSpot";
 import { useReviewByTourId } from "@/Hooks/useReviewByTourId";
 
 function FullTourCard() {
-  const [view, setView] = useState<boolean>(true);
   const { id } = useParams();
   const { isLoading, data, error, isError } = useTourById(+id!);
   const {
@@ -35,9 +31,9 @@ function FullTourCard() {
   const [emblaRef] = useEmblaCarousel(
     {
       loop: reviewsData && reviewsData.length >= 5,
-      startIndex: reviewsData ? Math.floor(reviewsData.length / 2) : 0,
+      startIndex: 0,
       align: "center",
-      containScroll: "trimSnaps",
+      containScroll: false,
     },
     reviewsData && reviewsData.length >= 5 ? [Autoplay({ delay: 3500 })] : [],
   );
@@ -124,33 +120,13 @@ function FullTourCard() {
 
       {/* Map/Globe Switcher */}
       <section className="flex flex-col gap-3 text-lg">
-        <div className="mb-2 flex flex-col justify-center gap-3 xl:flex-row">
-          <Button
-            onClick={() => setView(true)}
-            style={view ? "primary" : "secondary"}
-          >
-            Map View
-          </Button>
-          <Button
-            onClick={() => setView(false)}
-            style={view ? "secondary" : "primary"}
-          >
-            Globe View
-          </Button>
+        <div className="bg-primary-blue-50 rounded-2xl p-5">
+          <LeafletMap
+            className="min-h-[400px] w-full overflow-hidden rounded-xl"
+            locations={data.locations}
+            zoom={5}
+          />
         </div>
-        {view ? (
-          <div className="bg-primary-blue-50 rounded-2xl p-5">
-            <LeafletMap
-              className="min-h-[400px] w-full overflow-hidden rounded-xl"
-              locations={data.locations}
-              zoom={5}
-            />
-          </div>
-        ) : (
-          <div className="min-h-[40vh]">
-            <GlobeMap locations={data.locations} />
-          </div>
-        )}
       </section>
 
       {/* Start Dates */}

@@ -15,6 +15,9 @@
 
   --border-color-secondary-blue: #004553;
   --border-color-tertiary-blue: #00c6ff;
+  --border-color-tertiary-red: #ef4444;
+  --border-color-primary-yellow: #ffb700;
+  --border-color-primary-blue: #0d324d;
 }
 
 html {

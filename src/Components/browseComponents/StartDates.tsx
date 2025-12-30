@@ -25,16 +25,38 @@ function StartDates({ date, maxCustomers }: StartDatesProps) {
   let slotTextColor = "text-primary-blue";
   let slotFillColor = "bg-secondary-blue/80";
   let cardBg = "bg-primary-blue/10";
+  let cardBorder = "border-primary-blue/30";
+
+  //! FORCE YELLOW STATE FOR TESTING - COMMENT OUT WHEN DONE
+  // if (true) {
+  //   slotBarColor = "bg-primary-yellow/20";
+  //   slotTextColor = "text-primary-yellow";
+  //   slotFillColor = "bg-primary-yellow/80";
+  //   cardBg = "bg-primary-yellow/10";
+  //   cardBorder = "border-primary-yellow/40";
+  // }
+
+  //! FORCE RED STATE FOR TESTING - COMMENT OUT WHEN DONE
+  // if (true) {
+  //   slotBarColor = "bg-tertiary-red/20 animate-pulse";
+  //   slotTextColor = "text-tertiary-red";
+  //   slotFillColor = "bg-tertiary-red/80";
+  //   cardBg = "bg-tertiary-red/10";
+  //   cardBorder = "border-tertiary-red/40";
+  // }
+
   if (slotPercent < 0.35) {
     slotBarColor = "bg-tertiary-red/20 animate-pulse";
     slotTextColor = "text-tertiary-red";
     slotFillColor = "bg-tertiary-red/80";
     cardBg = "bg-tertiary-red/10";
+    cardBorder = "border-tertiary-red/40";
   } else if (slotPercent < 0.65) {
     slotBarColor = "bg-primary-yellow/20";
     slotTextColor = "text-primary-yellow";
     slotFillColor = "bg-primary-yellow/80";
     cardBg = "bg-primary-yellow/10";
+    cardBorder = "border-primary-yellow/40";
   }
 
   function handleNavigation() {
@@ -43,7 +65,7 @@ function StartDates({ date, maxCustomers }: StartDatesProps) {
 
   return (
     <Card
-      className={`flex w-full flex-col gap-0 rounded-3xl border-none ${cardBg} p-0 shadow-2xl backdrop-blur-xl`}
+      className={`flex w-full flex-col gap-0 rounded-3xl border-2 ${cardBorder} ${cardBg} hover:shadow-3xl p-0 shadow-2xl backdrop-blur-xl transition-all hover:scale-[1.02]`}
     >
       <CardHeader className="flex flex-col items-center gap-2 px-8 pt-8">
         <FontAwesomeIcon

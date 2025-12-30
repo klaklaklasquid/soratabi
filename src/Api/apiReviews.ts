@@ -15,3 +15,17 @@ export async function GetTourStats(tourId: number): Promise<TourStats> {
   );
   return response.data;
 }
+
+export async function CreateReview(
+  tourId: number,
+  tourName: string,
+  rating: number,
+  review: string,
+): Promise<void> {
+  await cosmosApiClient.post("reviews", {
+    tourId,
+    tourName,
+    rating,
+    review,
+  });
+}

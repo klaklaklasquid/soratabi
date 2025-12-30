@@ -22,6 +22,7 @@ import AuthProtectedRoute from "./Auth/AuthProtectedRoute.tsx";
 import AuthProvider from "./Auth/AuthProvider.tsx";
 import CreateTour from "./Pages/CreateTour.tsx";
 import PurchaseTour from "./Pages/PurchaseTour.tsx";
+import ReviewPage from "./Pages/ReviewPage.tsx";
 
 export const routeConfig = [
   {
@@ -91,6 +92,10 @@ export const routeConfig = [
   {
     path: "/tour/:type/:id/date/:dateId",
     element: <PurchaseTour />,
+  },
+  {
+    path: "/review/:id",
+    element: <ReviewPage />,
   },
   {
     path: "*",
