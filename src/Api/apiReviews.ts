@@ -29,3 +29,9 @@ export async function CreateReview(
     review,
   });
 }
+
+export async function GetAllReviewsFromUser(): Promise<ReviewResponse[]> {
+  const response =
+    await cosmosApiClient.get<ReviewResponse[]>("reviews/my-reviews");
+  return response.data;
+}

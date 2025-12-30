@@ -1,4 +1,5 @@
 import { GetCompletedTours, GetUpcomingTours } from "@/Api/api.Journey";
+import { GetAllReviewsFromUser } from "@/Api/apiReviews";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
@@ -37,6 +38,23 @@ export const useMyJourneyQueries = () => {
     staleTime: 5 * 60 * 1000,
   });
 
+  const {
+    isLoading: myReviewLoading,
+    data: myReviewData,
+    error: myReviewError,
+    isError: myReviewIsError,
+  } = useQuery({
+    queryKey: ["my-reviews"],
+    queryFn: GetAllReviewsFromUser,
+    retry: (failureCount, error) => {
+      if (error instanceof AxiosError && error.response?.status === 404) {
+        return false;
+      }
+      return failureCount < 1;
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
   return {
     upcomingTours,
     isLoadingUpcoming,
@@ -46,5 +64,9 @@ export const useMyJourneyQueries = () => {
     isLoadingCompleted,
     isErrorCompleted,
     completedError,
+    myReviewData,
+    myReviewLoading,
+    myReviewError,
+    myReviewIsError,
   };
 };

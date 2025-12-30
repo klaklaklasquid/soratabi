@@ -9,24 +9,24 @@ function ReviewCard({ review }: { review: ReviewResponse }) {
   });
 
   return (
-    <Card className="border-secondary-blue/30 hover:border-secondary-blue/50 flex w-80 min-w-72 shrink-0 flex-col gap-4 rounded-3xl border-2 bg-white/50 p-6 shadow-lg backdrop-blur-xl transition-all select-none hover:scale-105 hover:shadow-xl sm:min-w-80">
+    <Card className="flex w-80 min-w-72 shrink-0 flex-col gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-md transition-all duration-300 select-none hover:scale-105 hover:shadow-2xl sm:min-w-80">
       {/* Header with user info and rating */}
-      <div className="flex items-start justify-between">
+      <div className="flex items-start justify-between gap-3">
         <div className="flex flex-1 items-center gap-3">
           <img
             src={review.userPhoto}
             alt={review.userName}
-            className="ring-secondary-blue/40 h-12 w-12 rounded-full object-cover ring-2"
+            className="h-12 w-12 rounded-full border-2 border-white/20 object-cover shadow-lg"
           />
           <div className="flex flex-col">
-            <h3 className="text-primary-blue text-base font-bold drop-shadow-sm">
+            <h3 className="text-base font-bold text-white drop-shadow-lg">
               {review.userName}
             </h3>
-            <p className="text-xs font-medium text-gray-600">{reviewDate}</p>
+            <p className="text-xs font-medium text-gray-300">{reviewDate}</p>
           </div>
         </div>
         {/* Rating badge */}
-        <div className="bg-primary-yellow/90 flex h-10 w-10 items-center justify-center rounded-full shadow-md backdrop-blur-sm">
+        <div className="bg-primary-yellow/80 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/20 shadow-lg backdrop-blur-sm">
           <span className="text-primary-blue text-base font-bold">
             {review.rating}
           </span>
@@ -39,7 +39,7 @@ function ReviewCard({ review }: { review: ReviewResponse }) {
       </div>
 
       {/* Review text */}
-      <p className="text-sm leading-relaxed font-medium text-gray-800">
+      <p className="text-sm leading-relaxed font-medium text-gray-100">
         {review.review}
       </p>
     </Card>

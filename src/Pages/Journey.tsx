@@ -2,6 +2,7 @@ import { useMyJourneyQueries } from "@/Hooks/useMyJourneyQueries";
 import Loading from "@/UI/Loading";
 import ErrorMessage from "@/UI/ErrorMessage";
 import JourneyTourCard from "@/Components/journeyComponents/JourneyTourCard";
+import UserReviewCard from "@/Components/journeyComponents/UserReviewCard";
 
 function Journey() {
   const {
@@ -13,26 +14,28 @@ function Journey() {
     isLoadingCompleted,
     isErrorCompleted,
     completedError,
+    myReviewData,
+    myReviewLoading,
+    myReviewError,
+    myReviewIsError,
   } = useMyJourneyQueries();
 
-  if (isLoadingUpcoming || isLoadingCompleted) {
+  if (isLoadingUpcoming || isLoadingCompleted || myReviewLoading) {
     return <Loading />;
   }
 
-  if (isErrorUpcoming || isErrorCompleted) {
+  if (isErrorUpcoming || isErrorCompleted || myReviewIsError) {
     return (
       <ErrorMessage
         message={
           upcomingError?.message ||
           completedError?.message ||
+          myReviewError?.message ||
           "Failed to load tours"
         }
       />
     );
   }
-
-  console.log("Upcoming Tours:", upcomingTours);
-  console.log("Completed Tours:", completedTours);
 
   return (
     <div className="container mx-auto p-6">
@@ -51,7 +54,7 @@ function Journey() {
       </section>
 
       {/* Completed Tours Section */}
-      <section>
+      <section className="mb-12">
         <h1 className="mb-6 text-3xl font-bold text-white">Completed Tours</h1>
         {completedTours && completedTours.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -61,6 +64,22 @@ function Journey() {
           </div>
         ) : (
           <p className="text-gray-400">No completed tours found.</p>
+        )}
+      </section>
+
+      {/* My Reviews Section */}
+      <section>
+        <h1 className="mb-6 text-3xl font-bold text-white">My Reviews</h1>
+        {myReviewData && myReviewData.length > 0 ? (
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            {myReviewData.map((review) => (
+              <UserReviewCard key={review.id} review={review} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-400">
+            No reviews yet. Share your experiences!
+          </p>
         )}
       </section>
     </div>

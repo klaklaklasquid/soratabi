@@ -21,18 +21,16 @@ function StartDates({ date, maxCustomers }: StartDatesProps) {
 
   const remainingSlots = maxCustomers - date.currentCustomers;
   const slotPercent = Math.max(0, Math.min(1, remainingSlots / maxCustomers));
-  let slotBarColor = "bg-primary-blue/80";
-  let slotTextColor = "text-primary-blue";
+  let slotBarColor = "bg-white/20";
+  let slotTextColor = "text-white";
   let slotFillColor = "bg-secondary-blue/80";
-  let cardBg = "bg-primary-blue/10";
-  let cardBorder = "border-primary-blue/30";
+  let cardBorder = "border-white/10";
 
   //! FORCE YELLOW STATE FOR TESTING - COMMENT OUT WHEN DONE
   // if (true) {
   //   slotBarColor = "bg-primary-yellow/20";
   //   slotTextColor = "text-primary-yellow";
   //   slotFillColor = "bg-primary-yellow/80";
-  //   cardBg = "bg-primary-yellow/10";
   //   cardBorder = "border-primary-yellow/40";
   // }
 
@@ -41,7 +39,6 @@ function StartDates({ date, maxCustomers }: StartDatesProps) {
   //   slotBarColor = "bg-tertiary-red/20 animate-pulse";
   //   slotTextColor = "text-tertiary-red";
   //   slotFillColor = "bg-tertiary-red/80";
-  //   cardBg = "bg-tertiary-red/10";
   //   cardBorder = "border-tertiary-red/40";
   // }
 
@@ -49,13 +46,11 @@ function StartDates({ date, maxCustomers }: StartDatesProps) {
     slotBarColor = "bg-tertiary-red/20 animate-pulse";
     slotTextColor = "text-tertiary-red";
     slotFillColor = "bg-tertiary-red/80";
-    cardBg = "bg-tertiary-red/10";
     cardBorder = "border-tertiary-red/40";
   } else if (slotPercent < 0.65) {
     slotBarColor = "bg-primary-yellow/20";
     slotTextColor = "text-primary-yellow";
     slotFillColor = "bg-primary-yellow/80";
-    cardBg = "bg-primary-yellow/10";
     cardBorder = "border-primary-yellow/40";
   }
 
@@ -65,17 +60,17 @@ function StartDates({ date, maxCustomers }: StartDatesProps) {
 
   return (
     <Card
-      className={`flex w-full flex-col gap-0 rounded-3xl border-2 ${cardBorder} ${cardBg} hover:shadow-3xl p-0 shadow-2xl backdrop-blur-xl transition-all hover:scale-[1.02]`}
+      className={`flex w-full flex-col gap-0 rounded-3xl border ${cardBorder} bg-white/5 p-0 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl`}
     >
       <CardHeader className="flex flex-col items-center gap-2 px-8 pt-8">
         <FontAwesomeIcon
           icon={faCalendarAlt}
-          className="text-primary-blue mb-2 text-3xl"
+          className="mb-2 text-3xl text-white drop-shadow-lg"
         />
-        <CardTitle className="text-primary-blue text-3xl font-extrabold tracking-wide drop-shadow-lg">
+        <CardTitle className="text-3xl font-extrabold tracking-wide text-white drop-shadow-lg">
           {date.startDate}
         </CardTitle>
-        <CardDescription className="text-base text-gray-500">
+        <CardDescription className="text-base font-semibold text-gray-300">
           Tour Start Date
         </CardDescription>
       </CardHeader>
@@ -98,13 +93,15 @@ function StartDates({ date, maxCustomers }: StartDatesProps) {
         <div className="mt-2 flex items-center gap-3">
           <FontAwesomeIcon
             icon={faUserFriends}
-            className="text-primary-blue text-xl"
+            className="text-xl text-white drop-shadow"
           />
-          <span className="text-base text-white">Max: {maxCustomers}</span>
+          <span className="text-base font-semibold text-white">
+            Max: {maxCustomers}
+          </span>
           {remainingSlots > 0 && (
             <FontAwesomeIcon
               icon={faCheckCircle}
-              className="text-primary-green text-xl"
+              className="text-primary-green text-xl drop-shadow"
               title="Available"
             />
           )}
@@ -112,7 +109,7 @@ function StartDates({ date, maxCustomers }: StartDatesProps) {
       </CardContent>
       <CardFooter className="flex justify-center pb-8">
         <Button
-          className="bg-primary-blue/80 w-2/3 rounded-full py-3 text-lg font-bold text-white shadow-lg transition-transform duration-200 hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50"
+          className="w-2/3 rounded-full border border-white/20 bg-white/10 py-3 text-lg font-bold text-white shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white/20 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
           style="primary"
           disabled={remainingSlots <= 0}
           onClick={handleNavigation}
