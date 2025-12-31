@@ -63,7 +63,7 @@ function ConfirmationPopup({
         <button
           onClick={onClose}
           type="button"
-          className="border-secondary-blue/40 bg-secondary-blue/30 hover:border-secondary-blue/60 hover:bg-secondary-blue/50 absolute top-6 right-6 z-10 flex h-12 w-12 items-center justify-center rounded-full border text-white shadow-xl transition-all duration-300 hover:scale-110 hover:rotate-90 hover:shadow-2xl active:scale-95"
+          className="border-secondary-blue/40 bg-secondary-blue/30 hover:border-secondary-blue/60 hover:bg-secondary-blue/50 absolute top-6 right-6 z-10 flex h-12 w-12 items-center justify-center rounded-full border text-white shadow-sm transition-all duration-300 hover:scale-110 hover:rotate-90 hover:shadow-md active:scale-95"
         >
           <FontAwesomeIcon
             icon={faTimes}
@@ -99,7 +99,7 @@ function ConfirmationPopup({
         <div className="flex gap-4">
           <button
             onClick={onClose}
-            className="border-secondary-blue/40 bg-secondary-blue/30 hover:border-secondary-blue/60 hover:bg-secondary-blue/50 flex flex-1 items-center justify-center rounded-full border px-8 py-4 text-lg font-bold text-white shadow-xl backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-2xl active:scale-95"
+            className="border-secondary-blue/40 bg-secondary-blue/30 hover:border-secondary-blue/60 hover:bg-secondary-blue/50 flex flex-1 items-center justify-center rounded-full border px-8 py-4 text-lg font-bold text-white shadow-sm backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-md active:scale-95"
           >
             {cancelText}
           </button>
@@ -108,7 +108,7 @@ function ConfirmationPopup({
               onConfirm();
               onClose();
             }}
-            className={`${confirmColor} flex flex-1 items-center justify-center rounded-full border border-white/30 px-8 py-4 text-lg font-bold text-white shadow-xl backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-white/40 hover:shadow-2xl active:scale-95`}
+            className={`${confirmColor} flex flex-1 items-center justify-center rounded-full border border-white/30 px-8 py-4 text-lg font-bold text-white shadow-sm backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-white/40 hover:shadow-md active:scale-95`}
           >
             {confirmText}
           </button>
