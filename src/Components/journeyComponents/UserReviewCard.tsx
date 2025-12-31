@@ -3,7 +3,12 @@ import RatingStars from "../browseComponents/RatingsStars";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-function UserReviewCard({ review }: { review: ReviewResponse }) {
+interface UserReviewCardProps {
+  review: ReviewResponse;
+  onDelete: () => void;
+}
+
+function UserReviewCard({ review, onDelete }: UserReviewCardProps) {
   const reviewDate = new Date(review.createdAt).toLocaleDateString("en-GB", {
     day: "numeric",
     month: "short",
@@ -49,6 +54,7 @@ function UserReviewCard({ review }: { review: ReviewResponse }) {
         </button>
         <button
           type="button"
+          onClick={onDelete}
           className="bg-tertiary-red hover:bg-tertiary-red/80 flex flex-1 items-center justify-center gap-2 rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl"
         >
           <FontAwesomeIcon icon={faTrash} />

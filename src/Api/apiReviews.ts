@@ -35,3 +35,14 @@ export async function GetAllReviewsFromUser(): Promise<ReviewResponse[]> {
     await cosmosApiClient.get<ReviewResponse[]>("reviews/my-reviews");
   return response.data;
 }
+
+export async function DeleteReview(
+  reviewId: string,
+  tourId: number,
+): Promise<void> {
+  await cosmosApiClient.delete(`reviews/${reviewId}`, {
+    params: {
+      tourId,
+    },
+  });
+}
