@@ -71,7 +71,7 @@ function ReviewPage() {
       },
       {
         onSuccess: () => {
-          navigate(`/tour/${tour?.type}/${tourId}`);
+          navigate(-1);
         },
         onError: (err) => {
           console.error("Error submitting review:", err);

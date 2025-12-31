@@ -23,6 +23,9 @@ export function useCreateReview() {
       queryClient.invalidateQueries({
         queryKey: ["reviewsStats", `tour id: ${variables.tourId}`],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["my-reviews"],
+      });
     },
   });
 }
