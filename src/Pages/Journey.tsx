@@ -125,8 +125,6 @@ function Journey() {
     );
   }
 
-  console.log(myReviewData);
-
   return (
     <>
       <div className="container mx-auto p-6">

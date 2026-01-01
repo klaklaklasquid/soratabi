@@ -23,6 +23,7 @@ import AuthProvider from "./Auth/AuthProvider.tsx";
 import CreateTour from "./Pages/CreateTour.tsx";
 import PurchaseTour from "./Pages/PurchaseTour.tsx";
 import ReviewPage from "./Pages/ReviewPage.tsx";
+import InfoTourPage from "./Pages/InfoTourPage.tsx";
 
 export const routeConfig = [
   {
@@ -88,6 +89,10 @@ export const routeConfig = [
   {
     path: "/tour/:type/:id",
     element: <FullTourCard />,
+  },
+  {
+    path: "/info-tour/:id",
+    element: <InfoTourPage />,
   },
   {
     path: "/tour/:type/:id/date/:dateId",
