@@ -23,6 +23,24 @@ interface ToursData {
   tags: TagsData[];
 }
 
+interface JourneyResponse {
+  id: number;
+  name: string;
+  ratingsAverage: number;
+  ratingsQuantity: number;
+  createdAt: string;
+  duration: number;
+  price: number;
+  summary: string;
+  description: string;
+  coverImage: string;
+  type: string;
+  maxCustomers: number;
+  locations: LocationsData[];
+  tags: TagsData[];
+  bookedStartDate: StartDatesData;
+}
+
 interface LocationsData {
   id: number;
   name: string;
@@ -62,12 +80,17 @@ interface ReviewResponse {
   tourName: string;
 
   // User info
-  userId: number;
+  userId: string;
   userName: string;
   userPhoto: string;
 }
 
 type ReviewRequest = Omit<ReviewResponse, "id">;
+
+interface ReviewUpdateRequest {
+  rating: number;
+  review: string;
+}
 
 interface TourStats {
   tourId: number;

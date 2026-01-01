@@ -3,11 +3,8 @@ import { useParams } from "react-router-dom";
 import RatingStars from "./RatingsStars";
 import TextWithToggle from "./TextWithToggle";
 import LeafletMap from "../../UI/LeafletMap";
-import Button from "../Button";
-import { useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import GlobeMap from "../../3DComponents/GlobeMap";
 import StartDates from "./StartDates";
 import ReviewCard from "./ReviewCard";
 import ReviewEmpty from "./ReviewEmpty";
@@ -21,7 +18,6 @@ import BlurSpot from "../../UI/BlurSpot";
 import { useReviewByTourId } from "@/Hooks/useReviewByTourId";
 
 function FullTourCard() {
-  const [view, setView] = useState<boolean>(true);
   const { id } = useParams();
   const { isLoading, data, error, isError } = useTourById(+id!);
   const {
@@ -35,9 +31,9 @@ function FullTourCard() {
   const [emblaRef] = useEmblaCarousel(
     {
       loop: reviewsData && reviewsData.length >= 5,
-      startIndex: reviewsData ? Math.floor(reviewsData.length / 2) : 0,
+      startIndex: 0,
       align: "center",
-      containScroll: "trimSnaps",
+      containScroll: false,
     },
     reviewsData && reviewsData.length >= 5 ? [Autoplay({ delay: 3500 })] : [],
   );
@@ -64,24 +60,26 @@ function FullTourCard() {
   return (
     <section className="mx-5 mt-10 mb-10 flex flex-col gap-5 md:mx-20 lg:mx-40 xl:mx-80">
       {/* Hero/Info Panel - image as right-side background */}
-      <div className="relative flex min-h-80 flex-col gap-0 overflow-hidden rounded-3xl bg-white/30 shadow-lg backdrop-blur-md md:flex-row">
+      <div className="relative flex min-h-80 flex-col gap-0 overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-xl backdrop-blur-md md:flex-row">
         {/* Info Panel Left */}
         <div className="z-10 flex flex-col gap-2 px-6 py-8 md:w-1/2">
           <div className="mb-2 flex items-center justify-between">
             <RatingStars
               rating={stats ? stats.averageRating : data.ratingsAverage}
             />
-            <span className="bg-secondary-blue rounded-full px-4 py-2 text-white">
+            <span className="rounded-full border border-white/20 bg-white/10 px-4 py-2 font-semibold text-white shadow-lg backdrop-blur-sm">
               {stats ? stats.totalReviews : data.ratingsQuantity} reviews
             </span>
           </div>
-          <h2 className="text-primary-blue text-3xl font-bold">{data.name}</h2>
-          <h4 className="text-lg text-gray-700">{data.summary}</h4>
+          <h2 className="text-3xl font-bold text-white drop-shadow-lg">
+            {data.name}
+          </h2>
+          <h4 className="text-lg font-medium text-gray-200">{data.summary}</h4>
           <div className="my-2 flex gap-4">
-            <span className="bg-primary-yellow/80 text-primary-blue rounded-full px-4 py-1 text-lg font-bold shadow">
+            <span className="bg-primary-yellow/80 text-primary-blue rounded-full border border-white/20 px-4 py-1 text-lg font-bold shadow-lg backdrop-blur-sm">
               € {data.price}
             </span>
-            <span className="bg-primary-blue/80 rounded-full px-4 py-1 text-lg font-medium text-white shadow">
+            <span className="rounded-full border border-white/20 bg-white/10 px-4 py-1 text-lg font-semibold text-white shadow-lg backdrop-blur-sm">
               {data.duration}-Day
             </span>
           </div>
@@ -97,7 +95,7 @@ function FullTourCard() {
             backgroundRepeat: "no-repeat",
           }}
         >
-          <div className="bg-secondary-blue/90 absolute right-4 bottom-4 rounded-full px-5 py-2 text-xs font-bold text-white shadow-lg">
+          <div className="absolute right-4 bottom-4 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-xs font-bold text-white shadow-lg backdrop-blur-md">
             {data.tags.map((tag) => tag.tag).join(", ")}
           </div>
         </div>
@@ -124,33 +122,13 @@ function FullTourCard() {
 
       {/* Map/Globe Switcher */}
       <section className="flex flex-col gap-3 text-lg">
-        <div className="mb-2 flex flex-col justify-center gap-3 xl:flex-row">
-          <Button
-            onClick={() => setView(true)}
-            style={view ? "primary" : "secondary"}
-          >
-            Map View
-          </Button>
-          <Button
-            onClick={() => setView(false)}
-            style={view ? "secondary" : "primary"}
-          >
-            Globe View
-          </Button>
+        <div className="bg-primary-blue-50 rounded-2xl p-5">
+          <LeafletMap
+            className="min-h-[400px] w-full overflow-hidden rounded-xl"
+            locations={data.locations}
+            zoom={5}
+          />
         </div>
-        {view ? (
-          <div className="bg-primary-blue-50 rounded-2xl p-5">
-            <LeafletMap
-              className="min-h-[400px] w-full overflow-hidden rounded-xl"
-              locations={data.locations}
-              zoom={5}
-            />
-          </div>
-        ) : (
-          <div className="min-h-[40vh]">
-            <GlobeMap locations={data.locations} />
-          </div>
-        )}
       </section>
 
       {/* Start Dates */}

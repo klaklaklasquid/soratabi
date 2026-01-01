@@ -15,6 +15,7 @@ function NavBar() {
     "/filter-settings",
     "/tour/:type/:id",
     "/tour/:type/:id/date/:dateId",
+    "/review/:id",
   ]);
 
   return (
