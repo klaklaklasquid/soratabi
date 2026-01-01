@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { capitalizeFirst } from "@/Utils/textAlter";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 
 function JourneyTourCard({ data, status }: JourneyTourCardProps) {
   const formattedDate = new Date(
@@ -9,6 +11,11 @@ function JourneyTourCard({ data, status }: JourneyTourCardProps) {
     day: "numeric",
     year: "numeric",
   });
+
+  const handleDownloadPdf = () => {
+    // TODO: Implement PDF download functionality
+    console.log("Downloading PDF for tour:", data.id);
+  };
 
   const statusConfig = {
     upcoming: {
@@ -67,12 +74,24 @@ function JourneyTourCard({ data, status }: JourneyTourCardProps) {
           {data.summary}
         </p>
 
-        <Link
-          className={`${config.buttonColor} group mt-2 w-full rounded-full border border-white/20 px-6 py-2 text-center font-semibold text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl`}
-          to={config.buttonLink}
-        >
-          {config.buttonText}
-        </Link>
+        <div className="mt-2 flex gap-3">
+          <Link
+            className={`${config.buttonColor} group flex-1 rounded-full border border-white/20 px-6 py-2 text-center font-semibold text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl`}
+            to={config.buttonLink}
+          >
+            {config.buttonText}
+          </Link>
+          {status === "upcoming" && (
+            <button
+              onClick={handleDownloadPdf}
+              className="bg-tertiary-red hover:bg-tertiary-red/80 flex items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-2 font-semibold text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl"
+              title="Download PDF"
+            >
+              <FontAwesomeIcon icon={faFilePdf} />
+              <span className="hidden sm:inline">PDF</span>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Overlay for glassy blue tint */}
