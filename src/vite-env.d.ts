@@ -80,12 +80,17 @@ interface ReviewResponse {
   tourName: string;
 
   // User info
-  userId: number;
+  userId: string;
   userName: string;
   userPhoto: string;
 }
 
 type ReviewRequest = Omit<ReviewResponse, "id">;
+
+interface ReviewUpdateRequest {
+  rating: number;
+  review: string;
+}
 
 interface TourStats {
   tourId: number;

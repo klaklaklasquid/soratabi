@@ -4,20 +4,41 @@ import ErrorMessage from "@/UI/ErrorMessage";
 import JourneyTourCard from "@/Components/journeyComponents/JourneyTourCard";
 import UserReviewCard from "@/Components/journeyComponents/UserReviewCard";
 import ConfirmationPopup from "@/UI/ConfirmationPopup";
+import EditReviewPopup from "@/UI/EditReviewPopup";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { DeleteReview } from "@/Api/apiReviews";
+import { DeleteReview, UpdateReview } from "@/Api/apiReviews";
 
 function Journey() {
   const [deleteReviewId, setDeleteReviewId] = useState<string | null>(null);
   const [deleteReviewName, setDeleteReviewName] = useState<string>("");
   const [deleteTourId, setDeleteTourId] = useState<number | null>(null);
+  const [editReview, setEditReview] = useState<ReviewResponse | null>(null);
 
   const queryClient = useQueryClient();
 
   const deleteMutation = useMutation({
     mutationFn: ({ reviewId, tourId }: { reviewId: string; tourId: number }) =>
       DeleteReview(reviewId, tourId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["my-reviews"] });
+      queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      queryClient.invalidateQueries({ queryKey: ["reviewsStats"] });
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({
+      reviewId,
+      tourId,
+      rating,
+      review,
+    }: {
+      reviewId: string;
+      tourId: number;
+      rating: number;
+      review: string;
+    }) => UpdateReview(reviewId, tourId, { rating, review }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["my-reviews"] });
       queryClient.invalidateQueries({ queryKey: ["reviews"] });
@@ -59,6 +80,28 @@ function Journey() {
             setDeleteReviewId(null);
             setDeleteReviewName("");
             setDeleteTourId(null);
+          },
+        },
+      );
+    }
+  };
+
+  const handleEditClick = (review: ReviewResponse) => {
+    setEditReview(review);
+  };
+
+  const handleEditSave = (rating: number, reviewText: string) => {
+    if (editReview) {
+      updateMutation.mutate(
+        {
+          reviewId: editReview.id,
+          tourId: editReview.tourId,
+          rating,
+          review: reviewText,
+        },
+        {
+          onSuccess: () => {
+            setEditReview(null);
           },
         },
       );
@@ -137,6 +180,7 @@ function Journey() {
                   onDelete={() =>
                     handleDeleteClick(review.id, review.tourName, review.tourId)
                   }
+                  onEdit={() => handleEditClick(review)}
                 />
               ))}
             </div>
@@ -162,6 +206,15 @@ function Journey() {
         cancelText="Cancel"
         confirmColor="bg-tertiary-red hover:bg-tertiary-red/80"
       />
+
+      {editReview && (
+        <EditReviewPopup
+          isOpen={!!editReview}
+          review={editReview}
+          onClose={() => setEditReview(null)}
+          onSave={handleEditSave}
+        />
+      )}
     </>
   );
 }

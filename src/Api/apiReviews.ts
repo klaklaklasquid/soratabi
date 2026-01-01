@@ -46,3 +46,21 @@ export async function DeleteReview(
     },
   });
 }
+
+export async function UpdateReview(
+  reviewId: string,
+  tourId: number,
+  request: ReviewUpdateRequest,
+): Promise<ReviewResponse> {
+  const response = await cosmosApiClient.put<ReviewResponse>(
+    `reviews/${reviewId}`,
+    request,
+    {
+      params: {
+        tourId,
+      },
+    },
+  );
+
+  return response.data;
+}
