@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { capitalizeFirst } from "@/Utils/textAlter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
+import { useDownloadPdf } from "@/Hooks/useDownloadPdf";
 
 function JourneyTourCard({ data, status }: JourneyTourCardProps) {
   const formattedDate = new Date(
@@ -12,9 +13,13 @@ function JourneyTourCard({ data, status }: JourneyTourCardProps) {
     year: "numeric",
   });
 
+  const downloadPdfMutation = useDownloadPdf();
+
   const handleDownloadPdf = () => {
-    // TODO: Implement PDF download functionality
-    console.log("Downloading PDF for tour:", data.id);
+    downloadPdfMutation.mutate({
+      tourId: data.id,
+      startDateId: data.bookedStartDate.id,
+    });
   };
 
   const statusConfig = {
@@ -24,7 +29,7 @@ function JourneyTourCard({ data, status }: JourneyTourCardProps) {
       buttonText: "View Full Details",
       buttonColor:
         "bg-secondary-blue hover:border-tertiary-blue hover:bg-primary-blue",
-      buttonLink: `/tour/${data.type}/${data.id}`,
+      buttonLink: `/info-tour/${data.id}?startDateId=${data.bookedStartDate.id}`,
     },
     completed: {
       badge: "Completed",
@@ -84,11 +89,14 @@ function JourneyTourCard({ data, status }: JourneyTourCardProps) {
           {status === "upcoming" && (
             <button
               onClick={handleDownloadPdf}
-              className="bg-tertiary-red hover:bg-tertiary-red/80 flex items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-2 font-semibold text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl"
+              disabled={downloadPdfMutation.isPending}
+              className="bg-tertiary-red hover:bg-tertiary-red/80 flex items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-2 font-semibold text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
               title="Download PDF"
             >
               <FontAwesomeIcon icon={faFilePdf} />
-              <span className="hidden sm:inline">PDF</span>
+              <span className="hidden sm:inline">
+                {downloadPdfMutation.isPending ? "..." : "PDF"}
+              </span>
             </button>
           )}
         </div>

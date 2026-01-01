@@ -16,6 +16,7 @@ function NavBar() {
     "/tour/:type/:id",
     "/tour/:type/:id/date/:dateId",
     "/review/:id",
+    "/info-tour/:id",
   ]);
 
   return (
