@@ -46,8 +46,6 @@ interface LocationsData {
 
 interface LocationRequestData {
   name: string;
-  latitude: number;
-  longitude: number;
   description: string;
   image: File;
 }
