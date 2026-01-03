@@ -77,12 +77,11 @@ function Account() {
           {/* Profile Picture - Prominent on mobile */}
           <div className="flex flex-col items-center space-y-6">
             {userProfile?.userphoto ? (
-              <div className="flex h-40 w-40 items-center justify-center overflow-hidden rounded-full shadow-lg sm:h-48 sm:w-48">
+              <div className="h-40 w-40 overflow-hidden rounded-full shadow-lg sm:h-48 sm:w-48">
                 <img
                   src={userProfile.userphoto}
                   alt="Profile"
-                  className="min-h-full min-w-full object-cover"
-                  style={{ objectPosition: "50% 50%" }}
+                  className="h-full w-full object-contain"
                 />
               </div>
             ) : (
