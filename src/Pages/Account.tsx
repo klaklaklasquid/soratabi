@@ -3,18 +3,36 @@ import { useNavigate } from "react-router-dom";
 import { useUserProfile } from "../Hooks/useUserProfile";
 import Loading from "../UI/Loading";
 import ErrorMessage from "../UI/ErrorMessage";
+import EditProfileImagePopup from "@/UI/EditProfileImagePopup";
+import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { PatchUser } from "@/Api/apiUser";
 
 function Account() {
   const auth = useAuth();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [showEditPopup, setShowEditPopup] = useState(false);
   const {
     data: userProfile,
     isLoading: isLoadingProfile,
     error: profileError,
   } = useUserProfile();
 
+  const updateImageMutation = useMutation({
+    mutationFn: PatchUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+      setShowEditPopup(false);
+    },
+  });
+
   const handleLogout = () => {
     auth.signoutRedirect();
+  };
+
+  const handleSaveImage = (image: File) => {
+    updateImageMutation.mutate({ image });
   };
 
   if (auth.isLoading || isLoadingProfile) {
@@ -93,7 +111,13 @@ function Account() {
           </div>
 
           {/* Logout Button */}
-          <div className="pt-6">
+          <div className="space-y-3 pt-6">
+            <button
+              onClick={() => setShowEditPopup(true)}
+              className="border-secondary-blue/40 bg-secondary-blue/30 hover:border-secondary-blue/60 hover:bg-secondary-blue/50 w-full rounded-full border px-6 py-4 text-lg font-semibold text-white transition-all hover:scale-105"
+            >
+              Change Profile Image
+            </button>
             <button
               onClick={handleLogout}
               className="bg-tertiary-red hover:bg-tertiary-red/80 w-full rounded-full px-6 py-4 text-lg text-white transition-all hover:scale-105"
@@ -103,6 +127,14 @@ function Account() {
           </div>
         </div>
       </div>
+
+      <EditProfileImagePopup
+        isOpen={showEditPopup}
+        onClose={() => setShowEditPopup(false)}
+        onSave={handleSaveImage}
+        currentImage={userProfile?.userphoto}
+        isUploading={updateImageMutation.isPending}
+      />
     </div>
   );
 }

@@ -5,3 +5,7 @@ interface UserInterface {
   lastname: string;
   userPhoto: string;
 }
+
+interface UserPatchRequest {
+  image: File;
+}

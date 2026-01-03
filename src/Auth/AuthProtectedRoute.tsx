@@ -11,8 +11,6 @@ function AuthProtectedRoute({ children, role }: AuthProtectedRouteProps) {
     return <Navigate to={"/login"} />;
   }
 
-  console.log(auth.user?.profile?.role);
-
   // Check role if specified (role would be in user claims)
   if (role && auth.user?.profile?.role !== role) {
     return <Navigate to={"/"} />;
