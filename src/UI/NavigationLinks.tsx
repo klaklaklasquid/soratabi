@@ -24,7 +24,7 @@ function NavigationLinks() {
 
           if (
             route.name === "CREATE TOUR" &&
-            (!auth.isAuthenticated || auth.user?.profile?.role !== "admin")
+            (!auth.isAuthenticated || auth.user?.profile?.role !== "Admin")
           ) {
             return null;
           }

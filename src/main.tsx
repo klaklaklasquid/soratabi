@@ -67,7 +67,7 @@ export const routeConfig = [
   {
     path: "create-tour",
     element: (
-      <AuthProtectedRoute role="admin">
+      <AuthProtectedRoute role="Admin">
         <CreateTour />
       </AuthProtectedRoute>
     ),

@@ -1,5 +1,5 @@
 function CreateTour() {
-  return <div></div>;
+  return <div>create tour</div>;
 }
 
 export default CreateTour;
