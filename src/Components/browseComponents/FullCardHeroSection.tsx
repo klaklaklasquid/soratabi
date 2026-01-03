@@ -1,7 +1,13 @@
 import RatingStars from "./RatingsStars";
 import TextWithToggle from "./TextWithToggle";
+import { useNavigate } from "react-router-dom";
+import useAuth from "@/Auth/useAuth";
 
 function FullCardHeroSection({ stats, data }: FullCardHeroSectionProps) {
+  const navigate = useNavigate();
+  const auth = useAuth();
+  const isAdmin = auth.user?.profile?.role === "Admin";
+
   return (
     <div className="relative flex min-h-80 flex-col gap-0 overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-xl backdrop-blur-md md:flex-row">
       {/* Info Panel Left */}
@@ -30,7 +36,7 @@ function FullCardHeroSection({ stats, data }: FullCardHeroSectionProps) {
       </div>
       {/* Image Right */}
       <div
-        className="flex min-h-[220px] w-full items-end justify-end md:min-h-8 md:w-1/2"
+        className="relative flex min-h-[220px] w-full items-end justify-end md:min-h-8 md:w-1/2"
         style={{
           backgroundImage: `url(${data.coverImage})`,
           backgroundSize: "cover",
@@ -38,6 +44,14 @@ function FullCardHeroSection({ stats, data }: FullCardHeroSectionProps) {
           backgroundRepeat: "no-repeat",
         }}
       >
+        {isAdmin && (
+          <button
+            onClick={() => navigate(`/edit-tour/${data.id}`)}
+            className="absolute top-4 right-4 rounded-lg border border-white/30 bg-white/20 px-4 py-2 font-semibold text-white shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/30"
+          >
+            Edit Tour
+          </button>
+        )}
         <div className="absolute right-4 bottom-4 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-xs font-bold text-white shadow-lg backdrop-blur-md">
           {data.tags.map((tag) => tag.tag).join(", ")}
         </div>

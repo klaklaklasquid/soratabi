@@ -1,15 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import BlurSpot from "@/UI/BlurSpot";
 import CreateTagPopup from "@/Components/createTourComponents/CreateTagPopup";
 import CreateLocationPopup from "@/Components/createTourComponents/CreateLocationPopup";
 import CreateStartDatePopup from "@/Components/createTourComponents/CreateStartDatePopup";
 import { useCreateTour } from "@/Hooks/useCreateTour";
 import { createTourValidationSchema } from "@/schemas/tourSchemas";
+import { GetTourById } from "@/Api/apiGetTourById";
+import Loading from "@/UI/Loading";
 
 function CreateTour() {
   const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  const isEditMode = Boolean(id);
+
+  // Fetch existing tour data if editing
+  const { data: existingTour, isLoading } = useQuery({
+    queryKey: ["tour", id],
+    queryFn: () => GetTourById(Number(id)),
+    enabled: isEditMode,
+  });
 
   const [locationSearch, setLocationSearch] = useState("");
   const [startDateSearch, setStartDateSearch] = useState("");
@@ -40,47 +52,81 @@ function CreateTour() {
     createLocationMutation,
     createStartDateMutation,
     createTagMutation,
-  } = useCreateTour({
-    onLocationCreated: () => {
-      setShowLocationPopup(false);
-      setNewLocation({
-        name: "",
-        description: "",
-        image: null!,
-      });
+  } = useCreateTour(
+    {
+      onLocationCreated: () => {
+        setShowLocationPopup(false);
+        setNewLocation({
+          name: "",
+          description: "",
+          image: null!,
+        });
+      },
+      onStartDateCreated: () => {
+        setShowStartDatePopup(false);
+        setNewStartDate({ startDate: "" });
+      },
+      onTagCreated: () => {
+        setShowTagPopup(false);
+        setNewTag({ tag: "" });
+      },
     },
-    onStartDateCreated: () => {
-      setShowStartDatePopup(false);
-      setNewStartDate({ startDate: "" });
+    {
+      tourId: id ? Number(id) : undefined,
+      isEditMode,
     },
-    onTagCreated: () => {
-      setShowTagPopup(false);
-      setNewTag({ tag: "" });
-    },
-  });
+  );
 
-  const initialValues: ToursRequestData = {
-    name: "",
-    duration: "" as unknown as number,
-    price: "" as unknown as number,
-    summary: "",
-    description: "",
-    coverImage: undefined as unknown as File,
-    type: "tour",
-    maxCustomers: "" as unknown as number,
-    locationIds: [],
-    startDateIds: [],
-    tagIds: [],
+  const getInitialValues = (): ToursRequestData => {
+    if (isEditMode && existingTour) {
+      return {
+        name: existingTour.name,
+        duration: existingTour.duration,
+        price: existingTour.price,
+        summary: existingTour.summary,
+        description: existingTour.description,
+        coverImage: undefined as unknown as File,
+        type: existingTour.type,
+        maxCustomers: existingTour.maxCustomers,
+        locationIds: existingTour.locations.map((loc) => loc.id),
+        startDateIds: existingTour.startDates.map((date) => date.id),
+        tagIds: existingTour.tags.map((tag) => tag.id),
+      };
+    }
+    return {
+      name: "",
+      duration: "" as unknown as number,
+      price: "" as unknown as number,
+      summary: "",
+      description: "",
+      coverImage: undefined as unknown as File,
+      type: "tour",
+      maxCustomers: "" as unknown as number,
+      locationIds: [],
+      startDateIds: [],
+      tagIds: [],
+    };
   };
+
+  useEffect(() => {
+    if (isEditMode && existingTour) {
+      setImagePreview(existingTour.coverImage);
+    }
+  }, [isEditMode, existingTour]);
+
+  if (isEditMode && isLoading) {
+    return <Loading />;
+  }
 
   return (
     <section className="relative mx-5 mt-10 mb-10 flex flex-col gap-5 md:mx-20 lg:mx-40 xl:mx-80">
       <h1 className="text-4xl font-bold text-white drop-shadow-lg">
-        Create New Tour
+        {isEditMode ? "Edit Tour" : "Create New Tour"}
       </h1>
 
       <Formik
-        initialValues={initialValues}
+        enableReinitialize
+        initialValues={getInitialValues()}
         validationSchema={createTourValidationSchema}
         onSubmit={(values) => {
           createTourMutation.mutate(values);
@@ -528,7 +574,7 @@ function CreateTour() {
             <div className="flex gap-4 self-center">
               <button
                 type="button"
-                onClick={() => navigate("/browse")}
+                onClick={() => navigate("/browse-destination")}
                 className="rounded-full border border-white/20 bg-white/10 px-8 py-3 text-lg font-semibold text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl"
               >
                 Cancel

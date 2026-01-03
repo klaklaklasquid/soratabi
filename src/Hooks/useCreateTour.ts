@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { CreateTour as CreateTourAPI } from "../Api/apiTours";
+import { CreateTour as CreateTourAPI, UpdateTour } from "../Api/apiTours";
 import { GetAllLocations, CreateLocation } from "../Api/apiLocation";
 import { GetAllStartDates, CreateStartDate } from "../Api/apiStartDates";
 import { GetAllTags, CreateTag } from "../Api/apiTags";
@@ -11,9 +11,18 @@ interface UseCreateTourCallbacks {
   onTagCreated: () => void;
 }
 
-export function useCreateTour(callbacks: UseCreateTourCallbacks) {
+interface UseCreateTourOptions {
+  tourId?: number;
+  isEditMode?: boolean;
+}
+
+export function useCreateTour(
+  callbacks: UseCreateTourCallbacks,
+  options?: UseCreateTourOptions,
+) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { tourId, isEditMode } = options || {};
 
   // Queries
   const { data: locations = [] } = useQuery({
@@ -31,11 +40,17 @@ export function useCreateTour(callbacks: UseCreateTourCallbacks) {
     queryFn: GetAllTags,
   });
 
-  // Create tour mutation
+  // Create/Update tour mutation
   const createTourMutation = useMutation({
-    mutationFn: CreateTourAPI,
+    mutationFn: (data: ToursRequestData | TourUpdateRequestData) => {
+      if (isEditMode && tourId) {
+        return UpdateTour(tourId, data as TourUpdateRequestData);
+      }
+      return CreateTourAPI(data as ToursRequestData);
+    },
     onSuccess: (newTour) => {
       queryClient.invalidateQueries({ queryKey: ["tours"] });
+      queryClient.invalidateQueries({ queryKey: ["tour", tourId] });
       navigate(`/tour/${newTour.type}/${newTour.id}`);
     },
   });

@@ -35,6 +35,20 @@ interface ToursRequestData {
   tagIds: number[];
 }
 
+interface TourUpdateRequestData {
+  name: string;
+  duration: number;
+  price: number;
+  summary: string;
+  description: string;
+  coverImage?: File;
+  type: string;
+  maxCustomers: number;
+  locationIds: number[];
+  startDateIds: number[];
+  tagIds: number[];
+}
+
 interface LocationsData {
   id: number;
   name: string;

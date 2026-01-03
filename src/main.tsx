@@ -75,6 +75,14 @@ export const routeConfig = [
     inNav: true,
   },
   {
+    path: "edit-tour/:id",
+    element: (
+      <AuthProtectedRoute role="Admin">
+        <CreateTour />
+      </AuthProtectedRoute>
+    ),
+  },
+  {
     path: "/login",
     element: <LoginPage />,
   },
