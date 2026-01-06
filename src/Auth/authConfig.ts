@@ -5,7 +5,7 @@ export const oidcConfig = {
   redirect_uri: "http://localhost:5173/",
   post_logout_redirect_uri: "http://localhost:5173/",
   response_type: "code",
-  scope: "openid profile soratabi.api",
+  scope: "openid profile roles soratabi.api",
   automaticSilentRenew: true,
   loadUserInfo: true,
 };

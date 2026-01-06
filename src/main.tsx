@@ -67,12 +67,20 @@ export const routeConfig = [
   {
     path: "create-tour",
     element: (
-      <AuthProtectedRoute role="admin">
+      <AuthProtectedRoute role="Admin">
         <CreateTour />
       </AuthProtectedRoute>
     ),
     name: "CREATE TOUR",
     inNav: true,
+  },
+  {
+    path: "edit-tour/:id",
+    element: (
+      <AuthProtectedRoute role="Admin">
+        <CreateTour />
+      </AuthProtectedRoute>
+    ),
   },
   {
     path: "/login",

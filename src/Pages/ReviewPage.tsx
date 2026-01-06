@@ -17,10 +17,9 @@ import * as Yup from "yup";
 import { useTourById } from "../Hooks/useTourById";
 import Loading from "../UI/Loading";
 import ErrorMessage from "../UI/ErrorMessage";
-import RatingStars from "../Components/browseComponents/RatingsStars";
-import TextWithToggle from "../Components/browseComponents/TextWithToggle";
 import { useReviewByTourId } from "@/Hooks/useReviewByTourId";
 import { useCreateReview } from "../Hooks/useCreateReview";
+import FullCardHeroSection from "@/Components/browseComponents/FullCardHeroSection";
 
 interface ReviewFormValues {
   rating: number;
@@ -91,44 +90,7 @@ function ReviewPage() {
   return (
     <section className="mx-5 mt-10 mb-10 flex flex-col gap-5 md:mx-20 lg:mx-40 xl:mx-80">
       {/* Tour Preview */}
-      <div className="relative mb-8 flex min-h-80 flex-col gap-0 overflow-hidden rounded-3xl bg-white/30 shadow-xl backdrop-blur-md md:flex-row">
-        {/* Info Panel Left */}
-        <div className="z-10 flex flex-col gap-2 px-6 py-8 md:w-1/2">
-          <div className="mb-2 flex items-center justify-between">
-            <RatingStars
-              rating={stats ? stats.averageRating : tour.ratingsAverage}
-            />
-            <span className="bg-secondary-blue rounded-full px-4 py-2 text-white">
-              {stats ? stats.totalReviews : tour.ratingsQuantity} reviews
-            </span>
-          </div>
-          <h2 className="text-primary-blue text-3xl font-bold">{tour.name}</h2>
-          <h4 className="text-lg text-gray-700">{tour.summary}</h4>
-          <div className="my-2 flex gap-4">
-            <span className="bg-primary-yellow/80 text-primary-blue rounded-full px-4 py-1 text-lg font-bold shadow">
-              € {tour.price}
-            </span>
-            <span className="bg-primary-blue/80 rounded-full px-4 py-1 text-lg font-medium text-white shadow">
-              {tour.duration}-Day
-            </span>
-          </div>
-          <TextWithToggle text={tour.description} />
-        </div>
-        {/* Image Right */}
-        <div
-          className="flex min-h-[220px] w-full items-end justify-end md:min-h-8 md:w-1/2"
-          style={{
-            backgroundImage: `url(${tour.coverImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center 15%",
-            backgroundRepeat: "no-repeat",
-          }}
-        >
-          <div className="bg-secondary-blue/90 absolute right-4 bottom-4 rounded-full px-5 py-2 text-xs font-bold text-white shadow-lg">
-            {tour.tags.map((tag) => tag.tag).join(", ")}
-          </div>
-        </div>
-      </div>
+      <FullCardHeroSection stats={stats} data={tour} />
 
       {/* Review Form */}
       <div className="bg-primary-blue/40 border-tertiary-blue/30 rounded-3xl border p-8 shadow-lg backdrop-blur-xl">

@@ -21,7 +21,7 @@ function AuthProtectedRoute({ children, role }: AuthProtectedRouteProps) {
 
 interface AuthProtectedRouteProps {
   children: React.ReactNode;
-  role?: "admin";
+  role?: "Admin";
 }
 
 export default AuthProtectedRoute;
