@@ -9,3 +9,13 @@ interface UserInterface {
 interface UserPatchRequest {
   image: File;
 }
+
+interface UserCreateRequest {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  firstname: string;
+  lastname: string;
+  photo: File;
+}
