@@ -8,12 +8,13 @@ import FilterSettings from "../Components/browseComponents/FilterSettings";
 import { useFilter } from "../Hooks/useFilter";
 import { useQuery } from "@tanstack/react-query";
 import { GetAllTours } from "../Api/apiGetAllTours";
-import { AxiosError } from "axios";
+import { retryLogic } from "@/Utils/queryUtils";
 import Loading from "../UI/Loading";
 import Empty from "../UI/Empty";
 import NotFound from "../UI/NotFound";
 import ErrorMessage from "../UI/ErrorMessage";
 import BlurSpot from "../UI/BlurSpot";
+import { AxiosError } from "axios";
 
 function Browse() {
   const { search, setSearch } = useFilter();
@@ -23,12 +24,7 @@ function Browse() {
     useQuery<TourAndCruiseDateContract>({
       queryKey: ["tour"],
       queryFn: GetAllTours,
-      retry: (failureCount, error) => {
-        if (error instanceof AxiosError && error.response?.status === 404) {
-          return false;
-        }
-        return failureCount < 1;
-      },
+      retry: retryLogic,
       staleTime: 5 * 60 * 1000,
     });
 

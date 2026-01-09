@@ -4,7 +4,7 @@ import {
   GetTotalAverageRating,
 } from "@/Api/apiHomeStats";
 import { useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
+import { retryLogic } from "@/Utils/queryUtils";
 
 export function useHomeStats() {
   const {
@@ -14,12 +14,7 @@ export function useHomeStats() {
   } = useQuery({
     queryKey: ["countTours"],
     queryFn: GetCountTours,
-    retry: (failureCount, error) => {
-      if (error instanceof AxiosError && error.response?.status === 404) {
-        return false;
-      }
-      return failureCount < 1;
-    },
+    retry: retryLogic,
     staleTime: 5 * 60 * 1000,
   });
 
@@ -30,12 +25,7 @@ export function useHomeStats() {
   } = useQuery({
     queryKey: ["countUsers"],
     queryFn: GetCountUsers,
-    retry: (failureCount, error) => {
-      if (error instanceof AxiosError && error.response?.status === 404) {
-        return false;
-      }
-      return failureCount < 1;
-    },
+    retry: retryLogic,
     staleTime: 5 * 60 * 1000,
   });
 
@@ -46,12 +36,7 @@ export function useHomeStats() {
   } = useQuery({
     queryKey: ["totalAverageRating"],
     queryFn: GetTotalAverageRating,
-    retry: (failureCount, error) => {
-      if (error instanceof AxiosError && error.response?.status === 404) {
-        return false;
-      }
-      return failureCount < 1;
-    },
+    retry: retryLogic,
     staleTime: 5 * 60 * 1000,
   });
 
