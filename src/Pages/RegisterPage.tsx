@@ -9,41 +9,34 @@ import {
 } from "lucide-react";
 import BlurSpot from "../UI/BlurSpot";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-
-const registerSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .min(2, "First name must be at least 2 characters")
-    .required("First name is required"),
-  lastName: Yup.string()
-    .min(2, "Last name must be at least 2 characters")
-    .required("Last name is required"),
-  email: Yup.string()
-    .email("Invalid email address")
-    .required("Email is required"),
-  password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Password is required"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password")], "Passwords must match")
-    .required("Please confirm your password"),
-});
+import { useMutation } from "@tanstack/react-query";
+import { CreateUser } from "@/Api/apiUser";
+import { registerSchema } from "@/schemas/userSchemas";
+import { getErrorMessage } from "@/Utils/errorHandler";
+import { toast } from "sonner";
 
 function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  // const [profileImage, setProfileImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const createUserMutation = useMutation({
+    mutationFn: CreateUser,
+    onSuccess: () => {
+      toast.success("Registration successful! Please login.");
+      navigate("/login");
+    },
+  });
+
+  const handleImageChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setFieldValue: (field: string, value: File) => void,
+  ) => {
     const file = e.target.files?.[0];
     if (file) {
-      // setProfileImage(file);
+      setFieldValue("photo", file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewUrl(reader.result as string);
@@ -53,47 +46,31 @@ function RegisterPage() {
   };
 
   const handleRegisterSubmit = async (values: {
+    username: string;
     firstName: string;
     lastName: string;
     email: string;
     password: string;
     confirmPassword: string;
+    photo: File | undefined;
   }) => {
-    setIsSubmitting(true);
-    setError("");
+    if (!values.photo) return;
 
-    try {
-      // Register with Identity Server
-      const response = await axios.post(
-        "https://localhost:5001/api/account/register",
-        {
-          email: values.email,
-          password: values.password,
-        },
-      );
+    const userCreateRequest: UserCreateRequest = {
+      username: values.username,
+      email: values.email,
+      password: values.password,
+      confirmPassword: values.confirmPassword,
+      firstname: values.firstName,
+      lastname: values.lastName,
+      photo: values.photo,
+    };
 
-      if (response.data.success) {
-        // Redirect to login after successful registration
-        alert("Registration successful! Please login.");
-        navigate("/login");
-      }
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        setError(
-          err.response?.data?.message ||
-            "Registration failed. Please try again.",
-        );
-      } else {
-        setError("Registration failed. Please try again.");
-      }
-      console.error("Registration error:", err);
-    } finally {
-      setIsSubmitting(false);
-    }
+    createUserMutation.mutate(userCreateRequest);
   };
 
   return (
-    <section className="grid min-h-[calc(100svh-4rem)] w-screen place-items-center px-5 py-12">
+    <section className="grid min-h-[calc(100svh-4rem)] w-screen place-items-center px-5 py-6">
       {/* Background blur spots */}
       <BlurSpot
         color="bg-tertiary-blue/20"
@@ -122,16 +99,18 @@ function RegisterPage() {
           {/* Register Form */}
           <Formik
             initialValues={{
+              username: "",
               firstName: "",
               lastName: "",
               email: "",
               password: "",
               confirmPassword: "",
+              photo: undefined as File | undefined,
             }}
             validationSchema={registerSchema}
             onSubmit={handleRegisterSubmit}
           >
-            {({ errors, touched }) => (
+            {({ errors, touched, setFieldValue }) => (
               <Form className="space-y-4 sm:space-y-5">
                 {/* Profile Image Upload */}
                 <div className="flex flex-col items-center">
@@ -143,7 +122,7 @@ function RegisterPage() {
                       type="file"
                       id="profileImage"
                       accept="image/*"
-                      onChange={handleImageChange}
+                      onChange={(e) => handleImageChange(e, setFieldValue)}
                       className="hidden"
                     />
                     <label
@@ -161,6 +140,36 @@ function RegisterPage() {
                       )}
                     </label>
                   </div>
+                  <ErrorMessage
+                    name="photo"
+                    component="div"
+                    className="text-tertiary-red mt-1 text-center text-xs"
+                  />
+                </div>
+
+                {/* Username Input */}
+                <div className="relative w-full">
+                  <label className="mb-2 block text-xs font-medium text-gray-300 sm:text-sm">
+                    Username
+                  </label>
+                  <div className="relative w-full">
+                    <User className="text-tertiary-blue/70 pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 sm:left-4 sm:h-5 sm:w-5" />
+                    <Field
+                      type="text"
+                      name="username"
+                      placeholder="johnDoe"
+                      className={`w-full min-w-0 rounded-full border ${
+                        errors.username && touched.username
+                          ? "border-tertiary-red"
+                          : "border-tertiary-blue/30"
+                      } bg-primary-blue/50 focus:border-tertiary-blue focus:ring-tertiary-blue/20 py-2.5 pr-3 pl-10 text-sm text-white placeholder-gray-400 backdrop-blur-sm transition-all duration-300 outline-none focus:ring-2 sm:py-3 sm:pr-4 sm:pl-12 sm:text-base`}
+                    />
+                  </div>
+                  <ErrorMessage
+                    name="username"
+                    component="div"
+                    className="text-tertiary-red mt-1 text-xs"
+                  />
                 </div>
 
                 {/* Name Row */}
@@ -316,19 +325,24 @@ function RegisterPage() {
                 </div>
 
                 {/* Error Message */}
-                {error && (
+                {createUserMutation.isError && (
                   <div className="bg-tertiary-red/20 border-tertiary-red/50 text-tertiary-red rounded-lg border p-3 text-sm">
-                    {error}
+                    {getErrorMessage(
+                      createUserMutation.error,
+                      "Registration failed. Please try again.",
+                    )}
                   </div>
                 )}
 
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={createUserMutation.isPending}
                   className="bg-secondary-blue shadow-secondary-blue/50 hover:shadow-secondary-blue/70 w-full min-w-0 rounded-full py-2.5 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 sm:py-3 sm:text-base"
                 >
-                  {isSubmitting ? "Creating Account..." : "Create Account"}
+                  {createUserMutation.isPending
+                    ? "Creating Account..."
+                    : "Create Account"}
                 </button>
               </Form>
             )}

@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import "leaflet/dist/leaflet.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Toaster } from "sonner";
 
 import AppLayout from "./UI/AppLayout.tsx";
 import Home from "./Pages/Home.tsx";
@@ -131,6 +132,7 @@ createRoot(document.getElementById("root")!).render(
         <FilterProvider>
           <HamburgerProvider>
             <RouterProvider router={router} />
+            <Toaster position="top-center" richColors />
           </HamburgerProvider>
         </FilterProvider>
       </ModelsProvider>
