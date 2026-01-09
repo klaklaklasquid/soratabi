@@ -13,34 +13,18 @@ import {
   ErrorMessage as FormikError,
   FormikHelpers,
 } from "formik";
-import * as Yup from "yup";
 import { useTourById } from "../Hooks/useTourById";
 import Loading from "../UI/Loading";
 import ErrorMessage from "../UI/ErrorMessage";
 import { useReviewByTourId } from "@/Hooks/useReviewByTourId";
 import { useCreateReview } from "../Hooks/useCreateReview";
 import FullCardHeroSection from "@/Components/browseComponents/FullCardHeroSection";
+import { reviewSchema } from "@/schemas/reviewSchemas";
 
 interface ReviewFormValues {
   rating: number;
   review: string;
 }
-
-const ReviewSchema = Yup.object().shape({
-  rating: Yup.number()
-    .min(0.5, "Please select a rating")
-    .max(5, "Rating must be between 0.5 and 5")
-    .test("is-half-or-full", "Rating must be in increments of 0.5", (value) => {
-      if (!value) return false;
-      return value % 0.5 === 0;
-    })
-    .required("Rating is required"),
-  review: Yup.string()
-    .trim()
-    .min(10, "Review must be at least 10 characters")
-    .max(1000, "Review must not exceed 1000 characters")
-    .required("Review is required"),
-});
 
 function ReviewPage() {
   const { id } = useParams();
@@ -100,7 +84,7 @@ function ReviewPage() {
 
         <Formik
           initialValues={initialValues}
-          validationSchema={ReviewSchema}
+          validationSchema={reviewSchema}
           onSubmit={handleSubmit}
         >
           {({ values, setFieldValue, isSubmitting, errors, touched }) => (

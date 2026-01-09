@@ -1,7 +1,7 @@
 import { GetCompletedTours, GetUpcomingTours } from "@/Api/api.Journey";
 import { GetAllReviewsFromUser } from "@/Api/apiReviews";
 import { useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
+import { retryLogic } from "@/Utils/queryUtils";
 
 export const useMyJourneyQueries = () => {
   const {
@@ -12,12 +12,7 @@ export const useMyJourneyQueries = () => {
   } = useQuery({
     queryKey: ["upcoming tours"],
     queryFn: GetUpcomingTours,
-    retry: (failureCount, error) => {
-      if (error instanceof AxiosError && error.response?.status === 404) {
-        return false;
-      }
-      return failureCount < 1;
-    },
+    retry: retryLogic,
     staleTime: 5 * 60 * 1000,
   });
 
@@ -29,12 +24,7 @@ export const useMyJourneyQueries = () => {
   } = useQuery({
     queryKey: ["completed tours"],
     queryFn: GetCompletedTours,
-    retry: (failureCount, error) => {
-      if (error instanceof AxiosError && error.response?.status === 404) {
-        return false;
-      }
-      return failureCount < 1;
-    },
+    retry: retryLogic,
     staleTime: 5 * 60 * 1000,
   });
 
@@ -46,12 +36,7 @@ export const useMyJourneyQueries = () => {
   } = useQuery({
     queryKey: ["my-reviews"],
     queryFn: GetAllReviewsFromUser,
-    retry: (failureCount, error) => {
-      if (error instanceof AxiosError && error.response?.status === 404) {
-        return false;
-      }
-      return failureCount < 1;
-    },
+    retry: retryLogic,
     staleTime: 5 * 60 * 1000,
   });
 

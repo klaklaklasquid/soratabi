@@ -62,8 +62,6 @@ export const routeConfig = [
         <Account />
       </AuthProtectedRoute>
     ),
-    name: "ACCOUNT",
-    inNav: true,
   },
   {
     path: "create-tour",

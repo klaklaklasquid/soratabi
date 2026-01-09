@@ -10,6 +10,7 @@ import { useCreateTour } from "@/Hooks/useCreateTour";
 import { createTourValidationSchema } from "@/schemas/tourSchemas";
 import { GetTourById } from "@/Api/apiGetTourById";
 import Loading from "@/UI/Loading";
+import { retryLogic } from "@/Utils/queryUtils";
 
 function CreateTour() {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ function CreateTour() {
   const { data: existingTour, isLoading } = useQuery({
     queryKey: ["tour", id],
     queryFn: () => GetTourById(Number(id)),
+    retry: retryLogic,
     enabled: isEditMode,
   });
 

@@ -26,6 +26,9 @@ export function useCreateReview() {
       queryClient.invalidateQueries({
         queryKey: ["my-reviews"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["totalAverageRating"],
+      });
     },
   });
 }

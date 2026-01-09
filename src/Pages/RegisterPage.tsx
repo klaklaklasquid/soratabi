@@ -10,7 +10,7 @@ import {
 import BlurSpot from "../UI/BlurSpot";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Link, useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CreateUser } from "@/Api/apiUser";
 import { registerSchema } from "@/schemas/userSchemas";
 import { getErrorMessage } from "@/Utils/errorHandler";
@@ -21,10 +21,12 @@ function RegisterPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string>("");
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const createUserMutation = useMutation({
     mutationFn: CreateUser,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["countUsers"] });
       toast.success("Registration successful! Please login.");
       navigate("/login");
     },
