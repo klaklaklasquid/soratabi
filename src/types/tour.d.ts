@@ -1,6 +1,27 @@
 interface TourAndCruiseDateContract {
   tours: ToursData[];
   cruises: ToursData[];
+  toursPagination: Pagination;
+  cruisesPagination: Pagination;
+}
+
+interface Pagination {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  pageSize: number;
+}
+
+interface TourFilters {
+  search?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  minDuration?: number;
+  maxDuration?: number;
+  minRating?: number;
+  maxRating?: number;
+  startDateFrom?: string;
+  startDateTo?: string;
 }
 
 interface ToursData {
