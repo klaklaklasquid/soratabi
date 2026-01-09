@@ -12,6 +12,18 @@ interface Pagination {
   pageSize: number;
 }
 
+interface TourFilters {
+  search?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  minDuration?: number;
+  maxDuration?: number;
+  minRating?: number;
+  maxRating?: number;
+  startDateFrom?: string;
+  startDateTo?: string;
+}
+
 interface ToursData {
   id: number;
   name: string;

@@ -14,7 +14,7 @@ function Pagination({
   }
 
   return (
-    <div className="col-span-full mb-6 flex items-center justify-center gap-2 xl:col-start-2">
+    <div className="col-span-full mb-6 flex items-center justify-center gap-2">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}

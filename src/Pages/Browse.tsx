@@ -6,9 +6,7 @@ import FilterSettings from "../Components/browseComponents/FilterSettings";
 import Pagination from "../Components/browseComponents/Pagination";
 import { useFilter } from "../Hooks/useFilter";
 import { usePagination } from "../Hooks/usePagination";
-import { useQuery } from "@tanstack/react-query";
-import { GetAllTours } from "../Api/apiGetAllTours";
-import { retryLogic } from "@/Utils/queryUtils";
+import { useBrowseTours } from "../Hooks/useBrowseTours";
 import Loading from "../UI/Loading";
 import Empty from "../UI/Empty";
 import NotFound from "../UI/NotFound";
@@ -22,13 +20,10 @@ function Browse() {
     usePagination();
   const [active, setActive] = useState<boolean>(true);
 
-  const { isLoading, data, error, isError, isFetching } =
-    useQuery<TourAndCruiseDateContract>({
-      queryKey: ["tours", toursPage, cruisesPage],
-      queryFn: () => GetAllTours(toursPage, cruisesPage),
-      retry: retryLogic,
-      staleTime: 5 * 60 * 1000,
-    });
+  const { isLoading, data, error, isError, isFetching } = useBrowseTours(
+    toursPage,
+    cruisesPage,
+  );
 
   const currentPagination = active
     ? data?.toursPagination
