@@ -112,11 +112,13 @@ function Browse() {
         )}
       </div>
 
-      <Pagination
-        pagination={currentPagination!}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
+      {currentPagination && (
+        <Pagination
+          pagination={currentPagination}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      )}
 
       {/* Decorative blurred spots - using BlurSpot component */}
       <BlurSpot

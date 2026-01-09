@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { GetAllTours } from "@/Api/apiGetAllTours";
 import { retryLogic } from "@/Utils/queryUtils";
@@ -16,17 +17,30 @@ export function useBrowseTours(toursPage: number, cruisesPage: number) {
     maxDate,
   } = useFilter();
 
-  const filters: TourFilters = {
-    search: search || undefined,
-    minPrice,
-    maxPrice,
-    minDuration,
-    maxDuration,
-    minRating: minRatingAverage,
-    maxRating: maxRatingAverage,
-    startDateFrom: minDate || undefined,
-    startDateTo: maxDate || undefined,
-  };
+  const filters: TourFilters = useMemo(
+    () => ({
+      search: search || undefined,
+      minPrice,
+      maxPrice,
+      minDuration,
+      maxDuration,
+      minRating: minRatingAverage,
+      maxRating: maxRatingAverage,
+      startDateFrom: minDate || undefined,
+      startDateTo: maxDate || undefined,
+    }),
+    [
+      search,
+      minPrice,
+      maxPrice,
+      minDuration,
+      maxDuration,
+      minRatingAverage,
+      maxRatingAverage,
+      minDate,
+      maxDate,
+    ],
+  );
 
   return useQuery<TourAndCruiseDateContract>({
     queryKey: ["tours", toursPage, cruisesPage, filters],
