@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { CreateUser } from "@/Api/apiUser";
 import { registerSchema } from "@/schemas/userSchemas";
+import { getErrorMessage } from "@/Utils/errorHandler";
 
 function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -66,6 +67,8 @@ function RegisterPage() {
 
     createUserMutation.mutate(userCreateRequest);
   };
+
+  console.log(createUserMutation);
 
   return (
     <section className="grid min-h-[calc(100svh-4rem)] w-screen place-items-center px-5 py-6">
@@ -325,9 +328,10 @@ function RegisterPage() {
                 {/* Error Message */}
                 {createUserMutation.isError && (
                   <div className="bg-tertiary-red/20 border-tertiary-red/50 text-tertiary-red rounded-lg border p-3 text-sm">
-                    {createUserMutation.error instanceof Error
-                      ? createUserMutation.error.message
-                      : "Registration failed. Please try again."}
+                    {getErrorMessage(
+                      createUserMutation.error,
+                      "Registration failed. Please try again.",
+                    )}
                   </div>
                 )}
 
