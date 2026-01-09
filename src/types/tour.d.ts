@@ -1,6 +1,15 @@
 interface TourAndCruiseDateContract {
   tours: ToursData[];
   cruises: ToursData[];
+  toursPagination: Pagination;
+  cruisesPagination: Pagination;
+}
+
+interface Pagination {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  pageSize: number;
 }
 
 interface ToursData {
