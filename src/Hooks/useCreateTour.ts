@@ -51,6 +51,7 @@ export function useCreateTour(
     onSuccess: (newTour) => {
       queryClient.invalidateQueries({ queryKey: ["tours"] });
       queryClient.invalidateQueries({ queryKey: ["tour", tourId] });
+      queryClient.invalidateQueries({ queryKey: ["countTours"] });
       navigate(`/tour/${newTour.type}/${newTour.id}`);
     },
   });

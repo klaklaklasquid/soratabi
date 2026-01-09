@@ -6,9 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { Suspense } from "react";
 import Loading from "../UI/Loading";
 import BlurSpot from "../UI/BlurSpot";
+import { useHomeStats } from "@/Hooks/useHomeStats";
 
 function Home() {
   const navigate = useNavigate();
+  const { countTours, countUsers, totalAverageRating, isLoading } =
+    useHomeStats();
 
   return (
     <>
@@ -51,7 +54,7 @@ function Home() {
           <div className="animate-fade-in-delayed hidden grid-cols-4 gap-3 md:grid lg:max-w-3xl">
             <div className="hover:border-tertiary-blue/30 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all hover:bg-white/10">
               <div className="text-tertiary-blue mb-1 text-2xl font-bold lg:text-3xl">
-                150+
+                {isLoading ? "..." : `${countTours || 0}+`}
               </div>
               <div className="text-xs text-gray-400 lg:text-sm">
                 Destinations
@@ -59,7 +62,7 @@ function Home() {
             </div>
             <div className="hover:border-tertiary-blue/30 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all hover:bg-white/10">
               <div className="text-primary-yellow mb-1 text-2xl font-bold lg:text-3xl">
-                50K+
+                {isLoading ? "..." : `${countUsers || 0}+`}
               </div>
               <div className="text-xs text-gray-400 lg:text-sm">
                 Happy Travelers
@@ -67,7 +70,11 @@ function Home() {
             </div>
             <div className="hover:border-tertiary-blue/30 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all hover:bg-white/10">
               <div className="mb-1 text-2xl font-bold text-white lg:text-3xl">
-                4.9
+                {isLoading
+                  ? "..."
+                  : totalAverageRating
+                    ? totalAverageRating.toFixed(1)
+                    : "N/A"}
               </div>
               <div className="text-xs text-gray-400 lg:text-sm">
                 Average Rating
