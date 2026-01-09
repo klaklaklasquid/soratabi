@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FilterButton from "../Components/browseComponents/FilterButton";
 import InputButton from "../Components/InputButton";
 import TourCard from "../Components/browseComponents/TourCard";
@@ -36,6 +36,13 @@ function Browse() {
   const currentPage = active ? toursPage : cruisesPage;
   const setCurrentPage = active ? setToursPage : setCruisesPage;
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [toursPage, cruisesPage]);
+
   if (isError) {
     if (error instanceof AxiosError && error.response?.status === 404) {
       return <NotFound />;
@@ -46,7 +53,6 @@ function Browse() {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleTabChange = (isTours: boolean) => {
