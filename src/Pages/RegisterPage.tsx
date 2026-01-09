@@ -14,6 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { CreateUser } from "@/Api/apiUser";
 import { registerSchema } from "@/schemas/userSchemas";
 import { getErrorMessage } from "@/Utils/errorHandler";
+import { toast } from "sonner";
 
 function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,7 +25,7 @@ function RegisterPage() {
   const createUserMutation = useMutation({
     mutationFn: CreateUser,
     onSuccess: () => {
-      alert("Registration successful! Please login.");
+      toast.success("Registration successful! Please login.");
       navigate("/login");
     },
   });
@@ -67,8 +68,6 @@ function RegisterPage() {
 
     createUserMutation.mutate(userCreateRequest);
   };
-
-  console.log(createUserMutation);
 
   return (
     <section className="grid min-h-[calc(100svh-4rem)] w-screen place-items-center px-5 py-6">

@@ -12,13 +12,11 @@ export const getErrorMessage = (
     message?: string;
   }>;
 
-  // Extract the actual error message from the response
-  const errorMessage =
+  return (
     axiosError.response?.data?.error ||
     axiosError.response?.data?.details ||
     axiosError.response?.data?.message ||
     axiosError.message ||
-    fallbackMessage;
-
-  return errorMessage;
+    fallbackMessage
+  );
 };
