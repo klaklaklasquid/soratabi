@@ -10,7 +10,7 @@ export const useMyJourneyQueries = () => {
     isError: isErrorUpcoming,
     error: upcomingError,
   } = useQuery({
-    queryKey: ["upcoming tours"],
+    queryKey: ["upcoming-tours"],
     queryFn: GetUpcomingTours,
     retry: retryLogic,
     staleTime: 5 * 60 * 1000,
@@ -22,7 +22,7 @@ export const useMyJourneyQueries = () => {
     isError: isErrorCompleted,
     error: completedError,
   } = useQuery({
-    queryKey: ["completed tours"],
+    queryKey: ["completed-tours"],
     queryFn: GetCompletedTours,
     retry: retryLogic,
     staleTime: 5 * 60 * 1000,

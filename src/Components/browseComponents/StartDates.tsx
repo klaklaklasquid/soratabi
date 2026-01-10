@@ -8,12 +8,9 @@ import {
   CardDescription,
 } from "@/Components/ui/card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCalendarAlt,
-  faUserFriends,
-  faCheckCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt, faUserFriends } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams } from "react-router-dom";
+import { getSlotStyling } from "@/Utils/getSlotStyling";
 
 function StartDates({ date, maxCustomers }: StartDatesProps) {
   const { type, id } = useParams();
@@ -21,38 +18,9 @@ function StartDates({ date, maxCustomers }: StartDatesProps) {
 
   const remainingSlots = maxCustomers - date.currentCustomers;
   const slotPercent = Math.max(0, Math.min(1, remainingSlots / maxCustomers));
-  let slotBarColor = "bg-white/20";
-  let slotTextColor = "text-white";
-  let slotFillColor = "bg-secondary-blue/80";
-  let cardBorder = "border-white/10";
-
-  //! FORCE YELLOW STATE FOR TESTING - COMMENT OUT WHEN DONE
-  // if (true) {
-  //   slotBarColor = "bg-primary-yellow/20";
-  //   slotTextColor = "text-primary-yellow";
-  //   slotFillColor = "bg-primary-yellow/80";
-  //   cardBorder = "border-primary-yellow/40";
-  // }
-
-  //! FORCE RED STATE FOR TESTING - COMMENT OUT WHEN DONE
-  // if (true) {
-  //   slotBarColor = "bg-tertiary-red/20 animate-pulse";
-  //   slotTextColor = "text-tertiary-red";
-  //   slotFillColor = "bg-tertiary-red/80";
-  //   cardBorder = "border-tertiary-red/40";
-  // }
-
-  if (slotPercent < 0.35) {
-    slotBarColor = "bg-tertiary-red/20 animate-pulse";
-    slotTextColor = "text-tertiary-red";
-    slotFillColor = "bg-tertiary-red/80";
-    cardBorder = "border-tertiary-red/40";
-  } else if (slotPercent < 0.65) {
-    slotBarColor = "bg-primary-yellow/20";
-    slotTextColor = "text-primary-yellow";
-    slotFillColor = "bg-primary-yellow/80";
-    cardBorder = "border-primary-yellow/40";
-  }
+  
+  const { slotBarColor, slotTextColor, slotFillColor, cardBorder, statusIcon } =
+    getSlotStyling(remainingSlots, maxCustomers, "card");
 
   function handleNavigation() {
     navigate(`/tour/${type}/${id}/date/${date.id}`);
@@ -100,8 +68,8 @@ function StartDates({ date, maxCustomers }: StartDatesProps) {
           </span>
           {remainingSlots > 0 && (
             <FontAwesomeIcon
-              icon={faCheckCircle}
-              className="text-primary-green text-xl drop-shadow"
+              icon={statusIcon}
+              className="text-xl drop-shadow"
               title="Available"
             />
           )}

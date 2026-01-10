@@ -5,6 +5,7 @@ import Autoplay from "embla-carousel-autoplay";
 import StartDates from "./StartDates";
 import ReviewCard from "./ReviewCard";
 import ReviewEmpty from "./ReviewEmpty";
+import StartDatesEmpty from "./StartDatesEmpty";
 import { useTourById } from "../../Hooks/useTourById";
 import { AxiosError } from "axios";
 import Loading from "../../UI/Loading";
@@ -62,21 +63,21 @@ function FullTourCard() {
 
       {/* Review Carousel - shadcn Card + Embla */}
       <div className="flex w-full flex-col items-center gap-4">
-        <div className="w-full overflow-hidden rounded-3xl" ref={emblaRef}>
-          <div className="mx-auto flex max-w-md gap-6 px-4 py-6 md:max-w-2xl lg:max-w-3xl xl:max-w-4xl">
-            {reviewLoading ? (
-              <Loading />
-            ) : reviewIsError ? (
-              <ErrorMessage message={reviewError?.message} />
-            ) : !reviewsData || reviewsData.length === 0 ? (
-              <ReviewEmpty />
-            ) : (
-              reviewsData.map((review) => (
+        {reviewLoading ? (
+          <Loading />
+        ) : reviewIsError ? (
+          <ErrorMessage message={reviewError?.message} />
+        ) : !reviewsData || reviewsData.length === 0 ? (
+          <ReviewEmpty />
+        ) : (
+          <div className="w-full overflow-hidden rounded-3xl" ref={emblaRef}>
+            <div className="mx-auto flex max-w-md gap-6 px-4 py-6 md:max-w-2xl lg:max-w-3xl xl:max-w-4xl">
+              {reviewsData.map((review) => (
                 <ReviewCard key={review.id} review={review} />
-              ))
-            )}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Map/Globe Switcher */}
@@ -92,13 +93,22 @@ function FullTourCard() {
 
       {/* Start Dates */}
       <div className="flex flex-col gap-5">
-        {data.startDates.map((date) => (
-          <StartDates
-            key={date.id}
-            date={date}
-            maxCustomers={data.maxCustomers}
-          />
-        ))}
+        {(() => {
+          const futureDates = data.startDates.filter(
+            (date) => new Date(date.startDate) > new Date(),
+          );
+          return futureDates.length > 0 ? (
+            futureDates.map((date) => (
+              <StartDates
+                key={date.id}
+                date={date}
+                maxCustomers={data.maxCustomers}
+              />
+            ))
+          ) : (
+            <StartDatesEmpty />
+          );
+        })()}
       </div>
 
       {/* Decorative blurred spots - using BlurSpot component */}
