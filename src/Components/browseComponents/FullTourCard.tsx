@@ -3,8 +3,7 @@ import LeafletMap from "../../UI/LeafletMap";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import StartDates from "./StartDates";
-import ReviewCard from "./ReviewCard";
-import ReviewEmpty from "./ReviewEmpty";
+import ReviewCarousel from "./ReviewCarousel";
 import StartDatesEmpty from "./StartDatesEmpty";
 import { useTourById } from "../../Hooks/useTourById";
 import { AxiosError } from "axios";
@@ -63,23 +62,13 @@ function FullTourCard() {
       <FullCardHeroSection stats={stats} data={data} />
 
       {/* Review Carousel - shadcn Card + Embla */}
-      <div className="flex w-full flex-col items-center gap-4">
-        {reviewLoading ? (
-          <Loading />
-        ) : reviewIsError ? (
-          <ErrorMessage message={reviewError?.message} />
-        ) : !reviewsData || reviewsData.length === 0 ? (
-          <ReviewEmpty />
-        ) : (
-          <div className="w-full overflow-hidden rounded-3xl" ref={emblaRef}>
-            <div className="mx-auto flex max-w-md gap-6 px-4 py-6 md:max-w-2xl lg:max-w-3xl xl:max-w-4xl">
-              {reviewsData.map((review) => (
-                <ReviewCard key={review.id} review={review} />
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+      <ReviewCarousel
+        reviewLoading={reviewLoading}
+        reviewIsError={reviewIsError}
+        reviewError={reviewError}
+        reviewsData={reviewsData}
+        emblaRef={emblaRef}
+      />
 
       {/* Map/Globe Switcher */}
       <section className="flex flex-col gap-3 text-lg">

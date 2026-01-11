@@ -3,16 +3,9 @@ import { capitalizeFirst } from "@/Utils/textAlter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 import { useDownloadPdf } from "@/Hooks/useDownloadPdf";
+import { formatDate } from "@/Utils/dateFormatter";
 
 function JourneyTourCard({ data, status }: JourneyTourCardProps) {
-  const formattedDate = new Date(
-    data.bookedStartDate.startDate,
-  ).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-
   const downloadPdfMutation = useDownloadPdf();
 
   const handleDownloadPdf = () => {
@@ -68,7 +61,7 @@ function JourneyTourCard({ data, status }: JourneyTourCardProps) {
 
         <div className="flex items-center gap-3">
           <span className="rounded-full border border-white/20 bg-white/10 px-4 py-1 text-sm font-medium text-white shadow backdrop-blur-sm">
-            📅 {formattedDate}
+            📅 {formatDate(data.bookedStartDate.startDate)}
           </span>
           <span className="rounded-full border border-white/20 bg-white/10 px-4 py-1 text-sm font-medium text-white shadow backdrop-blur-sm">
             {data.duration} Days
