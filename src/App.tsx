@@ -10,11 +10,15 @@ function App({ children }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <>{children}</>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <TanStackDevtools
-        eventBusConfig={{ debug: false }}
-        plugins={[pacerDevtoolsPlugin()]}
-      />
+      {import.meta.env.DEV && (
+        <>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <TanStackDevtools
+            eventBusConfig={{ debug: false }}
+            plugins={[pacerDevtoolsPlugin()]}
+          />
+        </>
+      )}
     </QueryClientProvider>
   );
 }
