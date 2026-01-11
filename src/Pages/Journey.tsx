@@ -8,6 +8,7 @@ import EditReviewPopup from "@/UI/EditReviewPopup";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DeleteReview, UpdateReview } from "@/Api/apiReviews";
+import { toast } from "sonner";
 
 function Journey() {
   const [deleteReviewId, setDeleteReviewId] = useState<string | null>(null);
@@ -21,6 +22,7 @@ function Journey() {
     mutationFn: ({ reviewId, tourId }: { reviewId: string; tourId: number }) =>
       DeleteReview(reviewId, tourId),
     onSuccess: () => {
+      toast.success("Review deleted successfully!");
       queryClient.invalidateQueries({ queryKey: ["my-reviews"] });
       queryClient.invalidateQueries({ queryKey: ["reviews"] });
       queryClient.invalidateQueries({ queryKey: ["reviewsStats"] });
@@ -40,6 +42,7 @@ function Journey() {
       review: string;
     }) => UpdateReview(reviewId, tourId, { rating, review }),
     onSuccess: () => {
+      toast.success("Review updated successfully!");
       queryClient.invalidateQueries({ queryKey: ["my-reviews"] });
       queryClient.invalidateQueries({ queryKey: ["reviews"] });
       queryClient.invalidateQueries({ queryKey: ["reviewsStats"] });
