@@ -2,8 +2,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import LeafletMap from "@/UI/LeafletMap";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import ReviewCard from "@/Components/browseComponents/ReviewCard";
-import ReviewEmpty from "@/Components/browseComponents/ReviewEmpty";
+import ReviewCarousel from "@/Components/browseComponents/ReviewCarousel";
 import { useTourById } from "@/Hooks/useTourById";
 import { AxiosError } from "axios";
 import Loading from "@/UI/Loading";
@@ -54,7 +53,7 @@ function InfoTourPage() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center">
+      <div className="flex min-h-[80vh] items-center justify-center">
         <Loading />
       </div>
     );
@@ -64,7 +63,11 @@ function InfoTourPage() {
     if (error instanceof AxiosError && error.response?.status === 404) {
       return <NotFound />;
     }
-    return <ErrorMessage message={error?.message} />;
+    return (
+      <div className="flex min-h-[80vh] items-center justify-center">
+        <ErrorMessage message={error?.message} />
+      </div>
+    );
   }
 
   if (!data) {
@@ -112,23 +115,13 @@ function InfoTourPage() {
       )}
 
       {/* Review Carousel */}
-      <div className="flex w-full flex-col items-center gap-4">
-        <div className="w-full overflow-hidden rounded-3xl" ref={emblaRef}>
-          <div className="mx-auto flex max-w-md gap-6 px-4 py-6 md:max-w-2xl lg:max-w-3xl xl:max-w-4xl">
-            {reviewLoading ? (
-              <Loading />
-            ) : reviewIsError ? (
-              <ErrorMessage message={reviewError?.message} />
-            ) : !reviewsData || reviewsData.length === 0 ? (
-              <ReviewEmpty />
-            ) : (
-              reviewsData.map((review) => (
-                <ReviewCard key={review.id} review={review} />
-              ))
-            )}
-          </div>
-        </div>
-      </div>
+      <ReviewCarousel
+        reviewLoading={reviewLoading}
+        reviewIsError={reviewIsError}
+        reviewError={reviewError}
+        reviewsData={reviewsData}
+        emblaRef={emblaRef}
+      />
 
       {/* Map */}
       <section className="flex flex-col gap-3 text-lg">

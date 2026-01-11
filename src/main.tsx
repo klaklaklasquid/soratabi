@@ -26,6 +26,7 @@ import CreateTour from "./Pages/CreateTour.tsx";
 import PurchaseTour from "./Pages/PurchaseTour.tsx";
 import ReviewPage from "./Pages/ReviewPage.tsx";
 import InfoTourPage from "./Pages/InfoTourPage.tsx";
+import Payment from "./Pages/Payment.tsx";
 
 export const routeConfig = [
   {
@@ -104,11 +105,19 @@ export const routeConfig = [
   },
   {
     path: "/tour/:type/:id/date/:dateId",
-    element: <PurchaseTour />,
+    element: (
+      <AuthProtectedRoute>
+        <PurchaseTour />
+      </AuthProtectedRoute>
+    ),
   },
   {
     path: "/review/:id",
     element: <ReviewPage />,
+  },
+  {
+    path: "/payment/success",
+    element: <Payment />,
   },
   {
     path: "*",

@@ -3,8 +3,8 @@ import LeafletMap from "../../UI/LeafletMap";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import StartDates from "./StartDates";
-import ReviewCard from "./ReviewCard";
-import ReviewEmpty from "./ReviewEmpty";
+import ReviewCarousel from "./ReviewCarousel";
+import StartDatesEmpty from "./StartDatesEmpty";
 import { useTourById } from "../../Hooks/useTourById";
 import { AxiosError } from "axios";
 import Loading from "../../UI/Loading";
@@ -12,6 +12,7 @@ import NotFound from "../../UI/NotFound";
 import ErrorMessage from "../../UI/ErrorMessage";
 import Empty from "../../UI/Empty";
 import BlurSpot from "../../UI/BlurSpot";
+import { parseDate } from "@/Utils/dateFormatter";
 import { useReviewByTourId } from "@/Hooks/useReviewByTourId";
 import FullCardHeroSection from "./FullCardHeroSection";
 
@@ -38,7 +39,7 @@ function FullTourCard() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center">
+      <div className="flex min-h-[80vh] items-center justify-center">
         <Loading />
       </div>
     );
@@ -48,7 +49,11 @@ function FullTourCard() {
     if (error instanceof AxiosError && error.response?.status === 404) {
       return <NotFound />;
     }
-    return <ErrorMessage message={error?.message} />;
+    return (
+      <div className="flex min-h-[80vh] items-center justify-center">
+        <ErrorMessage message={error?.message} />
+      </div>
+    );
   }
 
   if (!data) {
@@ -61,23 +66,13 @@ function FullTourCard() {
       <FullCardHeroSection stats={stats} data={data} />
 
       {/* Review Carousel - shadcn Card + Embla */}
-      <div className="flex w-full flex-col items-center gap-4">
-        <div className="w-full overflow-hidden rounded-3xl" ref={emblaRef}>
-          <div className="mx-auto flex max-w-md gap-6 px-4 py-6 md:max-w-2xl lg:max-w-3xl xl:max-w-4xl">
-            {reviewLoading ? (
-              <Loading />
-            ) : reviewIsError ? (
-              <ErrorMessage message={reviewError?.message} />
-            ) : !reviewsData || reviewsData.length === 0 ? (
-              <ReviewEmpty />
-            ) : (
-              reviewsData.map((review) => (
-                <ReviewCard key={review.id} review={review} />
-              ))
-            )}
-          </div>
-        </div>
-      </div>
+      <ReviewCarousel
+        reviewLoading={reviewLoading}
+        reviewIsError={reviewIsError}
+        reviewError={reviewError}
+        reviewsData={reviewsData}
+        emblaRef={emblaRef}
+      />
 
       {/* Map/Globe Switcher */}
       <section className="flex flex-col gap-3 text-lg">
@@ -92,13 +87,24 @@ function FullTourCard() {
 
       {/* Start Dates */}
       <div className="flex flex-col gap-5">
-        {data.startDates.map((date) => (
-          <StartDates
-            key={date.id}
-            date={date}
-            maxCustomers={data.maxCustomers}
-          />
-        ))}
+        {(() => {
+          const futureDates = data.startDates.filter((date) => {
+            const startDate = parseDate(date.startDate);
+            const now = new Date();
+            return startDate > now;
+          });
+          return futureDates.length > 0 ? (
+            futureDates.map((date) => (
+              <StartDates
+                key={date.id}
+                date={date}
+                maxCustomers={data.maxCustomers}
+              />
+            ))
+          ) : (
+            <StartDatesEmpty />
+          );
+        })()}
       </div>
 
       {/* Decorative blurred spots - using BlurSpot component */}

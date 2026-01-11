@@ -8,6 +8,7 @@ import EditReviewPopup from "@/UI/EditReviewPopup";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DeleteReview, UpdateReview } from "@/Api/apiReviews";
+import { toast } from "sonner";
 
 function Journey() {
   const [deleteReviewId, setDeleteReviewId] = useState<string | null>(null);
@@ -21,6 +22,7 @@ function Journey() {
     mutationFn: ({ reviewId, tourId }: { reviewId: string; tourId: number }) =>
       DeleteReview(reviewId, tourId),
     onSuccess: () => {
+      toast.success("Review deleted successfully!");
       queryClient.invalidateQueries({ queryKey: ["my-reviews"] });
       queryClient.invalidateQueries({ queryKey: ["reviews"] });
       queryClient.invalidateQueries({ queryKey: ["reviewsStats"] });
@@ -40,6 +42,7 @@ function Journey() {
       review: string;
     }) => UpdateReview(reviewId, tourId, { rating, review }),
     onSuccess: () => {
+      toast.success("Review updated successfully!");
       queryClient.invalidateQueries({ queryKey: ["my-reviews"] });
       queryClient.invalidateQueries({ queryKey: ["reviews"] });
       queryClient.invalidateQueries({ queryKey: ["reviewsStats"] });
@@ -108,30 +111,21 @@ function Journey() {
     }
   };
 
-  if (isLoadingUpcoming || isLoadingCompleted || myReviewLoading) {
-    return <Loading />;
-  }
-
-  if (isErrorUpcoming || isErrorCompleted || myReviewIsError) {
-    return (
-      <ErrorMessage
-        message={
-          upcomingError?.message ||
-          completedError?.message ||
-          myReviewError?.message ||
-          "Failed to load tours"
-        }
-      />
-    );
-  }
-
   return (
     <>
       <div className="container mx-auto p-6">
         {/* Upcoming Tours Section */}
         <section className="mb-12">
           <h1 className="mb-6 text-3xl font-bold text-white">Upcoming Tours</h1>
-          {upcomingTours && upcomingTours.length > 0 ? (
+          {isLoadingUpcoming ? (
+            <div className="flex min-h-[30vh] items-center justify-center">
+              <Loading />
+            </div>
+          ) : isErrorUpcoming ? (
+            <div className="flex min-h-[30vh] items-center justify-center">
+              <ErrorMessage message={upcomingError?.message} />
+            </div>
+          ) : upcomingTours && upcomingTours.length > 0 ? (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {upcomingTours.map((tour, index) => (
                 <JourneyTourCard
@@ -151,7 +145,15 @@ function Journey() {
           <h1 className="mb-6 text-3xl font-bold text-white">
             Completed Tours
           </h1>
-          {completedTours && completedTours.length > 0 ? (
+          {isLoadingCompleted ? (
+            <div className="flex min-h-[30vh] items-center justify-center">
+              <Loading />
+            </div>
+          ) : isErrorCompleted ? (
+            <div className="flex min-h-[30vh] items-center justify-center">
+              <ErrorMessage message={completedError?.message} />
+            </div>
+          ) : completedTours && completedTours.length > 0 ? (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {completedTours.map((tour, index) => (
                 <JourneyTourCard
@@ -169,7 +171,15 @@ function Journey() {
         {/* My Reviews Section */}
         <section>
           <h1 className="mb-6 text-3xl font-bold text-white">My Reviews</h1>
-          {myReviewData && myReviewData.length > 0 ? (
+          {myReviewLoading ? (
+            <div className="flex min-h-[30vh] items-center justify-center">
+              <Loading />
+            </div>
+          ) : myReviewIsError ? (
+            <div className="flex min-h-[30vh] items-center justify-center">
+              <ErrorMessage message={myReviewError?.message} />
+            </div>
+          ) : myReviewData && myReviewData.length > 0 ? (
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               {myReviewData.map((review, index) => (
                 <UserReviewCard

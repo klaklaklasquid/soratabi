@@ -36,7 +36,11 @@ function Account() {
   };
 
   if (auth.isLoading || isLoadingProfile) {
-    return <Loading />;
+    return (
+      <div className="flex min-h-[80vh] items-center justify-center">
+        <Loading />
+      </div>
+    );
   }
 
   if (!auth.isAuthenticated) {

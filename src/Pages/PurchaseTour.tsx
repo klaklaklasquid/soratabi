@@ -9,11 +9,13 @@ import Loading from "@/UI/Loading";
 import NotFound from "@/UI/NotFound";
 import { AxiosError } from "axios";
 import { useParams } from "react-router-dom";
+import { useCreatePayment } from "@/Hooks/useCreatePayment";
 
 function PurchaseTour() {
   const { id, dateId } = useParams();
   const { isLoading, data, error, isError } = useTourById(+id!);
   const { stats } = useReviewByTourId(+id!);
+  const { mutate: createPayment, isPending } = useCreatePayment();
 
   if (isLoading) {
     return (
@@ -47,32 +49,16 @@ function PurchaseTour() {
     );
   }
 
-  const handleSubmit = async (
-    values: { tickets: number },
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
-  ) => {
-    try {
-      // TODO: Implement actual API call to purchase tour
-      console.log("Purchase Data:", {
-        tourId: id,
-        dateId: dateId,
-        ...values,
-      });
+  const handleSubmit = () => {
+    const paymentRequest: CreatePaymentRequest = {
+      amount: data.price,
+      description: `${data.name} - ${selectedDate.startDate}`,
+      tourId: Number(id),
+      startDateId: Number(dateId),
+      redirectUrl: `${window.location.origin}/payment/success`,
+    };
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      alert(
-        `Successfully booked ${values.tickets} ticket(s) for ${data.name}!`,
-      );
-      // Navigate to success page or user's bookings
-      // navigate("/bookings");
-    } catch (error) {
-      console.error("Purchase failed:", error);
-      alert("Purchase failed. Please try again.");
-    } finally {
-      setSubmitting(false);
-    }
+    createPayment(paymentRequest);
   };
 
   return (
@@ -86,6 +72,7 @@ function PurchaseTour() {
         maxCustomers={data.maxCustomers}
         tourPrice={data.price}
         onSubmit={handleSubmit}
+        isSubmitting={isPending}
       />
 
       {/* Decorative blurred spots - using BlurSpot component */}
