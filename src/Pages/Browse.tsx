@@ -106,7 +106,9 @@ function Browse() {
         ) : !data ||
           (!data.tours && !data.cruises) ||
           (data.tours.length === 0 && data.cruises.length === 0) ? (
-          <Empty />
+          <div className="col-span-2 flex min-h-[80vh] items-center justify-center">
+            <Empty />
+          </div>
         ) : active ? (
           data.tours.map((tour) => (
             <TourCard key={tour.id} data={tour} type={"tours"} />
