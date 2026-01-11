@@ -1,4 +1,6 @@
 import { ErrorMessage } from "formik";
+import { parseDate, getDateStyling } from "@/Utils/dateFormatter";
+import { useMemo } from "react";
 
 interface StartDatesSelectorProps {
   values: ToursRequestData;
@@ -17,6 +19,17 @@ function StartDatesSelector({
   setFieldValue,
   onCreateNew,
 }: StartDatesSelectorProps) {
+  const sortedSelectedDates = useMemo(() => {
+    return values.startDateIds
+      .map((id) => startDates.find((d) => d.id === id))
+      .filter((date): date is StartDatesData => date !== undefined)
+      .sort((a, b) => {
+        const dateA = parseDate(a.startDate);
+        const dateB = parseDate(b.startDate);
+        return dateA.getTime() - dateB.getTime();
+      });
+  }, [values.startDateIds, startDates]);
+
   return (
     <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-5 shadow-xl backdrop-blur-md">
       <div className="mb-2 flex items-center justify-between">
@@ -66,29 +79,26 @@ function StartDatesSelector({
         </div>
       )}
       <div className="flex flex-wrap gap-2">
-        {values.startDateIds.map((id) => {
-          const date = startDates.find((d) => d.id === id);
-          return (
-            <span
-              key={id}
-              className="flex items-center gap-2 rounded-full bg-white/20 px-4 py-1 text-sm font-semibold text-white backdrop-blur-sm"
+        {sortedSelectedDates.map((date) => (
+          <span
+            key={date.id}
+            className={`flex items-center gap-2 rounded-full border px-4 py-1 text-sm font-semibold backdrop-blur-sm ${getDateStyling(date.startDate)}`}
+          >
+            {date.startDate}
+            <button
+              type="button"
+              onClick={() =>
+                setFieldValue(
+                  "startDateIds",
+                  values.startDateIds.filter((did) => did !== date.id),
+                )
+              }
+              className="text-lg hover:text-red-300"
             >
-              {date?.startDate}
-              <button
-                type="button"
-                onClick={() =>
-                  setFieldValue(
-                    "startDateIds",
-                    values.startDateIds.filter((did) => did !== id),
-                  )
-                }
-                className="text-lg text-white hover:text-red-300"
-              >
-                ×
-              </button>
-            </span>
-          );
-        })}
+              ×
+            </button>
+          </span>
+        ))}
       </div>
       <ErrorMessage
         name="startDateIds"

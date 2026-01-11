@@ -20,6 +20,7 @@ import NotFound from "@/UI/NotFound";
 import { retryLogic } from "@/Utils/queryUtils";
 import { getInitialTourValues } from "@/Utils/tourFormUtils";
 import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 function CreateTour() {
   const navigate = useNavigate();
@@ -184,7 +185,14 @@ function CreateTour() {
             <div className="flex gap-4 self-center">
               <button
                 type="button"
-                onClick={() => navigate(-1)}
+                onClick={() => {
+                  toast.info(
+                    isEditMode
+                      ? "Tour edit cancelled"
+                      : "Tour creation cancelled",
+                  );
+                  navigate(-1);
+                }}
                 className="rounded-full border border-white/20 bg-white/10 px-8 py-3 text-lg font-semibold text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl"
               >
                 Cancel
@@ -194,7 +202,13 @@ function CreateTour() {
                 disabled={createTourMutation.isPending}
                 className="bg-primary-yellow/80 text-primary-blue rounded-full border border-white/20 px-8 py-3 text-lg font-bold shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
               >
-                {createTourMutation.isPending ? "Creating..." : "Create Tour"}
+                {createTourMutation.isPending
+                  ? isEditMode
+                    ? "Updating..."
+                    : "Creating..."
+                  : isEditMode
+                    ? "Update Tour"
+                    : "Create Tour"}
               </button>
             </div>
 

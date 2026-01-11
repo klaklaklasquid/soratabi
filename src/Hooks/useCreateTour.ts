@@ -5,6 +5,7 @@ import { GetAllStartDates, CreateStartDate } from "../Api/apiStartDates";
 import { GetAllTags, CreateTag } from "../Api/apiTags";
 import { useNavigate } from "react-router-dom";
 import { retryLogic } from "@/Utils/queryUtils";
+import { toast } from "sonner";
 
 interface UseCreateTourCallbacks {
   onLocationCreated: () => void;
@@ -59,10 +60,12 @@ export function useCreateTour(
       queryClient.invalidateQueries({ queryKey: ["tours"] });
       queryClient.invalidateQueries({ queryKey: ["tour", tourId] });
       queryClient.invalidateQueries({ queryKey: ["countTours"] });
-      
+
       if (isEditMode) {
+        toast.success("Tour updated successfully!");
         navigate(-1);
       } else {
+        toast.success("Tour created successfully!");
         navigate(`/tour/${newTour.type}/${newTour.id}`, { replace: true });
       }
     },
