@@ -129,7 +129,7 @@ function CreateTour() {
       <Formik
         enableReinitialize
         initialValues={getInitialValues()}
-        validationSchema={createTourValidationSchema}
+        validationSchema={createTourValidationSchema(isEditMode)}
         onSubmit={(values) => {
           createTourMutation.mutate(values);
         }}

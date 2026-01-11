@@ -8,9 +8,13 @@ import {
   CardDescription,
 } from "@/Components/ui/card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt, faUserFriends } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarAlt,
+  faUserFriends,
+} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSlotStyling } from "@/Utils/getSlotStyling";
+import { formatDate } from "@/Utils/dateFormatter";
 
 function StartDates({ date, maxCustomers }: StartDatesProps) {
   const { type, id } = useParams();
@@ -18,7 +22,7 @@ function StartDates({ date, maxCustomers }: StartDatesProps) {
 
   const remainingSlots = maxCustomers - date.currentCustomers;
   const slotPercent = Math.max(0, Math.min(1, remainingSlots / maxCustomers));
-  
+
   const { slotBarColor, slotTextColor, slotFillColor, cardBorder, statusIcon } =
     getSlotStyling(remainingSlots, maxCustomers, "card");
 
@@ -36,7 +40,7 @@ function StartDates({ date, maxCustomers }: StartDatesProps) {
           className="mb-2 text-3xl text-white drop-shadow-lg"
         />
         <CardTitle className="text-3xl font-extrabold tracking-wide text-white drop-shadow-lg">
-          {date.startDate}
+          {formatDate(date.startDate)}
         </CardTitle>
         <CardDescription className="text-base font-semibold text-gray-300">
           Tour Start Date

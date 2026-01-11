@@ -11,6 +11,7 @@ import {
   faUserFriends,
 } from "@fortawesome/free-solid-svg-icons";
 import { getSlotStyling } from "@/Utils/getSlotStyling";
+import { formatDate } from "@/Utils/dateFormatter";
 
 interface SelectedDateDisplayProps {
   date: StartDatesData;
@@ -50,7 +51,7 @@ function SelectedDateDisplay({
           className="text-offwhite mb-2 text-3xl"
         />
         <CardTitle className="text-offwhite text-3xl font-extrabold tracking-wide drop-shadow-lg">
-          {date.startDate}
+          {formatDate(date.startDate)}
         </CardTitle>
         <CardDescription className="text-base text-gray-500">
           Your Selected Tour Date

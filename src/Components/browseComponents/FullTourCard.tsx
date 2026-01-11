@@ -13,6 +13,7 @@ import NotFound from "../../UI/NotFound";
 import ErrorMessage from "../../UI/ErrorMessage";
 import Empty from "../../UI/Empty";
 import BlurSpot from "../../UI/BlurSpot";
+import { parseDate } from "@/Utils/dateFormatter";
 import { useReviewByTourId } from "@/Hooks/useReviewByTourId";
 import FullCardHeroSection from "./FullCardHeroSection";
 
@@ -94,9 +95,11 @@ function FullTourCard() {
       {/* Start Dates */}
       <div className="flex flex-col gap-5">
         {(() => {
-          const futureDates = data.startDates.filter(
-            (date) => new Date(date.startDate) > new Date(),
-          );
+          const futureDates = data.startDates.filter((date) => {
+            const startDate = parseDate(date.startDate);
+            const now = new Date();
+            return startDate > now;
+          });
           return futureDates.length > 0 ? (
             futureDates.map((date) => (
               <StartDates
