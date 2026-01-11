@@ -21,9 +21,13 @@ function ReviewCarousel({
   return (
     <div className="flex w-full flex-col items-center gap-4">
       {reviewLoading ? (
-        <Loading />
+        <div className="py-5">
+          <Loading />
+        </div>
       ) : reviewIsError ? (
-        <ErrorMessage message={reviewError?.message} />
+        <div className="py-5">
+          <ErrorMessage message={reviewError?.message} />
+        </div>
       ) : !reviewsData || reviewsData.length === 0 ? (
         <ReviewEmpty />
       ) : (

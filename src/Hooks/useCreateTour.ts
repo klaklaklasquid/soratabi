@@ -4,6 +4,7 @@ import { GetAllLocations, CreateLocation } from "../Api/apiLocation";
 import { GetAllStartDates, CreateStartDate } from "../Api/apiStartDates";
 import { GetAllTags, CreateTag } from "../Api/apiTags";
 import { useNavigate } from "react-router-dom";
+import { retryLogic } from "@/Utils/queryUtils";
 
 interface UseCreateTourCallbacks {
   onLocationCreated: () => void;
@@ -28,16 +29,22 @@ export function useCreateTour(
   const { data: locations = [] } = useQuery({
     queryKey: ["locations"],
     queryFn: GetAllLocations,
+    retry: retryLogic,
+    staleTime: 5 * 60 * 1000,
   });
 
   const { data: startDates = [] } = useQuery({
     queryKey: ["startDates"],
     queryFn: GetAllStartDates,
+    retry: retryLogic,
+    staleTime: 5 * 60 * 1000,
   });
 
   const { data: tags = [] } = useQuery({
     queryKey: ["tags"],
     queryFn: GetAllTags,
+    retry: retryLogic,
+    staleTime: 5 * 60 * 1000,
   });
 
   // Create/Update tour mutation
@@ -52,7 +59,12 @@ export function useCreateTour(
       queryClient.invalidateQueries({ queryKey: ["tours"] });
       queryClient.invalidateQueries({ queryKey: ["tour", tourId] });
       queryClient.invalidateQueries({ queryKey: ["countTours"] });
-      navigate(`/tour/${newTour.type}/${newTour.id}`);
+      
+      if (isEditMode) {
+        navigate(-1);
+      } else {
+        navigate(`/tour/${newTour.type}/${newTour.id}`, { replace: true });
+      }
     },
   });
 

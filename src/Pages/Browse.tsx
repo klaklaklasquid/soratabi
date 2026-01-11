@@ -42,7 +42,11 @@ function Browse() {
     if (error instanceof AxiosError && error.response?.status === 404) {
       return <NotFound />;
     } else {
-      return <ErrorMessage message={error?.message} />;
+      return (
+        <div className="flex min-h-[80vh] items-center justify-center">
+          <ErrorMessage message={error?.message} />
+        </div>
+      );
     }
   }
 
@@ -96,7 +100,9 @@ function Browse() {
 
       <div className="mt-5 mb-6 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:row-span-3 xl:mt-0">
         {isLoading || isFetching ? (
-          <Loading />
+          <div className="col-span-full flex items-center justify-center">
+            <Loading />
+          </div>
         ) : !data ||
           (!data.tours && !data.cruises) ||
           (data.tours.length === 0 && data.cruises.length === 0) ? (

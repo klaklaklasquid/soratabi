@@ -39,7 +39,7 @@ function FullTourCard() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center">
+      <div className="flex min-h-[80vh] items-center justify-center">
         <Loading />
       </div>
     );
@@ -49,7 +49,11 @@ function FullTourCard() {
     if (error instanceof AxiosError && error.response?.status === 404) {
       return <NotFound />;
     }
-    return <ErrorMessage message={error?.message} />;
+    return (
+      <div className="flex min-h-[80vh] items-center justify-center">
+        <ErrorMessage message={error?.message} />
+      </div>
+    );
   }
 
   if (!data) {
