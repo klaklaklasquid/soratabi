@@ -576,7 +576,7 @@ function CreateTour() {
             <div className="flex gap-4 self-center">
               <button
                 type="button"
-                onClick={() => navigate("/browse-destination")}
+                onClick={() => navigate(-1)}
                 className="rounded-full border border-white/20 bg-white/10 px-8 py-3 text-lg font-semibold text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl"
               >
                 Cancel
