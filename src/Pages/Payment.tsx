@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { CheckCircle2, XCircle, Loader2 } from "lucide-react";
 import Button from "../Components/Button";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { GetPayment } from "@/Api/apiPayment";
 import ErrorMessage from "@/UI/ErrorMessage";
 import { useEffect, useRef } from "react";
 
 function Payment() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const paymentId = useRef(sessionStorage.getItem("pendingPaymentId")).current;
 
   useEffect(() => {
@@ -34,8 +35,14 @@ function Payment() {
   useEffect(() => {
     if (paymentStatus) {
       sessionStorage.removeItem("pendingPaymentId");
+
+      // Invalidate tour queries only if payment was successful
+      if (paymentStatus.status === "paid") {
+        queryClient.invalidateQueries({ queryKey: ["upcoming-tours"] });
+        queryClient.invalidateQueries({ queryKey: ["completed-tours"] });
+      }
     }
-  }, [paymentStatus]);
+  }, [paymentStatus, queryClient]);
 
   if (isLoading || !paymentId) {
     return (
