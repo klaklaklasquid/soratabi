@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useDebouncedValue } from "@tanstack/react-pacer";
 import { GetAllTours } from "@/Api/apiGetAllTours";
 import { retryLogic } from "@/Utils/queryUtils";
 import { useFilter } from "@/Hooks/useFilter";
@@ -42,9 +43,11 @@ export function useBrowseTours(toursPage: number, cruisesPage: number) {
     ],
   );
 
+  const [debouncedFilters] = useDebouncedValue(filters, { wait: 500 });
+
   return useQuery<TourAndCruiseDateContract>({
-    queryKey: ["tours", toursPage, cruisesPage, filters],
-    queryFn: () => GetAllTours(toursPage, cruisesPage, filters),
+    queryKey: ["tours", toursPage, cruisesPage, debouncedFilters],
+    queryFn: () => GetAllTours(toursPage, cruisesPage, debouncedFilters),
     retry: retryLogic,
     staleTime: 5 * 60 * 1000,
   });
