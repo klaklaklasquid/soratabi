@@ -8,6 +8,8 @@ import { formatDate } from "@/Utils/dateFormatter";
 function JourneyTourCard({ data, status }: JourneyTourCardProps) {
   const downloadPdfMutation = useDownloadPdf();
 
+  console.log(data.bookedStartDate);
+
   const handleDownloadPdf = () => {
     downloadPdfMutation.mutate({
       tourId: data.id,
