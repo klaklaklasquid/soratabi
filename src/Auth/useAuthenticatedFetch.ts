@@ -1,3 +1,4 @@
+import { oidcConfig } from "./authConfig";
 import useAuth from "./useAuth";
 
 export const useAuthenticatedFetch = () => {
@@ -29,9 +30,8 @@ export const useAuthenticatedFetch = () => {
 // * Get the current access token
 export const getAccessToken = (): string | null => {
   try {
-    const oidcStorage = sessionStorage.getItem(
-      `oidc.user:https://localhost:5001:webapp-client`,
-    );
+    const storageKey = `oidc.user:${oidcConfig.authority}:${oidcConfig.client_id}`;
+    const oidcStorage = sessionStorage.getItem(storageKey);
     if (oidcStorage) {
       const user = JSON.parse(oidcStorage);
       return user.access_token || null;
