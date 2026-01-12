@@ -1,13 +1,14 @@
 import axios from "axios";
 
 // Import your oidc config to get the authority dynamically
-const AUTHORITY = import.meta.env.VITE_IDENTITY_SERVER_URL || "https://localhost:5001";
+const AUTHORITY =
+  import.meta.env.VITE_IDENTITY_SERVER_URL || "https://localhost:5001";
 const CLIENT_ID = "webapp-client";
 const STORAGE_KEY = `oidc.user:${AUTHORITY}:${CLIENT_ID}`;
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
-  timeout: 10000,
+  timeout: 50000,
   headers: {
     "Content-Type": "application/json",
   },
