@@ -1,9 +1,7 @@
 import apiClient from "./apiClient";
 
 export const GetUser = async (): Promise<UserInterface> => {
-  const response = await apiClient.get<UserInterface>("users/profile", {
-    withCredentials: true,
-  });
+  const response = await apiClient.get<UserInterface>("users/profile");
   return response.data;
 };
 

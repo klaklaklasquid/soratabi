@@ -1,5 +1,10 @@
 import axios from "axios";
 
+// Import your oidc config to get the authority dynamically
+const AUTHORITY = import.meta.env.VITE_IDENTITY_SERVER_URL || "https://localhost:5001";
+const CLIENT_ID = "webapp-client";
+const STORAGE_KEY = `oidc.user:${AUTHORITY}:${CLIENT_ID}`;
+
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 10000,
@@ -11,10 +16,7 @@ const apiClient = axios.create({
 // Add request interceptor to include auth token
 apiClient.interceptors.request.use(
   (config) => {
-    // Get token from sessionStorage (set by react-oidc-context)
-    const oidcStorage = sessionStorage.getItem(
-      `oidc.user:https://localhost:5001:webapp-client`,
-    );
+    const oidcStorage = sessionStorage.getItem(STORAGE_KEY);
     if (oidcStorage) {
       const user = JSON.parse(oidcStorage);
       if (user.access_token) {
@@ -39,9 +41,7 @@ export const cosmosApiClient = axios.create({
 // Add request interceptor to include auth token for cosmos client too
 cosmosApiClient.interceptors.request.use(
   (config) => {
-    const oidcStorage = sessionStorage.getItem(
-      `oidc.user:https://localhost:5001:webapp-client`,
-    );
+    const oidcStorage = sessionStorage.getItem(STORAGE_KEY);
     if (oidcStorage) {
       const user = JSON.parse(oidcStorage);
       if (user.access_token) {
