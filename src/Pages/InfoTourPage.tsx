@@ -15,6 +15,7 @@ import FullCardHeroSection from "@/Components/browseComponents/FullCardHeroSecti
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 import { useDownloadPdf } from "@/Hooks/useDownloadPdf";
+import { formatDate } from "@/Utils/dateFormatter";
 
 function InfoTourPage() {
   const { id } = useParams();
@@ -80,11 +81,7 @@ function InfoTourPage() {
     : null;
 
   const formattedDate = selectedStartDate
-    ? new Date(selectedStartDate.startDate).toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-      })
+    ? formatDate(selectedStartDate.startDate)
     : null;
 
   return (
