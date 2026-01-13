@@ -19,8 +19,8 @@ function Home() {
         {/* Hero Content */}
         <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center lg:ml-[5%]">
           {/* Main Hero Text */}
-          <div className="animate-slide-up mb-6 max-w-4xl sm:mb-8 lg:mb-10">
-            <h1 className="mb-4 text-4xl font-bold tracking-tight sm:mb-4 sm:text-5xl sm:leading-tight md:text-6xl md:leading-tight lg:text-7xl lg:leading-snug xl:text-8xl xl:leading-snug">
+          <div className="animate-slide-up mb-6 max-w-4xl sm:mb-6">
+            <h1 className="leading-t mb-4 text-4xl font-bold tracking-tight sm:mb-4 sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
               <span className="via-tertiary-blue bg-linear-to-r from-white to-white bg-clip-text text-transparent">
                 DISCOVER
               </span>
@@ -51,40 +51,40 @@ function Home() {
           </div>
 
           {/* Stats Section - Desktop only */}
-          <div className="animate-fade-in-delayed hidden grid-cols-4 gap-3 md:grid md:max-w-2xl lg:max-w-3xl xl:max-w-4xl">
-            <div className="hover:border-tertiary-blue/30 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all hover:bg-white/10 md:p-4 lg:p-5">
-              <div className="text-tertiary-blue mb-1 text-xl font-bold md:text-2xl lg:text-3xl">
+          <div className="animate-fade-in-delayed hidden grid-cols-4 gap-3 md:grid lg:max-w-3xl">
+            <div className="hover:border-tertiary-blue/30 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all hover:bg-white/10">
+              <div className="text-tertiary-blue mb-1 text-2xl font-bold lg:text-3xl">
                 {isLoading ? "..." : `${countTours || 0}+`}
               </div>
-              <div className="text-xs text-gray-400 md:text-sm">
+              <div className="text-xs text-gray-400 lg:text-sm">
                 Destinations
               </div>
             </div>
-            <div className="hover:border-tertiary-blue/30 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all hover:bg-white/10 md:p-4 lg:p-5">
-              <div className="text-primary-yellow mb-1 text-xl font-bold md:text-2xl lg:text-3xl">
+            <div className="hover:border-tertiary-blue/30 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all hover:bg-white/10">
+              <div className="text-primary-yellow mb-1 text-2xl font-bold lg:text-3xl">
                 {isLoading ? "..." : `${countUsers || 0}+`}
               </div>
-              <div className="text-xs text-gray-400 md:text-sm">
+              <div className="text-xs text-gray-400 lg:text-sm">
                 Happy Travelers
               </div>
             </div>
-            <div className="hover:border-tertiary-blue/30 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all hover:bg-white/10 md:p-4 lg:p-5">
-              <div className="mb-1 text-xl font-bold text-white md:text-2xl lg:text-3xl">
+            <div className="hover:border-tertiary-blue/30 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all hover:bg-white/10">
+              <div className="mb-1 text-2xl font-bold text-white lg:text-3xl">
                 {isLoading
                   ? "..."
                   : typeof totalAverageRating === "number"
                     ? totalAverageRating.toFixed(1)
                     : "N/A"}
               </div>
-              <div className="text-xs text-gray-400 md:text-sm">
+              <div className="text-xs text-gray-400 lg:text-sm">
                 Average Rating
               </div>
             </div>
-            <div className="hover:border-tertiary-blue/30 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all hover:bg-white/10 md:p-4 lg:p-5">
-              <div className="mb-1 text-xl font-bold text-white md:text-2xl lg:text-3xl">
+            <div className="hover:border-tertiary-blue/30 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all hover:bg-white/10">
+              <div className="mb-1 text-2xl font-bold text-white lg:text-3xl">
                 24/7
               </div>
-              <div className="text-xs text-gray-400 md:text-sm">Support</div>
+              <div className="text-xs text-gray-400 lg:text-sm">Support</div>
             </div>
           </div>
         </div>
