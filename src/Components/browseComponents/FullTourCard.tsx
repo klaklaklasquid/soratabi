@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { useMemo } from "react";
 import LeafletMap from "../../UI/LeafletMap";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
@@ -36,6 +37,19 @@ function FullTourCard() {
     },
     reviewsData && reviewsData.length >= 5 ? [Autoplay({ delay: 3500 })] : [],
   );
+
+  const futureDates = useMemo(() => {
+    if (!data?.startDates) return [];
+
+    const now = new Date();
+    return data.startDates
+      .filter((date) => parseDate(date.startDate) > now)
+      .sort((a, b) => {
+        const dateA = parseDate(a.startDate);
+        const dateB = parseDate(b.startDate);
+        return dateA.getTime() - dateB.getTime();
+      });
+  }, [data?.startDates]);
 
   if (isLoading) {
     return (
@@ -87,24 +101,17 @@ function FullTourCard() {
 
       {/* Start Dates */}
       <div className="flex flex-col gap-5">
-        {(() => {
-          const futureDates = data.startDates.filter((date) => {
-            const startDate = parseDate(date.startDate);
-            const now = new Date();
-            return startDate > now;
-          });
-          return futureDates.length > 0 ? (
-            futureDates.map((date) => (
-              <StartDates
-                key={date.id}
-                date={date}
-                maxCustomers={data.maxCustomers}
-              />
-            ))
-          ) : (
-            <StartDatesEmpty />
-          );
-        })()}
+        {futureDates.length > 0 ? (
+          futureDates.map((date) => (
+            <StartDates
+              key={date.id}
+              date={date}
+              maxCustomers={data.maxCustomers}
+            />
+          ))
+        ) : (
+          <StartDatesEmpty />
+        )}
       </div>
 
       {/* Decorative blurred spots - using BlurSpot component */}
